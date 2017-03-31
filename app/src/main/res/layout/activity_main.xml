@@ -1,18 +1,142 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fiuady.hadp.compustore.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.fiuady.hadp.compustore.MainActivity"
+    tools:layout_editor_absoluteX="0dp"
+    tools:layout_editor_absoluteY="81dp">
 
-    <TextView
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="154dp">
 
-</android.support.constraint.ConstraintLayout>
+        <ImageButton
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:scaleType="fitCenter"
+            android:src="@drawable/categorias" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:scaleType="fitCenter"
+            android:src="@drawable/productos2" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:text="Categorías"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:text="Productos"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="154dp">
+
+        <ImageButton
+            android:layout_width="196dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+
+            android:scaleType="fitCenter"
+            android:src="@drawable/ensambles" />
+
+        <ImageButton
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:scaleType="fitCenter"
+            android:src="@drawable/clientes" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:text="Ensambles"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:text="Clientes"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="154dp">
+
+        <ImageButton
+            android:layout_width="196dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ordenes" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/background_light"
+            android:scaleType="fitCenter"
+            android:src="@drawable/reportes" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:text="Ordenes"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="192dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_orange_light"
+            android:text="Reportes"
+            android:textAlignment="center"
+            android:textColor="@android:color/background_light"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+</LinearLayout>
