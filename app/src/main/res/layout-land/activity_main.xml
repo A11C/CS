@@ -8,14 +8,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="3"
-        tools:ignore="UselessParent">
+        android:weightSum="2">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <ImageButton
                 android:id="@+id/Button_Categorias"
@@ -25,8 +24,7 @@
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_categorias"
                 android:scaleType="centerInside"
-                android:src="@drawable/categorias"
-                tools:ignore="NestedWeights" />
+                android:src="@drawable/categorias" />
 
             <ImageButton
                 android:id="@+id/Button_Productos"
@@ -37,12 +35,22 @@
                 android:contentDescription="@string/tag_productos"
                 android:scaleType="centerInside"
                 android:src="@drawable/productos2" />
+
+            <ImageButton
+                android:id="@+id/Button_Ensambles"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/background_light"
+                android:contentDescription="@string/tag_ensambles"
+                android:scaleType="centerInside"
+                android:src="@drawable/ensambles" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:weightSum="3">
 
             <TextView
                 android:layout_width="match_parent"
@@ -64,41 +72,6 @@
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:weightSum="2">
-
-            <ImageButton
-                android:id="@+id/Button_Ensambles"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/background_light"
-                android:contentDescription="@string/tag_ensambles"
-                android:scaleType="centerInside"
-                android:src="@drawable/ensambles"
-                tools:ignore="NestedWeights" />
-
-            <ImageButton
-                android:id="@+id/Button_Clientes"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/background_light"
-                android:contentDescription="@string/tag_clientes"
-                android:scaleType="centerInside"
-                android:src="@drawable/clientes" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:weightSum="2">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -109,24 +82,23 @@
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
-                android:text="@string/tag_clientes"
-                android:textAlignment="center"
-                android:textColor="@android:color/background_light"
-                android:textStyle="bold" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layoutMode="opticalBounds"
-            android:weightSum="2">
+            android:weightSum="3">
+
+            <ImageButton
+                android:id="@+id/Button_Clientes"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/background_light"
+                android:contentDescription="@string/tag_clientes"
+                android:scaleType="centerInside"
+                android:src="@drawable/clientes" />
 
             <ImageButton
                 android:id="@+id/Button_Ordenes"
@@ -136,8 +108,7 @@
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_ordenes"
                 android:scaleType="centerInside"
-                android:src="@drawable/ordenes"
-                tools:ignore="NestedWeights" />
+                android:src="@drawable/ordenes" />
 
             <ImageButton
                 android:id="@+id/Button_Reportes"
@@ -153,7 +124,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:weightSum="2">
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:color/holo_orange_light"
+                android:text="@string/tag_clientes"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -176,5 +157,6 @@
                 android:textStyle="bold" />
 
         </LinearLayout>
+
     </LinearLayout>
 </FrameLayout>

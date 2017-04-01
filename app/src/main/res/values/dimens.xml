@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_width_land">200dp</dimen>
+    <dimen name="btn_heigth_land">140dp</dimen>
+    <dimen name="btn_width_port">192dp</dimen>
+    <dimen name="btn_heigth_port">154dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+</resources>

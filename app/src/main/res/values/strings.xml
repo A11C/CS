@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">CompuStore</string>
+    <string name="tag_ordenes">Ordenes</string>
+    <string name="tag_productos">Productos</string>
+    <string name="tag_categorias">Categorías</string>
+    <string name="tag_ensambles">Ensambles</string>
+    <string name="tag_clientes">Clientes</string>
+    <string name="tag_reportes">Reportes</string>
+    <string name="tag_agregar">Agregar</string>
+    <string name="title_activity_categories">CategoriesActivity</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>
