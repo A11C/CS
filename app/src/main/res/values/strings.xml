@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CompuStore</string>
+    <string name="app_name">CompuStore V1.0</string>
     <string name="tag_ordenes">Ordenes</string>
     <string name="tag_productos">Productos</string>
     <string name="tag_categorias">Categorías</string>
@@ -7,6 +7,29 @@
     <string name="tag_clientes">Clientes</string>
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
-    <string name="title_activity_categories">CategoriesActivity</string>
-    <string name="title_activity_main2">Main2Activity</string>
+
+
+    -- modificar nombres de strings--
+
+    <string name="category_add">Agregar una nueva categoría</string>
+
+    <string name="category_update">Modificar una categoría</string>
+
+    <string name="category_delete">Eliminar una categoría</string>
+
+
+    <string name="add_msg">Se ha guardado la selección</string>
+    <string name="error_msg">No se ha guardado la selección</string>
+
+    <string name="dummy_title">Titulo</string>
+    <string name="write_hint">Escribe ...</string>
+
+
+    <string name="save_text">Guardar</string>
+    <string name="cancel_text">Canclear</string>
+    <string name="modify_text">Modificar</string>
+    <string name="delete_text">Eliminar</string>
+    <string name="sure_text">¿Esta seguro?</string>
+
+
 </resources>
