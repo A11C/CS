@@ -24,7 +24,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_categorias"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/categorias"
                 tools:ignore="NestedWeights" />
 
@@ -35,7 +35,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_productos"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/productos2" />
         </LinearLayout>
 
@@ -48,17 +48,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
+                android:background="#3495b6"
                 android:text="@string/tag_categorias"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
+                android:background="#85b4a4"
                 android:text="@string/tag_productos"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
@@ -79,7 +84,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_ensambles"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ensambles"
                 tools:ignore="NestedWeights" />
 
@@ -90,7 +95,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_clientes"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/clientes" />
         </LinearLayout>
 
@@ -103,17 +108,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
+                android:background="#76b823"
                 android:text="@string/tag_ensambles"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
 
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
+                android:background="#ff7f27"
                 android:text="@string/tag_clientes"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
@@ -135,7 +145,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_ordenes"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/ordenes"
                 tools:ignore="NestedWeights" />
 
@@ -146,7 +156,7 @@
                 android:layout_weight="1"
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_reportes"
-                android:scaleType="centerInside"
+                android:scaleType="fitCenter"
                 android:src="@drawable/reportes" />
         </LinearLayout>
 
@@ -159,17 +169,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
+                android:background="#ff5b80"
                 android:text="@string/tag_ordenes"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@android:color/holo_orange_light"
+                android:background="#d36dd3"
                 android:text="@string/tag_reportes"
                 android:textAlignment="center"
                 android:textColor="@android:color/background_light"
