@@ -63,18 +63,18 @@ public class CategoriesActivity extends AppCompatActivity {
                                 txtTitle.setText(R.string.Edita_categoria);
 
                                 builder.setCancelable(false);
-                                builder.setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
+                                builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.dismiss();
                                     }
-                                }).setPositiveButton(R.string.save_text, new DialogInterface.OnClickListener() {
+                                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         if (compustore.updateCategory(txtAdd.getText().toString(), category.getId())) {
-                                            Toast.makeText(CategoriesActivity.this, R.string.add_msg, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                                             adapter = new CategoryAdapter(compustore.getAllCategories());
                                             categoryRV.setAdapter(adapter);
                                         } else {
-                                            Toast.makeText(CategoriesActivity.this, R.string.error_msg, Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
 
                                         }
                                     }
@@ -85,16 +85,16 @@ public class CategoriesActivity extends AppCompatActivity {
                             } else {
                                 AlertDialog.Builder build = new AlertDialog.Builder(CategoriesActivity.this);
                                 build.setCancelable(false);
-                                build.setTitle(getString(R.string.category_delete));
+                                build.setTitle(getString(R.string.Elimina_categoria));
                                 build.setMessage(R.string.sure_text);
 
-                                build.setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
+                                build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         dialog.dismiss();
                                     }
-                                }).setPositiveButton(R.string.save_text, new DialogInterface.OnClickListener() {
+                                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        Toast.makeText(CategoriesActivity.this, R.string.add_msg, Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                                         compustore.deleteCategory(category.getId(), true);
                                         adapter = new CategoryAdapter(compustore.getAllCategories());
                                         categoryRV.setAdapter(adapter);
@@ -173,33 +173,33 @@ public class CategoriesActivity extends AppCompatActivity {
         final View view = getLayoutInflater().inflate(R.layout.dialog_add, null);
         TextView txtTitle = (TextView) view.findViewById(R.id.add_title);
         final EditText txtAdd = (EditText) view.findViewById(R.id.add_text);
-        txtTitle.setText(R.string.category_add);
+        txtTitle.setText(R.string.Agrega_categoria);
         builder.setCancelable(false);
 
-        builder.setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 dialog.dismiss();
             }
-        }).setPositiveButton(R.string.save_text, new DialogInterface.OnClickListener() {
+        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 AlertDialog.Builder build = new AlertDialog.Builder(CategoriesActivity.this);
                 build.setCancelable(false);
-                build.setTitle(getString(R.string.category_add));
+                build.setTitle(getString(R.string.Agrega_categoria));
                 build.setMessage(R.string.sure_text);
 
-                build.setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
+                build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.dismiss();
-                        Toast.makeText(CategoriesActivity.this, R.string.error_msg, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
                     }
-                }).setPositiveButton(R.string.save_text, new DialogInterface.OnClickListener() {
+                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         if (compustore.insertCategory(txtAdd.getText().toString())) {
-                            Toast.makeText(CategoriesActivity.this, R.string.add_msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                             adapter = new CategoryAdapter(compustore.getAllCategories());
                             categoryRV.setAdapter(adapter);
                         } else {
-                            Toast.makeText(CategoriesActivity.this, R.string.error_msg, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
