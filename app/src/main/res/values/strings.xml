@@ -9,27 +9,26 @@
     <string name="tag_agregar">Agregar</string>
 
 
-    -- modificar nombres de strings--
 
-    <string name="category_add">Agregar una nueva categoría</string>
+    <string name="Agrega_categoria">Nombre de categoría nueva</string>
 
-    <string name="category_update">Modificar una categoría</string>
+    <string name="Edita_categoria">Editar categoría</string>
 
-    <string name="category_delete">Eliminar una categoría</string>
+    <string name="Elimina_categoria">Eliminar categoría</string>
 
 
-    <string name="add_msg">Se ha guardado la selección</string>
-    <string name="error_msg">No se ha guardado la selección</string>
+    <string name="Confirma_operacion">Se ha realizado exitosamente </string>
+    <string name="Error_operacion">No se ha completado la operación</string>
 
-    <string name="dummy_title">Titulo</string>
+    <string name="titulo">Titulo</string>
     <string name="write_hint">Escribe ...</string>
 
 
-    <string name="save_text">Guardar</string>
-    <string name="cancel_text">Canclear</string>
-    <string name="modify_text">Modificar</string>
-    <string name="delete_text">Eliminar</string>
-    <string name="sure_text">¿Esta seguro?</string>
+    <string name="texto_guardar">Guardar</string>
+    <string name="texto_cancelar">Cancelar</string>
+    <string name="texto_modificar">Modificar</string>
+    <string name="texto_eliminar">Eliminar</string>
+    <string name="sure_text">¿Seguro ?</string>
 
 
 </resources>

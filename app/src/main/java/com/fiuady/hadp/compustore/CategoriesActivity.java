@@ -60,7 +60,7 @@ public class CategoriesActivity extends AppCompatActivity {
                                 TextView txtTitle = (TextView) view.findViewById(R.id.add_title);
                                 final EditText txtAdd = (EditText) view.findViewById(R.id.add_text);
 
-                                txtTitle.setText(R.string.category_update);
+                                txtTitle.setText(R.string.Edita_categoria);
 
                                 builder.setCancelable(false);
                                 builder.setNegativeButton(R.string.cancel_text, new DialogInterface.OnClickListener() {
