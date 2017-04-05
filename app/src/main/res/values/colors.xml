@@ -3,4 +3,10 @@
     <color name="colorPrimary">#3f51b5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#ff00f7</color>
+    <color name="colorProducts">#85b4a4</color>
+    <color name="colorCategories">#3495b6</color>
+    <color name="colorAssemblies">#76b823</color>
+    <color name="colorClientes">#ff7f27</color>
+    <color name="colorOrders">#ff5b80</color>
+    <color name="colorReports">#d36dd3</color>
 </resources>

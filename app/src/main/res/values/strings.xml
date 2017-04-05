@@ -7,6 +7,8 @@
     <string name="tag_clientes">Clientes</string>
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
+    <string name="tag_Filtro">Filtro</string>
+    <string name="tag_busqueda">Búsqueda por texto</string>
 
 
 
@@ -17,8 +19,8 @@
     <string name="Elimina_categoria">Eliminar categoría</string>
 
 
-    <string name="Confirma_operacion">La acción se ha realizado correctamente </string>
-    <string name="Error_operacion">No se ha podido completar la acción</string>
+    <string name="Confirma_operacion">Se ha realizado exitosamente </string>
+    <string name="Error_operacion">No se ha completado la operación</string>
 
     <string name="titulo">Titulo</string>
     <string name="write_hint">Escribe ...</string>
@@ -28,7 +30,7 @@
     <string name="texto_cancelar">Cancelar</string>
     <string name="texto_modificar">Modificar</string>
     <string name="texto_eliminar">Eliminar</string>
-    <string name="Confirmacion">La categoría será eliminada</string>
+    <string name="sure_text">¿Seguro ?</string>
 
 
 </resources>

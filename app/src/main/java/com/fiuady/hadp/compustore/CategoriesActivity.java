@@ -83,7 +83,7 @@ public class CategoriesActivity extends AppCompatActivity {
                                 build.setMessage("La siguiente categoría será eliminada" + ": " + category.getDescription());
 
                                 build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
+                                        public void onClick(DialogInterface dialog, int id) {
                                         dialog.dismiss();
                                     }
                                 }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
