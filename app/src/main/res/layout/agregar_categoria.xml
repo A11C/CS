@@ -22,5 +22,6 @@
         android:inputType="text"
         android:textAlignment="center"
         android:textSize="20sp"
-        tool:text="...categoria..." />
+        tool:text="...categoria..."
+        tool:ignore="LabelFor" />
 </RelativeLayout>

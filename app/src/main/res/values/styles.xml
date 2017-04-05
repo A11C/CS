@@ -23,6 +23,35 @@
         <item name="android:navigationBarColor">@color/colorProducts</item>
     </style>
 
+    <style name="AssembliesTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorAssemblies</item>
+        <item name="colorPrimaryDark">@color/colorAssemblies</item>
+        <item name="colorAccent">@color/colorAssemblies</item>
+        <item name="android:navigationBarColor">@color/colorAssemblies</item>
+    </style>
+
+    <style name="ClientsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorClientes</item>
+        <item name="colorPrimaryDark">@color/colorClientes</item>
+        <item name="colorAccent">@color/colorClientes</item>
+        <item name="android:navigationBarColor">@color/colorClientes</item>
+    </style>
+
+    <style name="OrdersTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorOrders</item>
+        <item name="colorPrimaryDark">@color/colorOrders</item>
+        <item name="colorAccent">@color/colorOrders</item>
+        <item name="android:navigationBarColor">@color/colorOrders</item>
+    </style>
+
+    <style name="ReportsTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorReports</item>
+        <item name="colorPrimaryDark">@color/colorReports</item>
+        <item name="colorAccent">@color/colorReports</item>
+        <item name="android:navigationBarColor">@color/colorReports</item>
+    </style>
+
+
 
 
     <style name="AppTheme.NoActionBar">

@@ -15,12 +15,36 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CategoriesActivity" android:theme="@style/CategoryTheme" android:configChanges="screenSize|orientation" />
-        <activity android:name=".ProductsActivity" android:theme="@style/ProductTheme" android:configChanges="screenSize|orientation" />
-        <activity android:name=".AssemblyActivity" />
-        <activity android:name=".ClientsActivity" />
-        <activity android:name=".OrdersActivity" />
-        <activity android:name=".ReportsActivity"></activity>
+        <activity
+            android:name=".CategoriesActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/tag_categorias"
+            android:theme="@style/CategoryTheme" />
+        <activity
+            android:name=".ProductsActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/tag_productos"
+            android:theme="@style/ProductTheme" />
+        <activity
+            android:name=".AssemblyActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/tag_ensambles"
+            android:theme="@style/AssembliesTheme" />
+        <activity
+            android:name=".ClientsActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/tag_clientes"
+            android:theme="@style/ClientsTheme" />
+        <activity
+            android:name=".OrdersActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/tag_ordenes"
+            android:theme="@style/OrdersTheme" />
+        <activity
+            android:name=".ReportsActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/tag_reportes"
+            android:theme="@style/ReportsTheme"/>
     </application>
 
 </manifest>

@@ -11,9 +11,9 @@ public class ClientsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clients);
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorClientes));
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorClientes));
-        }
+       // if (Build.VERSION.SDK_INT >= 21) {
+       //    getWindow().setNavigationBarColor(getResources().getColor(R.color.colorClientes));
+       //     getWindow().setStatusBarColor(getResources().getColor(R.color.colorClientes));
+       // }
     }
 }

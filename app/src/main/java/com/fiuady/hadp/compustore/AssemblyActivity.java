@@ -11,9 +11,9 @@ public class AssemblyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assembly);
 
-        if (Build.VERSION.SDK_INT >= 21) {
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorAssemblies));
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorAssemblies));
-        }
+        //if (Build.VERSION.SDK_INT >= 21) {
+        //    getWindow().setNavigationBarColor(getResources().getColor(R.color.colorAssemblies));
+        //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorAssemblies));
+        //}
     }
 }
