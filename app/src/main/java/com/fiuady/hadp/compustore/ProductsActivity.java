@@ -102,10 +102,7 @@ public class ProductsActivity extends AppCompatActivity {
                                     }
                                 }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-//                                        Toast.makeText(ProductsActivity.this, R.string.add_msg, Toast.LENGTH_SHORT).show();
-//                                        compuStore.deleteCategory(product.getId(), true);
-//                                        adapter = new ProductsActivity.ProductAdapter(compuStore.getAllProducts());
-//                                        productRV.setAdapter(adapter);
+//
                                     }
                                 });
 
