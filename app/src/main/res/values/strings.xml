@@ -8,7 +8,6 @@
     <string name="tag_clientes">Clientes</string>
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
-    <string name="tag_Filtro">Filtro</string>
     <string name="tag_busqueda">Búsqueda por texto</string>
     <string name="title_AddProducto">Nuevo Producto</string>
     <string name="tag_description">Descripción: </string>

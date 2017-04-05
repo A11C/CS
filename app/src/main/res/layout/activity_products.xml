@@ -3,6 +3,7 @@
 
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true">
@@ -18,36 +19,26 @@
                 android:layout_height="match_parent"
                 tools:context="com.fiuady.android.compustore.ProductsActivity">
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textAlignment="center"
-                    android:text="@string/tag_Filtro"
-                    android:id="@+id/filtro_text"
-                    android:textSize="30dp"
-                    android:padding="10dp"
-                    android:textColor="@android:color/black"
-                     />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tag_cat2"
                     android:id="@+id/categorias_tag"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:layout_below="@id/filtro_text"
                      />
 
                 <Spinner
                     android:id="@+id/spinner"
+                    android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:layout_below="@id/filtro_text"
                     android:layout_toEndOf="@+id/categorias_tag"></Spinner>
 
                 <TextView
@@ -56,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="@string/tag_busqueda"
-                    android:textSize="24dp"
+                    android:textSize="24sp"
                     android:padding="10dp"
                     android:textColor="@android:color/black"
                     android:layout_below="@+id/categorias_tag"
@@ -69,9 +60,8 @@
                     android:layout_below="@+id/busqueda_tag"
                     android:enabled="false"
                     android:padding="10dp"
-                    android:textSize="24dp"
-                    android:focusable="false"
-                    />
+                    android:textSize="24sp"
+                    tools:ignore="LabelFor,TextFields" />
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -82,7 +72,7 @@
                     android:src="@android:drawable/ic_search_category_default"
                     android:background="@android:color/transparent"
                     android:scaleType="fitCenter"
-                     />
+                    tools:ignore="ContentDescription" />
 
             </RelativeLayout>
 

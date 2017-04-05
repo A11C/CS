@@ -147,10 +147,10 @@ public class ProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_products);
 
 
-        if(Build.VERSION.SDK_INT >= 21){
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorProducts));
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorProducts));
-        }
+    //    if(Build.VERSION.SDK_INT >= 21){
+      //      getWindow().setNavigationBarColor(getResources().getColor(R.color.colorProducts));
+        //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorProducts));
+       // }
 
         categoriesSpinner = (Spinner)findViewById(R.id.spinner);
         compustore = new CompuStore(getApplicationContext());
