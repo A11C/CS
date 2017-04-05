@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/add_title"
+        android:id="@+id/dialog_tittle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -15,10 +15,10 @@
         android:textAlignment="center" />
 
     <EditText
-        android:id="@+id/add_text"
+        android:id="@+id/dialog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/add_title"
+        android:layout_below="@id/dialog_tittle"
         android:layout_marginTop="16dp"
         android:inputType="text"
         android:textSize="24sp" />
