@@ -29,7 +29,16 @@
                     android:padding="10dp"
                     android:textColor="@android:color/black"
                      />
-
+                <Spinner
+                    android:id="@+id/spinner"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="24sp"
+                    android:padding="10dp"
+                    android:textColor="@android:color/black"
+                    android:layout_toEndOf="@+id/categorias_tag"></Spinner>
                 <Spinner
                     android:id="@+id/spinner"
                     android:gravity="center"
