@@ -17,13 +17,13 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.channels.FileChannel;
 
-public final class CompuStoreHelper extends SQLiteOpenHelper{
+public final class InventoryCSHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "CompuStore.db";
     public static final int SCHEMA_VERSION = 1;
 
     private Context context;
 
-    public CompuStoreHelper(Context context) {
+    public InventoryCSHelper(Context context) {
         super(context, DATABASE_NAME, null, SCHEMA_VERSION);
 
         this.context = context;

@@ -1,9 +1,6 @@
 package com.fiuady.hadp.compustore;
 
-import android.app.ActionBar;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,7 +23,8 @@ import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity {
 
-    EditText txtAdd;
+    private EditText editText;
+    private TextView dialogTitle;
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
 
@@ -35,7 +33,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
         public CategoryHolder(View itemView) {
             super(itemView);
-            txtDescription = (TextView) itemView.findViewById(android.R.id.text1);
+            txtDescription = (TextView) itemView.findViewById(R.id.description_text);
         }
 
         public void bindCategory(final Category category) {
@@ -56,10 +54,10 @@ public class CategoriesActivity extends AppCompatActivity {
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CategoriesActivity.this);
                                 View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                TextView txtTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-                                txtAdd = (EditText) view.findViewById(R.id.dialog_text);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_title);
+                                editText = (EditText) view.findViewById(R.id.dialog_text);
 
-                                txtTitle.setText(R.string.Edita_categoria);
+                                dialogTitle.setText(R.string.Edita_categoria);
 
                                 builder.setCancelable(false);
                                 builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -68,10 +66,10 @@ public class CategoriesActivity extends AppCompatActivity {
                                     }
                                 }).setPositiveButton(R.string.texto_modificar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        if (compustore.updateCategory(txtAdd.getText().toString(), category.getId())) {
+                                        if (compustore.updateCategory(editText.getText().toString(), category.getId())) {
                                             Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                                            categoryadapter = new CategoryAdapter(compustore.getAllCategories());
-                                            recyclerview.setAdapter(categoryadapter);
+                                            adapter = new CategoryAdapter(compustore.getAllCategories());
+                                            recyclerview.setAdapter(adapter);
                                         } else {
                                             Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
 
@@ -96,8 +94,8 @@ public class CategoriesActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                                         compustore.deleteCategory(category.getId(), true);
-                                        categoryadapter = new CategoryAdapter(compustore.getAllCategories());
-                                        recyclerview.setAdapter(categoryadapter);
+                                        adapter = new CategoryAdapter(compustore.getAllCategories());
+                                        recyclerview.setAdapter(adapter);
                                     }
                                 });
 
@@ -123,7 +121,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
         @Override
         public CategoryHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, parent, false);
+            View view = getLayoutInflater().inflate(R.layout.categories_list, parent, false);
             return new CategoryHolder(view);
 
         }
@@ -135,6 +133,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
         @Override
         public int getItemCount() {
+
             return categories.size();
         }
 
@@ -143,7 +142,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private CompuStore compustore;
     private RecyclerView recyclerview;
-    private CategoryAdapter categoryadapter;
+    private CategoryAdapter adapter;
 
 
     @Override
@@ -160,9 +159,9 @@ public class CategoriesActivity extends AppCompatActivity {
 
         recyclerview= (RecyclerView) findViewById(R.id.activity_categories);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        categoryadapter = new CategoryAdapter(compustore.getAllCategories());
+        adapter = new CategoryAdapter(compustore.getAllCategories());
 
-        recyclerview.setAdapter(categoryadapter);
+        recyclerview.setAdapter(adapter);
     }
 
     @Override
@@ -175,9 +174,9 @@ public class CategoriesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-        TextView txtTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-        txtAdd = (EditText) view.findViewById(R.id.dialog_text);
-        txtTitle.setText(R.string.Agrega_categoria);
+        dialogTitle = (TextView) view.findViewById(R.id.dialog_title);
+        editText = (EditText) view.findViewById(R.id.dialog_text);
+        dialogTitle.setText(R.string.Agrega_categoria);
         builder.setCancelable(false);
 
         builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -187,10 +186,10 @@ public class CategoriesActivity extends AppCompatActivity {
         }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                if (compustore.InsertCategory(txtAdd.getText().toString())) {
+                if (compustore.InsertCategory(editText.getText().toString())) {
                     Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                    categoryadapter = new CategoryAdapter(compustore.getAllCategories());
-                    recyclerview.setAdapter(categoryadapter);
+                    adapter = new CategoryAdapter(compustore.getAllCategories());
+                    recyclerview.setAdapter(adapter);
                 } else {
                     Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
                 }

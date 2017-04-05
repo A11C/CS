@@ -6,20 +6,21 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/dialog_tittle"
+        android:id="@+id/dialog_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:padding="5dp"
-        android:textSize="24sp"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textSize="26sp"
+        tool:text="@string/Agrega_categoria" />
 
     <EditText
         android:id="@+id/dialog_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_tittle"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/dialog_title"
         android:inputType="text"
-        android:textSize="24sp" />
+        android:textAlignment="center"
+        android:textSize="20sp"
+        tool:text="...categoria..." />
 </RelativeLayout>

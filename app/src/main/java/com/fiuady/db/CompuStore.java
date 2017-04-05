@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fiuady.db.CompuStoreDbSchema.*;
+import com.fiuady.db.InventoryCSDbSchema.*;
 
 class CategoryCursor extends CursorWrapper {
     public CategoryCursor(Cursor cursor) {
@@ -18,8 +18,8 @@ class CategoryCursor extends CursorWrapper {
 
     public Category getCategory(){
         Cursor cursor = getWrappedCursor();
-        return new Category(cursor.getInt(cursor.getColumnIndex(CompuStoreDbSchema.CategoriesTable.Columns.ID)),
-                cursor.getString(cursor.getColumnIndex(CompuStoreDbSchema.CategoriesTable.Columns.DESCRIPTION)));
+        return new Category(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.CategoriesTable.Columns.ID)),
+                cursor.getString(cursor.getColumnIndex(InventoryCSDbSchema.CategoriesTable.Columns.DESCRIPTION)));
     }
 }
 
@@ -30,34 +30,31 @@ class ProductCursor extends CursorWrapper {
 
     public Product getProduct(){
         Cursor cursor = getWrappedCursor();
-        return new Product(cursor.getInt(cursor.getColumnIndex(CompuStoreDbSchema.ProductsTable.Columns.ID)),cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.CATEGORY_ID)),
-                cursor.getString(cursor.getColumnIndex(CompuStoreDbSchema.ProductsTable.Columns.DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.PRICE)),
+        return new Product(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.ID)),cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.CATEGORY_ID)),
+                cursor.getString(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.PRICE)),
                 cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.QUANTITY)));
     }
 }
 
-class ClientCursor extends CursorWrapper {
-    public ClientCursor(Cursor cursor) {
-        super(cursor);
-    }
+class AssemblyProductCursor extends CursorWrapper{
+    public AssemblyProductCursor(Cursor cursor){super(cursor);}
 
-    public Client getClient(){
+    public AssemblyProduct getAssemblyProduct(){
         Cursor cursor = getWrappedCursor();
-        return new Client(cursor.getInt(cursor.getColumnIndex(CompuStoreDbSchema.CustomersTable.Columns.ID)),cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.FIRST_NAME)),
-                cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.LAST_NAME)),cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.ADDRESS)),
-                cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.E_MAIL)),cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.PHONE1)),
-                cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.PHONE2)),cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.PHONE3)));
+        return new AssemblyProduct(cursor.getInt(cursor.getColumnIndex(AssemblyProductsTable.Columns.ID)),
+                cursor.getInt(cursor.getColumnIndex(AssemblyProductsTable.Columns.PRODUCT_ID)),
+                cursor.getInt(cursor.getColumnIndex(AssemblyProductsTable.Columns.QUANTITY)));
     }
 }
 
 public final class CompuStore {
-    private CompuStoreHelper compustorehelper;
+    private InventoryCSHelper compustorehelper;
     private SQLiteDatabase db;
 
     private List<Category> categories;
 
     public CompuStore(Context context) {
-        compustorehelper = new CompuStoreHelper(context);
+        compustorehelper = new InventoryCSHelper(context);
         db = compustorehelper.getWritableDatabase();
         compustorehelper.backupDatabasefile(context);
     }
@@ -169,15 +166,107 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Client> getAllClients() {
-        ArrayList<Client> list = new ArrayList<>();
+    public boolean updateProduct(String des, int id, int category_id, int precio, int qty) {
+        boolean b = true;
+        List<Product> a = getAllProducts();
 
-        ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers ORDER BY id", null));
-        while(cursor.moveToNext()){
-            list.add(cursor.getClient());
+        if (des.isEmpty()) {
+            b = false;
+        }
+
+        for(Product product : a) {
+            if (product.getDescription().toUpperCase().equals(des.toUpperCase())) {
+                b = false;
+            }
+        }
+
+        if (b) {
+            ContentValues values = new ContentValues();
+            values.put(ProductsTable.Columns.DESCRIPTION, des);
+            values.put(ProductsTable.Columns.CATEGORY_ID, category_id);
+            values.put(ProductsTable.Columns.PRICE, precio);
+            values.put(ProductsTable.Columns.QUANTITY, qty);
+
+            db.update(ProductsTable.NAME,
+                    values,
+                    ProductsTable.Columns.ID+ "= ?",
+                    new String[] {Integer.toString(id)});
+        }
+
+        return b;
+    }
+
+    public boolean insertProduct(String text, int id, int category_id, int precio, int qty) {
+        boolean b = true;
+        List<Product> a = getAllProducts();
+        ContentValues values = new ContentValues();
+
+        if (text.isEmpty()) {
+            b = false;
+        }
+
+        for(Product product : a) {
+            if (product.getDescription().toUpperCase().equals(text.toUpperCase())) {
+                b = false;
+            }
+        }
+
+        if (b) {
+            Product c = a.get(a.size()-1);
+
+            values.put(CategoriesTable.Columns.DESCRIPTION, text);
+            values.put(ProductsTable.Columns.CATEGORY_ID, category_id);
+            values.put(ProductsTable.Columns.PRICE, precio);
+            values.put(ProductsTable.Columns.QUANTITY, qty);
+
+            db.insert(CategoriesTable.NAME, null, values);
+        }
+
+        return b;
+    }
+
+    public boolean deleteProduct(int id, boolean dlt) {
+        boolean c = false;
+        boolean d = true;
+        boolean e = true;
+        List<Product> a = getAllProducts();
+        List<AssemblyProduct> b = getAllAssemblyProducts();
+
+        for(Product product : a) {
+            if (e) {
+                if (product.getId() == id) {  // Condicion si la categoria ya exite en categorias
+                    e = false;
+                    if (d) {
+                        for(AssemblyProduct assemblyProduct : b) {
+                            if (assemblyProduct.getProduct_id() == id) {  // Condicion si algun producto tiene asignado la categoria
+                                c = true;
+                                d = false;
+                            }
+                            else {
+                                if (dlt){  // Quiero elimanrlo?
+                                    db.delete(ProductsTable.NAME, ProductsTable.Columns.ID + "= ?",
+                                            new String[] {Integer.toString(id)});
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return  c;
+    }
+
+    public List<AssemblyProduct> getAllAssemblyProducts(){
+        ArrayList<AssemblyProduct> list = new ArrayList<>();
+
+        AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("select * from assembly_products order by id",null));
+        while (cursor.moveToNext()){
+            list.add(cursor.getAssemblyProduct());
         }
         cursor.close();
 
         return list;
     }
+
 }

@@ -1,6 +1,6 @@
 package com.fiuady.db;
 
-public final class CompuStoreDbSchema {
+public final class InventoryCSDbSchema {
 
     public static final class CategoriesTable {
         public static final String NAME = "product_categories";
