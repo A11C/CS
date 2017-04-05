@@ -1,6 +1,9 @@
 package com.fiuady.hadp.compustore;
 
+import android.app.ActionBar;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,9 +26,12 @@ import java.util.List;
 
 public class CategoriesActivity extends AppCompatActivity {
 
+    EditText txtAdd;
+
     private class CategoryHolder extends RecyclerView.ViewHolder {
 
         private TextView txtDescription;
+
 
         public CategoryHolder(View itemView) {
             super(itemView);
@@ -49,9 +55,9 @@ public class CategoriesActivity extends AppCompatActivity {
 
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CategoriesActivity.this);
-                                final View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
+                                View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
                                 TextView txtTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-                                final EditText txtAdd = (EditText) view.findViewById(R.id.dialog_text);
+                                txtAdd = (EditText) view.findViewById(R.id.dialog_text);
 
                                 txtTitle.setText(R.string.Edita_categoria);
 
@@ -65,7 +71,7 @@ public class CategoriesActivity extends AppCompatActivity {
                                         if (compustore.updateCategory(txtAdd.getText().toString(), category.getId())) {
                                             Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                                             categoryadapter = new CategoryAdapter(compustore.getAllCategories());
-                                            reciclerview.setAdapter(categoryadapter);
+                                            recyclerview.setAdapter(categoryadapter);
                                         } else {
                                             Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
 
@@ -91,7 +97,7 @@ public class CategoriesActivity extends AppCompatActivity {
                                         Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                                         compustore.deleteCategory(category.getId(), true);
                                         categoryadapter = new CategoryAdapter(compustore.getAllCategories());
-                                        reciclerview.setAdapter(categoryadapter);
+                                        recyclerview.setAdapter(categoryadapter);
                                     }
                                 });
 
@@ -136,7 +142,7 @@ public class CategoriesActivity extends AppCompatActivity {
     }
 
     private CompuStore compustore;
-    private RecyclerView reciclerview;
+    private RecyclerView recyclerview;
     private CategoryAdapter categoryadapter;
 
 
@@ -146,18 +152,17 @@ public class CategoriesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_categories);
 
         if (Build.VERSION.SDK_INT >= 21){
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimary));
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorPrimary));
-            getWindow().setTitleColor(getResources().getColor(R.color.colorPrimary));
+            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorCategories));
+            getWindow().setStatusBarColor(getResources().getColor(R.color.colorCategories));
         }
 
         compustore = new CompuStore(this);
 
-        reciclerview= (RecyclerView) findViewById(R.id.activity_categories);
-        reciclerview.setLayoutManager(new LinearLayoutManager(this));
+        recyclerview= (RecyclerView) findViewById(R.id.activity_categories);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
         categoryadapter = new CategoryAdapter(compustore.getAllCategories());
 
-        reciclerview.setAdapter(categoryadapter);
+        recyclerview.setAdapter(categoryadapter);
     }
 
     @Override
@@ -169,9 +174,9 @@ public class CategoriesActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        final View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
+        View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
         TextView txtTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-        final EditText txtAdd = (EditText) view.findViewById(R.id.dialog_text);
+        txtAdd = (EditText) view.findViewById(R.id.dialog_text);
         txtTitle.setText(R.string.Agrega_categoria);
         builder.setCancelable(false);
 
@@ -182,10 +187,10 @@ public class CategoriesActivity extends AppCompatActivity {
         }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
 
-                if (compustore.insertCategory(txtAdd.getText().toString())) {
+                if (compustore.InsertCategory(txtAdd.getText().toString())) {
                     Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                     categoryadapter = new CategoryAdapter(compustore.getAllCategories());
-                    reciclerview.setAdapter(categoryadapter);
+                    recyclerview.setAdapter(categoryadapter);
                 } else {
                     Toast.makeText(CategoriesActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
                 }

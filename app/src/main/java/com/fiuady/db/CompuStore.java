@@ -18,7 +18,8 @@ class CategoryCursor extends CursorWrapper {
 
     public Category getCategory(){
         Cursor cursor = getWrappedCursor();
-        return new Category(cursor.getInt(cursor.getColumnIndex(CompuStoreDbSchema.CategoriesTable.Columns.ID)),cursor.getString(cursor.getColumnIndex(CompuStoreDbSchema.CategoriesTable.Columns.DESCRIPTION)));
+        return new Category(cursor.getInt(cursor.getColumnIndex(CompuStoreDbSchema.CategoriesTable.Columns.ID)),
+                cursor.getString(cursor.getColumnIndex(CompuStoreDbSchema.CategoriesTable.Columns.DESCRIPTION)));
     }
 }
 
@@ -50,18 +51,16 @@ class ClientCursor extends CursorWrapper {
 }
 
 public final class CompuStore {
-    private CompuStoreHelper compuStoreHelper;
+    private CompuStoreHelper compustorehelper;
     private SQLiteDatabase db;
 
     private List<Category> categories;
 
     public CompuStore(Context context) {
-        compuStoreHelper = new CompuStoreHelper(context);
-        db = compuStoreHelper.getWritableDatabase();
-        compuStoreHelper.backupDatabasefile(context);
+        compustorehelper = new CompuStoreHelper(context);
+        db = compustorehelper.getWritableDatabase();
+        compustorehelper.backupDatabasefile(context);
     }
-
-    // ------------------------------------------------------ CATEGORIES --------------------------------------------------------
 
     public List<Category> getAllCategories() {
         ArrayList<Category> list = new ArrayList<>();
@@ -102,16 +101,16 @@ public final class CompuStore {
         return b;
     }
 
-    public boolean insertCategory(String text) {
+    public boolean InsertCategory(String text) {
         boolean b = true;
-        List<Category> a = getAllCategories();
+        List<Category> categories = getAllCategories();
         ContentValues values = new ContentValues();
 
         if (text.isEmpty()) {
             b = false;
         }
 
-        for(Category category : a) {
+        for(Category category : categories) {
             if (category.getDescription().toUpperCase().equals(text.toUpperCase())) {
 
                 b = false;
@@ -119,8 +118,6 @@ public final class CompuStore {
         }
 
         if (b) {
-            Category c = a.get(a.size()-1);
-
             values.put(CategoriesTable.Columns.DESCRIPTION, text);
 
             db.insert(CategoriesTable.NAME, null, values);
@@ -138,18 +135,17 @@ public final class CompuStore {
 
         for(Category category : a) {
             if (e) {
-                if (category.getId() == id) {  // Condicion si la categoria ya exite en categorias
+                if (category.getId() == id) {
                     e = false;
                     if (d) {
                         for(Product product : b) {
-                            if (product.getCategory_id() == id) {  // Condicion si algun producto tiene asignado la categoria
+                            if (product.getCategory_id() == id) {
                                 c = true;
                                 d = false;
                             }
                             else {
-                                if (dlt){  // Quiero elimanrlo?
-                                    db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?",
-                                            new String[] {Integer.toString(id)});
+                                if (dlt){
+                                    db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[] {Integer.toString(id)});
                                 }
                             }
                         }
@@ -160,8 +156,6 @@ public final class CompuStore {
 
         return  c;
     }
-
-    // -------------------------------------------------------- PRODUCTS --------------------------------------------------------
 
     public List<Product> getAllProducts() {
         ArrayList<Product> list = new ArrayList<>();
@@ -174,8 +168,6 @@ public final class CompuStore {
 
         return list;
     }
-
-    // -------------------------------------------------------- CLIENTS --------------------------------------------------------
 
     public List<Client> getAllClients() {
         ArrayList<Client> list = new ArrayList<>();

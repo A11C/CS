@@ -45,7 +45,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.add_menu,menu);
+        getMenuInflater().inflate(R.menu.agregar,menu);
         return true;
     }
 
