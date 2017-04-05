@@ -15,8 +15,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CategoriesActivity" />
-        <activity android:name=".ProductsActivity" />
+        <activity android:name=".CategoriesActivity" android:theme="@style/CategoryTheme" android:configChanges="screenSize|orientation" />
+        <activity android:name=".ProductsActivity" android:theme="@style/ProductTheme" android:configChanges="screenSize|orientation" />
         <activity android:name=".AssemblyActivity" />
         <activity android:name=".ClientsActivity" />
         <activity android:name=".OrdersActivity" />

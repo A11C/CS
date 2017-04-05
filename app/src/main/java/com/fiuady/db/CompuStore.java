@@ -30,8 +30,10 @@ class ProductCursor extends CursorWrapper {
 
     public Product getProduct(){
         Cursor cursor = getWrappedCursor();
-        return new Product(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.ID)),cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.CATEGORY_ID)),
-                cursor.getString(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.DESCRIPTION)), cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.PRICE)),
+        return new Product(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.ID)),
+                cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.CATEGORY_ID)),
+                cursor.getString(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.DESCRIPTION)),
+                cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.PRICE)),
                 cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.QUANTITY)));
     }
 }
@@ -48,15 +50,15 @@ class AssemblyProductCursor extends CursorWrapper{
 }
 
 public final class CompuStore {
-    private InventoryCSHelper compustorehelper;
+    private InventoryCSHelper inventoryCSHelper;
     private SQLiteDatabase db;
 
     private List<Category> categories;
 
     public CompuStore(Context context) {
-        compustorehelper = new InventoryCSHelper(context);
-        db = compustorehelper.getWritableDatabase();
-        compustorehelper.backupDatabasefile(context);
+        inventoryCSHelper = new InventoryCSHelper(context);
+        db = inventoryCSHelper.getWritableDatabase();
+        inventoryCSHelper.backupDatabasefile(context);
     }
 
     public List<Category> getAllCategories() {
@@ -123,7 +125,7 @@ public final class CompuStore {
         return b;
     }
 
-    public boolean deleteCategory(int id, boolean dlt) {
+    public boolean categorydelete(int id, boolean dlt) {
         boolean c = false;
         boolean d = true;
         boolean e = true;
@@ -260,7 +262,7 @@ public final class CompuStore {
     public List<AssemblyProduct> getAllAssemblyProducts(){
         ArrayList<AssemblyProduct> list = new ArrayList<>();
 
-        AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("select * from assembly_products order by id",null));
+        AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("SELECT * FROM assembly_products ORDER BY id",null));
         while (cursor.moveToNext()){
             list.add(cursor.getAssemblyProduct());
         }

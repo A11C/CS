@@ -1,7 +1,6 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,33 +27,32 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
 
-        private TextView txtDescription;
-
+        private TextView descriptioncat;
 
         public CategoryHolder(View itemView) {
             super(itemView);
-            txtDescription = (TextView) itemView.findViewById(R.id.description_text);
+            descriptioncat = (TextView) itemView.findViewById(R.id.category_description);
         }
 
         public void bindCategory(final Category category) {
-            txtDescription.setOnClickListener(new View.OnClickListener() {
+            descriptioncat.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final PopupMenu popup = new PopupMenu(CategoriesActivity.this, txtDescription);
-                    popup.getMenuInflater().inflate(R.menu.menu_option, popup.getMenu());
+                    final PopupMenu menu = new PopupMenu(CategoriesActivity.this, descriptioncat);
+                    menu.getMenuInflater().inflate(R.menu.menu_option, menu.getMenu());
 
-                    if (compustore.deleteCategory(category.getId(), false)) {
-                        popup.getMenu().removeItem(R.id.menu_1);
+                    if (compustore.categorydelete(category.getId(), false)) {
+                        menu.getMenu().removeItem(R.id.menu_1);
                     }
 
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
 
-                            if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
+                            if (item.getTitle().equals(menu.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CategoriesActivity.this);
                                 View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_title);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
                                 editText = (EditText) view.findViewById(R.id.dialog_text);
 
                                 dialogTitle.setText(R.string.Edita_categoria);
@@ -93,7 +91,7 @@ public class CategoriesActivity extends AppCompatActivity {
                                 }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                                        compustore.deleteCategory(category.getId(), true);
+                                        compustore.categorydelete(category.getId(), true);
                                         adapter = new CategoryAdapter(compustore.getAllCategories());
                                         recyclerview.setAdapter(adapter);
                                     }
@@ -104,10 +102,10 @@ public class CategoriesActivity extends AppCompatActivity {
                             return true;
                         }
                     });
-                    popup.show();
+                    menu.show();
                 }
             });
-            txtDescription.setText(category.getDescription());
+            descriptioncat.setText(category.getDescription());
         }
     }
 
@@ -150,10 +148,10 @@ public class CategoriesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categories);
 
-        if (Build.VERSION.SDK_INT >= 21){
-            getWindow().setNavigationBarColor(getResources().getColor(R.color.colorCategories));
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorCategories));
-        }
+        //if (Build.VERSION.SDK_INT >= 21){
+        //   getWindow().setNavigationBarColor(getResources().getColor(R.color.colorCategories));
+        //   getWindow().setStatusBarColor(getResources().getColor(R.color.colorCategories));
+        //}
 
         compustore = new CompuStore(this);
 
@@ -174,7 +172,7 @@ public class CategoriesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-        dialogTitle = (TextView) view.findViewById(R.id.dialog_title);
+        dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
         editText = (EditText) view.findViewById(R.id.dialog_text);
         dialogTitle.setText(R.string.Agrega_categoria);
         builder.setCancelable(false);
@@ -185,7 +183,6 @@ public class CategoriesActivity extends AppCompatActivity {
             }
         }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-
                 if (compustore.InsertCategory(editText.getText().toString())) {
                     Toast.makeText(CategoriesActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                     adapter = new CategoryAdapter(compustore.getAllCategories());
