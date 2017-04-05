@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
+
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -21,15 +24,17 @@
                     android:textAlignment="center"
                     android:text="@string/tag_Filtro"
                     android:id="@+id/filtro_text"
-                    android:textSize="20dp"
+                    android:textSize="30dp"
+                    android:padding="10dp"
                     android:textColor="@android:color/black"
                      />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tag_categorias"
+                    android:text="@string/tag_cat2"
                     android:id="@+id/categorias_tag"
-                    android:textSize="18dp"
+                    android:textSize="24dp"
+                    android:padding="10dp"
                     android:textColor="@android:color/black"
                     android:layout_below="@id/filtro_text"
                      />
@@ -39,36 +44,40 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
-                    android:textSize="18dp"
-                    android:hint="Elige una categoría..."
+                    android:textSize="24dp"
+                    android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:layout_below="@id/categorias_tag"
+                    android:layout_below="@id/filtro_text"
                     android:layout_toEndOf="@+id/categorias_tag"></Spinner>
 
                 <TextView
                     android:id="@+id/busqueda_tag"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:textAlignment="center"
                     android:text="@string/tag_busqueda"
-                    android:textSize="18dp"
+                    android:textSize="24dp"
+                    android:padding="10dp"
                     android:textColor="@android:color/black"
-                    android:layout_below="@+id/spinner"
+                    android:layout_below="@+id/categorias_tag"
                     android:layout_alignParentStart="true" />
 
                 <EditText
                     android:id="@+id/busqueda_text"
-                    android:layout_width="200dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/busqueda_tag"
-                    android:layout_centerHorizontal="true"
-                    android:textSize="18dp" />
+                    android:enabled="false"
+                    android:padding="10dp"
+                    android:textSize="24dp"
+                    android:focusable="false"
+                    />
 
                 <ImageButton
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:id="@+id/buscar_button"
-                    android:layout_toRightOf="@id/busqueda_text"
-                    android:layout_below="@id/spinner"
+                      android:layout_below="@id/busqueda_tag"
                     android:layout_alignParentEnd="true"
                     android:src="@android:drawable/ic_search_category_default"
                     android:background="@android:color/transparent"
@@ -80,9 +89,10 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/productos_RecyclerView"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                ></android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
     </ScrollView>
-

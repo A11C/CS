@@ -3,34 +3,33 @@
     <string name="tag_ordenes">Ordenes</string>
     <string name="tag_productos">Productos</string>
     <string name="tag_categorias">Categorías</string>
+    <string name="tag_cat2">Categorías: </string>
     <string name="tag_ensambles">Ensambles</string>
     <string name="tag_clientes">Clientes</string>
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
     <string name="tag_Filtro">Filtro</string>
     <string name="tag_busqueda">Búsqueda por texto</string>
-
-
-
+    <string name="title_AddProducto">Nuevo Producto</string>
+    <string name="tag_description">Descripción: </string>
+    <string name="tag_precio">Precio: </string>
+    <string name="tag_cantidad">Cantidad: </string>
     <string name="Agrega_categoria">Nombre de categoría nueva</string>
 
     <string name="Edita_categoria">Editar categoría</string>
 
     <string name="Elimina_categoria">Eliminar categoría</string>
 
-
     <string name="Confirma_operacion">Se ha realizado exitosamente </string>
     <string name="Error_operacion">No se ha completado la operación</string>
-
-    <string name="titulo">Titulo</string>
-    <string name="write_hint">Escribe ...</string>
-
 
     <string name="texto_guardar">Guardar</string>
     <string name="texto_cancelar">Cancelar</string>
     <string name="texto_modificar">Modificar</string>
     <string name="texto_eliminar">Eliminar</string>
     <string name="sure_text">¿Seguro ?</string>
-
-
+    <string name="new_category">Nombre de categoría nueva: </string>
+    <string name="new_client">Nombre de cliente nuevo: </string>
+    <string name="edit_category">Editar categoría</string>
+    <string name="delete_category">Eliminar categoría</string>
 </resources>
