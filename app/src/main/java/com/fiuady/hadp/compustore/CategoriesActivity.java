@@ -27,18 +27,18 @@ public class CategoriesActivity extends AppCompatActivity {
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
 
-        private TextView descriptioncat;
+        private TextView descriptioncategory;
 
         public CategoryHolder(View itemView) {
             super(itemView);
-            descriptioncat = (TextView) itemView.findViewById(R.id.category_description);
+            descriptioncategory = (TextView) itemView.findViewById(R.id.category_description);
         }
 
         public void bindCategory(final Category category) {
-            descriptioncat.setOnClickListener(new View.OnClickListener() {
+            descriptioncategory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final PopupMenu menu = new PopupMenu(CategoriesActivity.this, descriptioncat);
+                    final PopupMenu menu = new PopupMenu(CategoriesActivity.this, descriptioncategory);
                     menu.getMenuInflater().inflate(R.menu.menu_option, menu.getMenu());
 
                     if (compustore.categorydelete(category.getId(), false)) {
@@ -105,7 +105,7 @@ public class CategoriesActivity extends AppCompatActivity {
                     menu.show();
                 }
             });
-            descriptioncat.setText(category.getDescription());
+            descriptioncategory.setText(category.getDescription());
         }
     }
 

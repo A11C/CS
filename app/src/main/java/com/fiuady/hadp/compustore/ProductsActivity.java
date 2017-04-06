@@ -1,10 +1,10 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.DialogInterface;
-import android.os.Build;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fiuady.db.Category;
 import com.fiuady.db.CompuStore;
@@ -23,20 +24,24 @@ import com.fiuady.db.Product;
 import java.util.List;
 
 public class ProductsActivity extends AppCompatActivity {
+
+    private EditText editText;
+    private TextView dialogTitle;
+
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        protected TextView txtDescription;
+        private TextView descriptionproduct;
 
         public ProductHolder(View itemView) {
             super(itemView);
-            txtDescription = (TextView) itemView.findViewById(android.R.id.text1);
+            descriptionproduct = (TextView) itemView.findViewById(android.R.id.text1);
         }
 
         public void bindCategory(final Product product) {
-            txtDescription.setOnClickListener(new View.OnClickListener() {
+            descriptionproduct.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final PopupMenu popup = new PopupMenu(ProductsActivity.this, txtDescription);
+                    final PopupMenu popup = new PopupMenu(ProductsActivity.this, descriptionproduct);
                     popup.getMenuInflater().inflate(R.menu.menu_option, popup.getMenu());
 
                     if (compustore.deleteProduct(product.getId(), false)) {
@@ -49,11 +54,11 @@ public class ProductsActivity extends AppCompatActivity {
 
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ProductsActivity.this);
-                                final View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                TextView txtTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-                                final EditText txtAdd = (EditText) view.findViewById(R.id.dialog_text);
+                                View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+                                editText = (EditText) view.findViewById(R.id.dialog_text);
 
-                                txtTitle.setText(R.string.edit_category); // aqui cambiar por string de categories
+                                editText.setText(R.string.edit_category);
 
                                 builder.setCancelable(false);
                                 builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -64,7 +69,7 @@ public class ProductsActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         AlertDialog.Builder build = new AlertDialog.Builder(ProductsActivity.this);
                                         build.setCancelable(false);
-                                        build.setTitle(getString(R.string.edit_category));   // aqui cambiar por string de categories
+                                        build.setTitle(getString(R.string.edit_category));
                                         build.setMessage(R.string.sure_text);
 
                                         build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -109,7 +114,7 @@ public class ProductsActivity extends AppCompatActivity {
                     popup.show();
                 }
             });
-            txtDescription.setText(product.getDescription());
+            descriptionproduct.setText(product.getDescription());
         }
     }
 
@@ -123,7 +128,7 @@ public class ProductsActivity extends AppCompatActivity {
 
         @Override
         public ProductsActivity.ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(android.R.layout.simple_list_item_1, parent, false);
+            View view = getLayoutInflater().inflate(R.layout.categories_list, parent, false);
             return new ProductsActivity.ProductHolder(view);
         }
         @Override
@@ -136,10 +141,10 @@ public class ProductsActivity extends AppCompatActivity {
         }
     }
 
-    private ProductAdapter adapter;
-    private RecyclerView productRV;
-    private Spinner categoriesSpinner;
     private CompuStore compustore;
+    private RecyclerView recyclerview;
+    private ProductAdapter adapter;
+    private Spinner categoriesSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,16 +158,21 @@ public class ProductsActivity extends AppCompatActivity {
        // }
 
         categoriesSpinner = (Spinner)findViewById(R.id.spinner);
-        compustore = new CompuStore(getApplicationContext());
+        compustore = new CompuStore(this);
 
-        ArrayAdapter<String> adapter= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item);
-        categoriesSpinner.setAdapter(adapter);
+        recyclerview= (RecyclerView) findViewById(R.id.productos_rv);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter.add("Todos");
+        ArrayAdapter<String> arrayAdapter= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item);
+        categoriesSpinner.setAdapter(arrayAdapter);
+
+        arrayAdapter.add("Todos");
         List<Category> categories = compustore.getAllCategories();
         for(Category category :categories){
-            adapter.add(category.getDescription());
+            arrayAdapter.add(category.getDescription());
         }
+
+        recyclerview.setAdapter(adapter);
 
 
     }
@@ -175,6 +185,32 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.add_product, null);
+        dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+        editText = (EditText) view.findViewById(R.id.dialog_text);
+        dialogTitle.setText(R.string.Agrega_categoria);
+        builder.setCancelable(false);
+
+        builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                if (compustore.InsertCategory(editText.getText().toString())) {
+                    Toast.makeText(ProductsActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                    adapter = new ProductAdapter(compustore.getAllProducts());
+                    recyclerview.setAdapter(adapter);
+                } else {
+                    Toast.makeText(ProductsActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        builder.setView(view);
+        AlertDialog dialog = builder.create();
+        dialog.show();
         return super.onOptionsItemSelected(item);
     }
 }
