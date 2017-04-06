@@ -55,7 +55,7 @@
                 android:background="@android:color/background_light"
                 android:contentDescription="@string/tag_resumenventas"
                 android:scaleType="fitCenter"
-                android:src="@drawable/resumen"
+                android:src="@drawable/resumen2"
                 tools:ignore="NestedWeights" />
 
         </LinearLayout>

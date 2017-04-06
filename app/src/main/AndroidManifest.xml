@@ -42,7 +42,6 @@
             android:theme="@style/OrdersTheme" />
         <activity
             android:name=".ReportsActivity"
-            android:configChanges="screenSize|orientation"
             android:label="@string/tag_reportes"
             android:theme="@style/ReportsTheme"/>
     </application>
