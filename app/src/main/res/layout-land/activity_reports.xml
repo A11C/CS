@@ -4,78 +4,111 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context="com.fiuady.hadp.compustore.OrdersActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="3"
-        tools:ignore="UselessParent">
+        android:weightSum="2"
+        android:background="#ffffff">
 
-        <ImageButton
-            android:id="@+id/Button_Faltantes"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:weightSum="3"
             android:layout_weight="1"
-            android:background="@android:color/background_light"
-            android:contentDescription="@string/tag_faltantes"
-            android:scaleType="fitCenter"
-            android:src="@drawable/productosfaltantes"
-            tools:ignore="NestedWeights" />
+            tools:ignore="UselessParent">
+
+            <ImageButton
+                android:id="@+id/Button_Faltantes"
+                android:layout_width="100dp"
+                android:layout_height="280dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@android:color/background_light"
+                android:contentDescription="@string/tag_faltantes"
+                android:scaleType="fitCenter"
+                android:src="@drawable/productosfaltantes"
+                tools:ignore="NestedWeights" />
+
+            <ImageButton
+                android:id="@+id/Button_Confirmacion"
+                android:layout_width="100dp"
+                android:layout_height="280dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@android:color/background_light"
+                android:contentDescription="@string/tag_orderconfirmation"
+                android:scaleType="fitCenter"
+                android:src="@drawable/checklist"
+                tools:ignore="NestedWeights" />
 
 
-        <TextView
+            <ImageButton
+                android:id="@+id/Button_Ventass"
+                android:layout_width="100dp"
+                android:layout_height="280dp"
+                android:layout_weight="1"
+                android:layout_gravity="center"
+                android:background="@android:color/background_light"
+                android:contentDescription="@string/tag_resumenventas"
+                android:scaleType="fitCenter"
+                android:src="@drawable/resumen"
+                tools:ignore="NestedWeights" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#FFE49DE4"
-            android:text="@string/tag_faltantes"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textStyle="bold" />
-
-        <ImageButton
-            android:id="@+id/Button_Confirmacion"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/background_light"
-            android:contentDescription="@string/tag_orderconfirmation"
-            android:scaleType="fitCenter"
-            android:src="@drawable/checklist"
-            tools:ignore="NestedWeights" />
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="600dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#FFE49DE4"
+                android:text="@string/tag_faltantes"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"/>
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFE49DE4"
-            android:text="@string/tag_orderconfirmation"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="600dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#FFE49DE4"
+                android:text="@string/tag_orderconfirmation"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#ffffff"/>
+
+            <TextView
+                android:layout_width="600dp"
+                android:layout_height="50dp"
+                android:layout_weight="1"
+                android:background="#FFE49DE4"
+                android:text="@string/tag_resumenventas"
+                android:textAlignment="center"
+                android:textColor="@android:color/background_light"
+                android:textStyle="bold" />
 
 
-        <ImageButton
-            android:id="@+id/Button_Ventass"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/background_light"
-            android:contentDescription="@string/tag_resumenventas"
-            android:scaleType="fitCenter"
-            android:src="@drawable/resumen"
-            tools:ignore="NestedWeights" />
-
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#FFE49DE4"
-            android:text="@string/tag_resumenventas"
-            android:textAlignment="center"
-            android:textColor="@android:color/background_light"
-            android:textStyle="bold" />
-
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>
+
