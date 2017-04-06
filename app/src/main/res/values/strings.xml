@@ -17,7 +17,9 @@
     <string name="tag_faltantes">Productos Faltantes</string>
     <string name="tag_orderconfirmation">Confirmación de órdenes</string>
     <string name="tag_resumenventas">Resumen de ventas</string>
-
+    <string name="tag_id">ID: </string>
+    <string name="tag_caregoriaID">Categoría: </string>
+    <string name="tag_qty">Cantidad: </string>
 
     <string name="Edita_categoria">Editar categoría</string>
 
