@@ -44,6 +44,7 @@
             android:name=".ReportsActivity"
             android:label="@string/tag_reportes"
             android:theme="@style/ReportsTheme"/>
+
     </application>
 
 </manifest>

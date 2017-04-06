@@ -6,6 +6,7 @@ INSERT INTO product_categories (id, description) VALUES (4, 'Tarjeta madre');
 INSERT INTO product_categories (id, description) VALUES (5, 'Tarjeta de video');
 INSERT INTO product_categories (id, description) VALUES (6, 'Tarjeta de sonido');
 
+
 INSERT INTO products (id, category_id, description, price, qty) VALUES (0, 0, 'Western Digital Purple WD10PURX, 3.5", 1TB, SATA3, 6GB/s, 64MB, IntelliPower', 149900, 2);
 INSERT INTO products (id, category_id, description, price, qty) VALUES (1, 0, 'Western Digital 3.5" SATA de 320GB a 7200 RPM / New-Pulls / WD3200AAJS / WD3200AAKS', 43500, 4);
 INSERT INTO products (id, category_id, description, price, qty) VALUES (2, 0, 'Toshiba 3.5" 3TB, SATA 6.0Gb/s 64MB Cache, 7200 RPM', 209900, 0);

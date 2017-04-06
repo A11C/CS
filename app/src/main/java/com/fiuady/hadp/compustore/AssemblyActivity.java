@@ -15,5 +15,7 @@ public class AssemblyActivity extends AppCompatActivity {
         //    getWindow().setNavigationBarColor(getResources().getColor(R.color.colorAssemblies));
         //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorAssemblies));
         //}
+
     }
 }
+

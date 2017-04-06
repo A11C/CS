@@ -17,4 +17,5 @@
         android:textStyle="bold"
         tools:text="...categoria..."/>
 
+
 </LinearLayout>
