@@ -107,6 +107,7 @@
         android:layout_toEndOf="@id/tel_tag"
         android:inputType="number"
         android:hint="(Lada)"
+        android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
 
     <EditText
@@ -117,6 +118,7 @@
         android:layout_toEndOf="@id/ladat1_text"
         android:inputType="phone"
         android:hint="(phone)"
+        android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
     <EditText
         android:id="@+id/ladat2_text"
@@ -125,6 +127,7 @@
         android:layout_below="@+id/tel_tag"
         android:layout_toEndOf="@id/tel2_tag"
         android:inputType="number"
+        android:textAlignment="center"
         android:hint="(Lada)"
         tool:ignore="HardcodedText,LabelFor" />
 
@@ -136,6 +139,7 @@
         android:layout_toEndOf="@id/ladat2_text"
         android:inputType="phone"
         android:hint="(phone)"
+        android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
     <EditText
         android:id="@+id/ladat3_text"
@@ -145,6 +149,7 @@
         android:layout_toEndOf="@id/tel3_tag"
         android:inputType="number"
         android:hint="(Lada)"
+        android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
 
     <EditText
@@ -155,6 +160,7 @@
         android:layout_toEndOf="@id/ladat3_text"
         android:inputType="phone"
         android:hint="(phone)"
+        android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
     <EditText
         android:id="@+id/email_text"
