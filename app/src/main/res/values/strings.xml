@@ -20,9 +20,21 @@
     <string name="tag_id">ID: </string>
     <string name="tag_caregoriaID">Categoría: </string>
     <string name="tag_qty">Cantidad: </string>
+    <string name="tag_nombre">Nombre </string>
+    <string name="tag_apellido">Apellido </string>
+    <string name="tag_direccion">Dirección </string>
+    <string name="tag_telefono">Teléfono </string>
+    <string name="tag_email">E-mail </string>
+
+    <string name="stock">Agregar a stock </string>
+
+    <string name="new_client">Nombre de cliente nuevo: </string>
 
     <string name="Edita_categoria">Editar categoría</string>
     <string name="Elimina_categoria">Eliminar categoría</string>
+    <string name="edit_category">Editar categoría</string>
+    <string name="delete_category">Eliminar categoría</string>
+    <string name="new_category">Nombre de categoría nueva: </string>
 
     <string name="Edita_ensamble">Editar ensamble</string>
     <string name="Elimina_ensamble">Eliminar ensamble</string>
@@ -36,9 +48,8 @@
     <string name="texto_modificar">Modificar</string>
     <string name="texto_eliminar">Eliminar</string>
     <string name="sure_text">¿Seguro ?</string>
-    <string name="new_category">Nombre de categoría nueva: </string>
-    <string name="new_client">Nombre de cliente nuevo: </string>
-    <string name="edit_category">Editar categoría</string>
-    <string name="delete_category">Eliminar categoría</string>
+
+
+
 
 </resources>
