@@ -50,10 +50,6 @@ public class ProductsActivity extends AppCompatActivity {
                     final PopupMenu popup = new PopupMenu(ProductsActivity.this, itemView);
                     popup.getMenuInflater().inflate(R.menu.menu_option_products, popup.getMenu());
 
-                    //if (compustore.deleteProduct(product.getId(), false)) {
-                    //    popup.getMenu().removeItem(R.id.menu_1);
-                    //}
-
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -158,7 +154,6 @@ public class ProductsActivity extends AppCompatActivity {
     private ImageButton search;
 
     private EditText desctext, pricetext, qtytext, searchtext;
-    private TextView cattag, desctag, pricetag, qtytag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,11 +235,6 @@ public class ProductsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.add_product, null);
 
-        dialogTitle = (TextView) view.findViewById(R.id.title_product);
-        cattag = (TextView) view.findViewById(R.id.category_tag);
-        desctag = (TextView) view.findViewById(R.id.description_tag);
-        pricetag = (TextView) view.findViewById(R.id.precio_tag);
-        qtytag = (TextView) view.findViewById(R.id.cantidad_tag);
         desctext = (EditText) view.findViewById(R.id.description_text);
         pricetext = (EditText) view.findViewById(R.id.precio_text);
         qtytext = (EditText) view.findViewById(R.id.cantidad_text);

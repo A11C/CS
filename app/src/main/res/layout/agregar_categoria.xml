@@ -12,7 +12,7 @@
         android:layout_centerHorizontal="true"
         android:textAlignment="center"
         android:textSize="26sp"
-        tool:text="@string/Agrega_categoria" />
+        android:text="@string/Agrega_categoria" />
 
     <EditText
         android:id="@+id/dialog_text"

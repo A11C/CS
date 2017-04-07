@@ -40,10 +40,6 @@ public class AssemblyActivity extends AppCompatActivity {
                     final PopupMenu menu = new PopupMenu(AssemblyActivity.this, descriptionassembly);
                     menu.getMenuInflater().inflate(R.menu.menu_option_catassem, menu.getMenu());
 
-                    //if (compustore.deleteAssembly(assembly.getId(), false)) {
-                    //    menu.getMenu().removeItem(R.id.menu_2);
-                    //}
-
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -170,7 +166,7 @@ public class AssemblyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.agregar_ensamble, null);
-        dialogTitle = (TextView) view.findViewById(R.id.assemly_tittle);
+        dialogTitle = (TextView) view.findViewById(R.id.assembly_tittle);
         editText = (EditText) view.findViewById(R.id.assembly_text);
         dialogTitle.setText(R.string.Agrega_ensamble);
         builder.setCancelable(false);

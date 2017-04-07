@@ -54,7 +54,6 @@ public class CategoriesActivity extends AppCompatActivity {
                                 View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
                                 dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
                                 editText = (EditText) view.findViewById(R.id.dialog_text);
-
                                 dialogTitle.setText(R.string.Edita_categoria);
 
                                 builder.setCancelable(false);

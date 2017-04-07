@@ -54,10 +54,6 @@ public class ClientsActivity extends AppCompatActivity {
                     final PopupMenu popup = new PopupMenu(ClientsActivity.this, itemView);
                     popup.getMenuInflater().inflate(R.menu.menu_option_products, popup.getMenu());
 
-                    //if (compustore.deleteProduct(client.getId(), false)) {
-                    //    popup.getMenu().removeItem(R.id.menu_1);
-                    //}
-
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
@@ -247,23 +243,11 @@ public class ClientsActivity extends AppCompatActivity {
         dirtxt = (EditText) view.findViewById(R.id.direc_text);
         lad1txt = (EditText) view.findViewById(R.id.ladat1_text);
         lad2txt = (EditText) view.findViewById(R.id.ladat2_text);
-        lad3txt = (EditText) view.findViewById(R.id.ladat2_text);
+        lad3txt = (EditText) view.findViewById(R.id.ladat3_text);
         p1txt = (EditText) view.findViewById(R.id.phonet1_text);
         p2txt = (EditText) view.findViewById(R.id.phonet2_text);
         p3txt = (EditText) view.findViewById(R.id.phonet3_text);
         emailtxt = (EditText) view. findViewById(R.id.email_text);
-
-       //dialogTitle = (TextView) view.findViewById(R.id.title_product);
-       //cattag = (TextView) view.findViewById(R.id.category_tag);
-       //desctag = (TextView) view.findViewById(R.id.description_tag);
-       //pricetag = (TextView) view.findViewById(R.id.precio_tag);
-       //qtytag = (TextView) view.findViewById(R.id.cantidad_tag);
-       //desctext = (EditText) view.findViewById(R.id.description_text);
-       //pricetext = (EditText) view.findViewById(R.id.precio_text);
-       //qtytext = (EditText) view.findViewById(R.id.cantidad_text);
-       //spinneradd = (Spinner) view.findViewById(R.id.spinner);
-       //ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-       //spinneradd.setAdapter(arrayAdapter);
 
        //List<Client> clients = compustore.getAllCategories();
         //for (Client client : clients) {

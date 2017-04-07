@@ -62,10 +62,12 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
 
-        <DatePicker
-            android:id="@+id/datePickerfi"
-            android:layout_width="wrap_content"
-            android:layout_height="147dp" />
+        <TextView
+            android:id="@+id/dateini"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            tools:text="...fecha..."/>
 
     </LinearLayout>
     <LinearLayout
@@ -83,15 +85,17 @@
             android:textSize="18sp"
             android:textStyle="bold"/>
 
-        <DatePicker
-            android:id="@+id/datePickerff"
-            android:layout_width="244dp"
-            android:layout_height="111dp"
-            android:layout_weight="1.84" />
+        <TextView
+            android:id="@+id/datefin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            tools:text="...fecha..."/>
+
 
     </LinearLayout>
 <LinearLayout
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_below="@id/LL_ff"
         >
@@ -100,7 +104,7 @@
     <android.support.v7.widget.RecyclerView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/activity_orders"
+        android:id="@+id/orders_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingBottom="@dimen/activity_vertical_margin"
