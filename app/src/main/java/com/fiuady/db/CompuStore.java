@@ -168,7 +168,31 @@ public final class CompuStore {
     public List<Product> getAllProducts() {
         ArrayList<Product> list = new ArrayList<>();
 
-        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products ORDER BY id", null));
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products ORDER BY description", null));
+        while(cursor.moveToNext()) {
+            list.add(cursor.getProduct());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public List<Product> getOneProductCategory(int id){
+        ArrayList<Product> list = new ArrayList<>();
+
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE category_id = " + id + " ORDER BY description", null));
+        while(cursor.moveToNext()) {
+            list.add(cursor.getProduct());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public List<Product> getProductName(String name){
+        ArrayList<Product> list = new ArrayList<>();
+
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE description LIKE '%" + name + "%' ORDER BY description", null));
         while(cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }

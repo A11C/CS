@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="#9fd6c3"
+            tools:context="com.fiuady.android.compustore.ProductsActivity">
+
+
+            <TextView
+                android:id="@+id/categorias_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="30dp"
+                android:text="@string/tag_cat2"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/categorias_tag"
+                android:gravity="center"
+                android:paddingTop="30dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/busqueda_tag"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/categorias_tag"
+                android:paddingTop="100dp"
+                android:text="@string/tag_busqueda"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
+                android:textSize="24sp" />
+
+            <EditText
+                android:id="@+id/busqueda_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/busqueda_tag"
+                android:paddingTop="20dp"
+                android:textSize="24sp"
+                tools:ignore="LabelFor,TextFields" />
+
+            <ImageButton
+                android:id="@+id/buscar_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_below="@+id/busqueda_tag"
+                android:layout_alignParentEnd="true"
+                android:background="#b1e7d4"
+                android:foregroundGravity="center"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_search_category_default"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/productos_rv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+</FrameLayout>
