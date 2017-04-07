@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <CheckBox
+        android:id="@+id/pediente_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:text="@string/order_pendiente"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <CheckBox
+        android:id="@+id/cancelado_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/pediente_checkbox"
+        android:text="@string/order_cancelado"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+    <CheckBox
+        android:id="@+id/confirmado_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/cancelado_checkbox"
+        android:text="@string/order_confirmado"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+    <CheckBox
+        android:id="@+id/transito_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/confirmado_checkbox"
+        android:text="@string/order_entransito"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+    <CheckBox
+        android:id="@+id/final_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/transito_checkbox"
+        android:text="@string/order_finalizado"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    />
+
+
+</LinearLayout>

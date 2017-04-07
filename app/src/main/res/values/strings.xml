@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CompuStore V1.0</string>
-    <string name="tag_ordenes">Ordenes</string>
+    <string name="tag_ordenes">Órdenes</string>
     <string name="tag_productos">Productos</string>
     <string name="tag_categorias">Categorías</string>
     <string name="tag_cat2">Categorías: </string>
@@ -25,6 +25,19 @@
     <string name="tag_telefono2">Teléfono 2: </string>
     <string name="tag_telefono3">Teléfono 3: </string>
     <string name="tag_email">E-mail: </string>
+    <string name="tag_fechafinal">Fecha  final: </string>
+    <string name="tag_fechainicial">Fecha inicial:</string>
+    <string name="tag_estado">Estado: </string>
+    <string name="tag_clientID">ID Cliente: </string>
+    <string name="tag_fecha">Fecha: </string>
+    <string name="tag_cambios">Registro de cambios: </string>
+
+    <string name="order_pendiente">Pendiente: </string>
+    <string name="order_cancelado">Cancelado: </string>
+    <string name="order_confirmado">Cofirmado: </string>
+    <string name="order_entransito">En tránsito: </string>
+    <string name="order_finalizado">Finalizado:</string>
+
 
     <string name="title_AddProducto">Nuevo Producto</string>
     <string name="title_NewClient">Cliente nuevo</string>
@@ -46,6 +59,8 @@
 
     <string name="Confirma_operacion">Se ha realizado exitosamente </string>
     <string name="Error_operacion">No se ha completado la operación</string>
+
+
 
     <string name="texto_guardar">Guardar</string>
     <string name="texto_cancelar">Cancelar</string>
