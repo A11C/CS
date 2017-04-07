@@ -22,8 +22,11 @@
     <string name="tag_qty">Cantidad: </string>
 
     <string name="Edita_categoria">Editar categoría</string>
-
     <string name="Elimina_categoria">Eliminar categoría</string>
+
+    <string name="Edita_ensamble">Editar ensamble</string>
+    <string name="Elimina_ensamble">Eliminar ensamble</string>
+    <string name="Agrega_ensamble">Nombre de ensamble nuevo</string>
 
     <string name="Confirma_operacion">Se ha realizado exitosamente </string>
     <string name="Error_operacion">No se ha completado la operación</string>
