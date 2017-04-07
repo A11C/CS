@@ -38,7 +38,7 @@ public class AssemblyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final PopupMenu menu = new PopupMenu(AssemblyActivity.this, descriptionassembly);
-                    menu.getMenuInflater().inflate(R.menu.menu_option, menu.getMenu());
+                    menu.getMenuInflater().inflate(R.menu.menu_option_categories, menu.getMenu());
 
                   //  if (compustore.assemblydelete(assembly.getId(), false)) {
                       //  menu.getMenu().removeItem(R.id.menu_1);
@@ -155,7 +155,7 @@ public class AssemblyActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.activity_assemblies);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AssemblyAdapter();
+        //adapter = new AssemblyAdapter();
 
         recyclerview.setAdapter(adapter);
     }

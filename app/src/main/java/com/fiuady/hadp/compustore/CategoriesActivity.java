@@ -39,7 +39,7 @@ public class CategoriesActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final PopupMenu menu = new PopupMenu(CategoriesActivity.this, descriptioncategory);
-                    menu.getMenuInflater().inflate(R.menu.menu_option, menu.getMenu());
+                    menu.getMenuInflater().inflate(R.menu.menu_option_categories, menu.getMenu());
 
                     if (compustore.categorydelete(category.getId(), false)) {
                         menu.getMenu().removeItem(R.id.menu_1);
