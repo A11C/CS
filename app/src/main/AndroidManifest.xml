@@ -33,7 +33,6 @@
             android:theme="@style/AssembliesTheme" />
         <activity
             android:name=".ClientsActivity"
-            android:configChanges="screenSize|orientation"
             android:label="@string/tag_clientes"
             android:theme="@style/ClientsTheme" />
         <activity
