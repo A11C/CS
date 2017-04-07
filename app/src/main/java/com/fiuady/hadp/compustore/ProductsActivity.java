@@ -27,21 +27,32 @@ public class ProductsActivity extends AppCompatActivity {
 
     private EditText editText;
     private TextView dialogTitle;
+    private Spinner spinneradd;
+    Category category;
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView descriptionproduct;
+        private TextView idtag, idtext, catidtag, catidtext, desctag2, desctext2, pricetag2, pricetext2, qtytext2, qtytag2;
 
         public ProductHolder(View itemView) {
             super(itemView);
-            descriptionproduct = (TextView) itemView.findViewById(android.R.id.text1);
+            idtag = (TextView) itemView.findViewById(R.id.id_tag);
+            idtext = (TextView) itemView.findViewById(R.id.id_text);
+            catidtag = (TextView) itemView.findViewById(R.id.categoryID_tag);
+            catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
+            desctag2 = (TextView) itemView.findViewById(R.id.description_tag);
+            desctext2 = (TextView) itemView.findViewById(R.id.description_text);
+            pricetag2 = (TextView) itemView.findViewById(R.id.price_tag);
+            pricetext2 = (TextView) itemView.findViewById(R.id.price_text);
+            qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
+            qtytag2 = (TextView) itemView.findViewById(R.id.qty_tag);
         }
 
-        public void bindCategory(final Product product) {
-            descriptionproduct.setOnClickListener(new View.OnClickListener() {
+        public void bindProduct(final Product product) {
+            itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final PopupMenu popup = new PopupMenu(ProductsActivity.this, descriptionproduct);
+                    final PopupMenu popup = new PopupMenu(ProductsActivity.this, itemView);
                     popup.getMenuInflater().inflate(R.menu.menu_option, popup.getMenu());
 
                     if (compustore.deleteProduct(product.getId(), false)) {
@@ -88,9 +99,7 @@ public class ProductsActivity extends AppCompatActivity {
                                 builder.setView(view);
                                 AlertDialog dialog = builder.create();
                                 dialog.show();
-                            }
-
-                            else{
+                            } else {
                                 AlertDialog.Builder build = new AlertDialog.Builder(ProductsActivity.this);
                                 build.setCancelable(false);
                                 build.setTitle(getString(R.string.delete_category));
@@ -114,11 +123,16 @@ public class ProductsActivity extends AppCompatActivity {
                     popup.show();
                 }
             });
-            descriptionproduct.setText(product.getDescription());
+            idtext.setText(Integer.toString(product.getId()));
+//            category = compustore.getOneCategory(product.getCategory_id());
+            catidtext.setText(Integer.toString(product.getCategory_id()));
+            pricetext2.setText(Integer.toString(product.getPrice()));
+            qtytext2.setText(Integer.toString(product.getQuantity()));
+            desctext2.setText(product.getDescription());
         }
     }
 
-    private class ProductAdapter extends RecyclerView.Adapter<ProductsActivity.ProductHolder> {
+    private class ProductAdapter extends RecyclerView.Adapter<ProductHolder> {
 
         private List<Product> products;
 
@@ -127,14 +141,16 @@ public class ProductsActivity extends AppCompatActivity {
         }
 
         @Override
-        public ProductsActivity.ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.categories_list, parent, false);
-            return new ProductsActivity.ProductHolder(view);
+        public ProductHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View view = getLayoutInflater().inflate(R.layout.list_products, parent, false);
+            return new ProductHolder(view);
         }
+
         @Override
-        public void onBindViewHolder(ProductsActivity.ProductHolder holder, int position) {
-            holder.bindCategory(products.get(position));
+        public void onBindViewHolder(ProductHolder holder, int position) {
+            holder.bindProduct(products.get(position));
         }
+
         @Override
         public int getItemCount() {
             return products.size();
@@ -144,7 +160,10 @@ public class ProductsActivity extends AppCompatActivity {
     private CompuStore compustore;
     private RecyclerView recyclerview;
     private ProductAdapter adapter;
-    private Spinner categoriesSpinner;
+    private Spinner spinner;
+
+    private EditText desctext, pricetext, qtytext;
+    private TextView cattag, desctag, pricetag, qtytag;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,25 +171,27 @@ public class ProductsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_products);
 
 
-    //    if(Build.VERSION.SDK_INT >= 21){
-      //      getWindow().setNavigationBarColor(getResources().getColor(R.color.colorProducts));
+        //    if(Build.VERSION.SDK_INT >= 21){
+        //      getWindow().setNavigationBarColor(getResources().getColor(R.color.colorProducts));
         //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorProducts));
-       // }
+        // }
 
-        categoriesSpinner = (Spinner)findViewById(R.id.spinner);
+        spinner = (Spinner) findViewById(R.id.spinner);
         compustore = new CompuStore(this);
 
-        recyclerview= (RecyclerView) findViewById(R.id.productos_rv);
+        recyclerview = (RecyclerView) findViewById(R.id.productos_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
-        ArrayAdapter<String> arrayAdapter= new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item);
-        categoriesSpinner.setAdapter(arrayAdapter);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        spinner.setAdapter(arrayAdapter);
 
         arrayAdapter.add("Todos");
         List<Category> categories = compustore.getAllCategories();
-        for(Category category :categories){
+        for (Category category : categories) {
             arrayAdapter.add(category.getDescription());
         }
+
+        adapter = new ProductAdapter(compustore.getAllProducts());
 
         recyclerview.setAdapter(adapter);
 
@@ -179,7 +200,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.agregar,menu);
+        getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
     }
 
@@ -187,9 +208,24 @@ public class ProductsActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.add_product, null);
-        dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-        editText = (EditText) view.findViewById(R.id.dialog_text);
-        dialogTitle.setText(R.string.Agrega_categoria);
+
+        dialogTitle = (TextView) view.findViewById(R.id.title_product);
+        cattag = (TextView) view.findViewById(R.id.category_tag);
+        desctag = (TextView) view.findViewById(R.id.description_tag);
+        pricetag = (TextView) view.findViewById(R.id.precio_tag);
+        qtytag = (TextView) view.findViewById(R.id.cantidad_tag);
+        desctext = (EditText) view.findViewById(R.id.description_text);
+        pricetext = (EditText) view.findViewById(R.id.precio_text);
+        qtytext = (EditText) view.findViewById(R.id.cantidad_text);
+        spinneradd = (Spinner) view.findViewById(R.id.spinner);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        spinneradd.setAdapter(arrayAdapter);
+
+        List<Category> categories = compustore.getAllCategories();
+        for (Category category : categories) {
+            arrayAdapter.add(category.getDescription());
+        }
+
         builder.setCancelable(false);
 
         builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -198,13 +234,13 @@ public class ProductsActivity extends AppCompatActivity {
             }
         }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (compustore.InsertCategory(editText.getText().toString())) {
-                    Toast.makeText(ProductsActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                    adapter = new ProductAdapter(compustore.getAllProducts());
-                    recyclerview.setAdapter(adapter);
-                } else {
-                    Toast.makeText(ProductsActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
-                }
+                //   if (compustore.insertProduct(desctext.getText().toString(),)) {
+                //       Toast.makeText(ProductsActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                //       adapter = new ProductAdapter(compustore.getAllProducts());
+                //       recyclerview.setAdapter(adapter);
+                //   } else {
+                //      Toast.makeText(ProductsActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+                //   }
             }
         });
 

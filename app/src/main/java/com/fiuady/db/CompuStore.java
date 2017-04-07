@@ -73,6 +73,15 @@ public final class CompuStore {
         return list;
     }
 
+    public Category getOneCategory(int id){
+        Category category;
+        CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories WHERE id =" + id, null));
+        category = cursor.getCategory();
+        cursor.close();
+
+        return category;
+    }
+
     public boolean updateCategory(String des, int id) {
         boolean b = true;
         List<Category> a = getAllCategories();
@@ -198,7 +207,7 @@ public final class CompuStore {
         return b;
     }
 
-    public boolean insertProduct(String text, int id, int category_id, int precio, int qty) {
+    public boolean insertProduct(String text, int category_id, int precio, int qty) {
         boolean b = true;
         List<Product> a = getAllProducts();
         ContentValues values = new ContentValues();
