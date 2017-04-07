@@ -29,24 +29,18 @@ public class ProductsActivity extends AppCompatActivity {
     private EditText editText;
     private TextView dialogTitle;
     private Spinner spinneradd;
-    Category category;
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView idtag, idtext, catidtag, catidtext, desctag2, desctext2, pricetag2, pricetext2, qtytext2, qtytag2;
+        private TextView idtext, catidtext, desctext2, pricetext2, qtytext2;
 
         public ProductHolder(View itemView) {
             super(itemView);
-            idtag = (TextView) itemView.findViewById(R.id.id_tag);
             idtext = (TextView) itemView.findViewById(R.id.id_text);
-            catidtag = (TextView) itemView.findViewById(R.id.categoryID_tag);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
-            desctag2 = (TextView) itemView.findViewById(R.id.description_tag);
             desctext2 = (TextView) itemView.findViewById(R.id.description_text);
-            pricetag2 = (TextView) itemView.findViewById(R.id.price_tag);
             pricetext2 = (TextView) itemView.findViewById(R.id.price_text);
             qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
-            qtytag2 = (TextView) itemView.findViewById(R.id.qty_tag);
         }
 
         public void bindProduct(final Product product) {
@@ -56,9 +50,9 @@ public class ProductsActivity extends AppCompatActivity {
                     final PopupMenu popup = new PopupMenu(ProductsActivity.this, itemView);
                     popup.getMenuInflater().inflate(R.menu.menu_option_products, popup.getMenu());
 
-                    if (compustore.deleteProduct(product.getId(), false)) {
-                        popup.getMenu().removeItem(R.id.menu_1);
-                    }
+                    //if (compustore.deleteProduct(product.getId(), false)) {
+                    //    popup.getMenu().removeItem(R.id.menu_1);
+                    //}
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
