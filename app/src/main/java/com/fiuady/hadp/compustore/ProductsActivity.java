@@ -201,7 +201,7 @@ public class ProductsActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (spinner.getSelectedItem().toString() != "Todas"){
-                    adapter = new ProductAdapter(compustore.getOneProductCategory(position-1));
+                    adapter = new ProductAdapter(compustore.getOneCategoryProduct(position-1));
                     recyclerview.setAdapter(adapter);
                 }else{
                     adapter = new ProductAdapter(compustore.getAllProducts());

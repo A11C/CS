@@ -49,6 +49,18 @@ class AssemblyProductCursor extends CursorWrapper{
     }
 }
 
+class AssemblyCursor extends CursorWrapper
+{
+    public AssemblyCursor(Cursor cursor) {super(cursor);}
+
+    public Assembly getAssembly()
+    {
+        Cursor cursor = getWrappedCursor();
+        return new Assembly(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.AssembliesTable.Columns.ID)),
+                cursor.getString(cursor.getColumnIndex(AssembliesTable.Columns.DESCRIPTION)));
+    }
+}
+
 public final class CompuStore {
     private InventoryCSHelper inventoryCSHelper;
     private SQLiteDatabase db;
@@ -177,12 +189,12 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Product> getOneProductCategory(int id){
+   public List<Product> getOneCategoryProduct(int id){
         ArrayList<Product> list = new ArrayList<>();
 
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE category_id = " + id + " ORDER BY description", null));
         while(cursor.moveToNext()) {
-            list.add(cursor.getProduct());
+           list.add(cursor.getProduct());
         }
         cursor.close();
 
@@ -265,7 +277,7 @@ public final class CompuStore {
         boolean d = true;
         boolean e = true;
         List<Product> a = getAllProducts();
-        List<AssemblyProduct> b = getAllAssemblyProducts();
+        List<AssemblyProduct> b = getAllAssemblyProductsid();
 
         for(Product product : a) {
             if (e) {
@@ -291,8 +303,19 @@ public final class CompuStore {
 
         return  c;
     }
+    public List<Assembly> getAllAssemblies(){
+        ArrayList<Assembly> list = new ArrayList<>();
 
-    public List<AssemblyProduct> getAllAssemblyProducts(){
+        AssemblyCursor cursor = new AssemblyCursor(db.rawQuery("SELECT * FROM assemblies ORDER BY description",null));
+        while (cursor.moveToNext()) {
+            list.add(cursor.getAssembly());
+        }
+        cursor.close();
+        return list;
+    }
+
+
+    public List<AssemblyProduct> getAllAssemblyProductsid(){
         ArrayList<AssemblyProduct> list = new ArrayList<>();
 
         AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("SELECT * FROM assembly_products ORDER BY id",null));

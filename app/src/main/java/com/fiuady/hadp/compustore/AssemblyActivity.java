@@ -38,11 +38,11 @@ public class AssemblyActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final PopupMenu menu = new PopupMenu(AssemblyActivity.this, descriptionassembly);
-                    menu.getMenuInflater().inflate(R.menu.menu_option_categories, menu.getMenu());
+                    menu.getMenuInflater().inflate(R.menu.menu_option_catassem, menu.getMenu());
 
-                  //  if (compustore.assemblydelete(assembly.getId(), false)) {
-                      //  menu.getMenu().removeItem(R.id.menu_1);
-                   // }
+                    //if (compustore.deleteAssembly(assembly.getId(), false)) {
+                    //    menu.getMenu().removeItem(R.id.menu_2);
+                    //}
 
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -155,7 +155,7 @@ public class AssemblyActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.activity_assemblies);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        //adapter = new AssemblyAdapter();
+        adapter = new AssemblyAdapter(compustore.getAllAssemblies());
 
         recyclerview.setAdapter(adapter);
     }
@@ -170,8 +170,8 @@ public class AssemblyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.agregar_ensamble, null);
-        dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
-        editText = (EditText) view.findViewById(R.id.dialog_text);
+        dialogTitle = (TextView) view.findViewById(R.id.assemly_tittle);
+        editText = (EditText) view.findViewById(R.id.assembly_text);
         dialogTitle.setText(R.string.Agrega_ensamble);
         builder.setCancelable(false);
 
@@ -181,13 +181,13 @@ public class AssemblyActivity extends AppCompatActivity {
             }
         }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                if (compustore.InsertCategory(editText.getText().toString())) {
-                    Toast.makeText(AssemblyActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+             //   if (compustore.InsertAssembly(editText.getText().toString())) {
+             //       Toast.makeText(AssemblyActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
              //   adapter = new AssemblyAdapter(compustore.getAllCategories());
-                    recyclerview.setAdapter(adapter);
-                } else {
-                    Toast.makeText(AssemblyActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
-                }
+             //       recyclerview.setAdapter(adapter);
+             //   } else {
+             //       Toast.makeText(AssemblyActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+             //   }
             }
         });
 
