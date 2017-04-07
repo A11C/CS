@@ -107,7 +107,7 @@
         android:layout_toEndOf="@id/tel_tag"
         android:inputType="number"
         android:hint="(Lada)"
-        tool:ignore="LabelFor" />
+        tool:ignore="HardcodedText,LabelFor" />
 
     <EditText
         android:id="@+id/phonet1_text"
@@ -115,9 +115,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/direc_tag"
         android:layout_toEndOf="@id/ladat1_text"
-        android:inputType="number"
+        android:inputType="phone"
         android:hint="(phone)"
-        tool:ignore="LabelFor" />
+        tool:ignore="HardcodedText,LabelFor" />
     <EditText
         android:id="@+id/ladat2_text"
         android:layout_width="60dp"
@@ -126,7 +126,7 @@
         android:layout_toEndOf="@id/tel2_tag"
         android:inputType="number"
         android:hint="(Lada)"
-        tool:ignore="LabelFor" />
+        tool:ignore="HardcodedText,LabelFor" />
 
     <EditText
         android:id="@+id/phonet2_text"
@@ -134,9 +134,9 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tel_tag"
         android:layout_toEndOf="@id/ladat2_text"
-        android:inputType="number"
+        android:inputType="phone"
         android:hint="(phone)"
-        tool:ignore="LabelFor" />
+        tool:ignore="HardcodedText,LabelFor" />
     <EditText
         android:id="@+id/ladat3_text"
         android:layout_width="60dp"
@@ -145,7 +145,7 @@
         android:layout_toEndOf="@id/tel3_tag"
         android:inputType="number"
         android:hint="(Lada)"
-        tool:ignore="LabelFor" />
+        tool:ignore="HardcodedText,LabelFor" />
 
     <EditText
         android:id="@+id/phonet3_text"
@@ -153,16 +153,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tel2_tag"
         android:layout_toEndOf="@id/ladat3_text"
-        android:inputType="number"
+        android:inputType="phone"
         android:hint="(phone)"
-        tool:ignore="LabelFor" />
+        tool:ignore="HardcodedText,LabelFor" />
     <EditText
         android:id="@+id/email_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tel3_tag"
         android:layout_toEndOf="@+id/email_tag"
-        android:inputType="text"
+        android:inputType="textEmailAddress"
         tool:ignore="LabelFor" />
 
 </RelativeLayout>
