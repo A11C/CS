@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?android:listSeparatorTextViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/id_Or_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="@string/tag_id"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/id_Or_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/id_Or_tag"
+        android:text="@string/tag_caregoriaID"
+        android:textSize="18sp"
+        tools:text="...ID.." />
+
+    <TextView
+        android:id="@+id/estado_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/id_Or_tag"
+        android:text="@string/tag_estado"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/estado_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/id_Or_tag"
+        android:layout_toEndOf="@id/estado_tag"
+        android:text="@string/tag_estado"
+        android:textSize="18sp"
+        tools:text="...Estado.." />
+    <TextView
+        android:id="@+id/idclient_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/estado_tag"
+        android:text="@string/tag_clientID"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/idclient_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/estado_tag"
+        android:layout_toEndOf="@id/idclient_tag"
+        android:text="@string/tag_clientID"
+        android:textSize="18sp"
+        tools:text="...Id Cliente.." />
+    <TextView
+        android:id="@+id/fecha_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/idclient_tag"
+        android:text="@string/tag_fecha"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/fecha_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idclient_tag"
+        android:layout_toEndOf="@id/fecha_tag"
+        android:text="@string/tag_fecha"
+        android:textSize="18sp"
+        tools:text="...Fecha.." />
+<Button
+    android:id="@+id/cambios_btn"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/fecha_tag"
+    android:layout_centerInParent="true"
+    android:text="@string/tag_cambios"
+    />
+</RelativeLayout>
