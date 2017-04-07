@@ -155,7 +155,7 @@ public class AssemblyActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.activity_assemblies);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AssemblyAdapter();
+//        adapter = new AssemblyAdapter(compustore.getAllCategories());
 
         recyclerview.setAdapter(adapter);
     }

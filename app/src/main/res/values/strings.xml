@@ -9,27 +9,31 @@
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
     <string name="tag_busqueda">Búsqueda por texto</string>
-    <string name="title_AddProducto">Nuevo Producto</string>
     <string name="tag_description">Descripción: </string>
     <string name="tag_precio">Precio: </string>
     <string name="tag_cantidad">Cantidad: </string>
-    <string name="Agrega_categoria">Nombre de categoría nueva</string>
     <string name="tag_faltantes">Productos Faltantes</string>
     <string name="tag_orderconfirmation">Confirmación de órdenes</string>
     <string name="tag_resumenventas">Resumen de ventas</string>
     <string name="tag_id">ID: </string>
     <string name="tag_caregoriaID">Categoría: </string>
     <string name="tag_qty">Cantidad: </string>
-    <string name="tag_nombre">Nombre </string>
-    <string name="tag_apellido">Apellido </string>
-    <string name="tag_direccion">Dirección </string>
-    <string name="tag_telefono">Teléfono </string>
-    <string name="tag_email">E-mail </string>
+    <string name="tag_nombre">Nombre: </string>
+    <string name="tag_apellido">Apellido: </string>
+    <string name="tag_direccion">Dirección: </string>
+    <string name="tag_telefono">Teléfono 1: </string>
+    <string name="tag_telefono2">Teléfono 2: </string>
+    <string name="tag_telefono3">Teléfono 3: </string>
+    <string name="tag_email">E-mail: </string>
+
+    <string name="title_AddProducto">Nuevo Producto</string>
+    <string name="title_NewClient">Cliente nuevo</string>
 
     <string name="stock">Agregar a stock </string>
 
     <string name="new_client">Nombre de cliente nuevo: </string>
 
+    <string name="Agrega_categoria">Nombre de categoría nueva</string>
     <string name="Edita_categoria">Editar categoría</string>
     <string name="Elimina_categoria">Eliminar categoría</string>
     <string name="edit_category">Editar categoría</string>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:text="@string/title_NewClient"
+        android:id="@+id/title_client"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:textSize="30sp"/>
+
+    <TextView
+        android:id="@+id/nombre_tag"
+        android:text="@string/tag_nombre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_client"
+        android:padding="10dp"
+        android:textSize="24sp"/>
+
+    <TextView
+        android:id="@+id/apellido_tag"
+        android:text="@string/tag_apellido"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nombre_tag"
+        android:padding="10dp"
+        android:textSize="24sp"/>
+    <TextView
+        android:id="@+id/direc_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/apellido_tag"
+        android:text="@string/tag_direccion"
+        android:padding="10sp"
+        android:textSize="24sp"
+        />
+
+    <TextView
+        android:id="@+id/tel_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/direc_tag"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:text="@string/tag_telefono"/>
+    <TextView
+        android:id="@+id/tel2_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel_tag"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:text="@string/tag_telefono2"/>
+    <TextView
+        android:id="@+id/tel3_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel2_tag"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:text="@string/tag_telefono3"/>
+    <TextView
+        android:id="@+id/email_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel3_tag"
+        android:padding="10dp"
+        android:textSize="24sp"
+        android:text="@string/tag_email"/>
+    <EditText
+        android:id="@+id/nombre_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_client"
+        android:layout_toEndOf="@+id/nombre_tag"
+        android:inputType="text"
+        tool:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/apellido_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nombre_tag"
+        android:layout_toEndOf="@+id/apellido_tag"
+        android:inputType="text"
+        tool:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/direc_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/apellido_tag"
+        android:layout_toEndOf="@+id/direc_tag"
+        android:inputType="text"
+        tool:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/ladat1_text"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/direc_tag"
+        android:layout_toEndOf="@id/tel_tag"
+        android:inputType="number"
+        android:hint="(Lada)"
+        tool:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/phonet1_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/direc_tag"
+        android:layout_toEndOf="@id/ladat1_text"
+        android:inputType="number"
+        android:hint="(phone)"
+        tool:ignore="LabelFor" />
+    <EditText
+        android:id="@+id/ladat2_text"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel_tag"
+        android:layout_toEndOf="@id/tel2_tag"
+        android:inputType="number"
+        android:hint="(Lada)"
+        tool:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/phonet2_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel_tag"
+        android:layout_toEndOf="@id/ladat2_text"
+        android:inputType="number"
+        android:hint="(phone)"
+        tool:ignore="LabelFor" />
+    <EditText
+        android:id="@+id/ladat3_text"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel2_tag"
+        android:layout_toEndOf="@id/tel3_tag"
+        android:inputType="number"
+        android:hint="(Lada)"
+        tool:ignore="LabelFor" />
+
+    <EditText
+        android:id="@+id/phonet3_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel2_tag"
+        android:layout_toEndOf="@id/ladat3_text"
+        android:inputType="number"
+        android:hint="(phone)"
+        tool:ignore="LabelFor" />
+    <EditText
+        android:id="@+id/email_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tel3_tag"
+        android:layout_toEndOf="@+id/email_tag"
+        android:inputType="text"
+        tool:ignore="LabelFor" />
+
+</RelativeLayout>
