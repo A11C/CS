@@ -84,7 +84,7 @@
     android:id="@+id/cambios_btn"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_below="@+id/fecha_tag"
+    android:layout_below="@id/fecha_tag"
     android:layout_centerInParent="true"
     android:text="@string/tag_cambios"
     />
