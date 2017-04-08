@@ -1,6 +1,7 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -164,32 +165,9 @@ public class AssemblyActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.agregar_ensamble, null);
-        dialogTitle = (TextView) view.findViewById(R.id.assembly_tittle);
-        editText = (EditText) view.findViewById(R.id.assembly_text);
-        dialogTitle.setText(R.string.Agrega_ensamble);
-        builder.setCancelable(false);
 
-        builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-             //   if (compustore.InsertAssembly(editText.getText().toString())) {
-             //       Toast.makeText(AssemblyActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-             //   adapter = new AssemblyAdapter(compustore.getAllCategories());
-             //       recyclerview.setAdapter(adapter);
-             //   } else {
-             //       Toast.makeText(AssemblyActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
-             //   }
-            }
-        });
-
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
+        startActivity(i);
 
         return super.onOptionsItemSelected(item);
     }

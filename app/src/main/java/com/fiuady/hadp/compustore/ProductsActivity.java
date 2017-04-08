@@ -237,7 +237,6 @@ public class ProductsActivity extends AppCompatActivity {
 
         desctext = (EditText) view.findViewById(R.id.description_text);
         pricetext = (EditText) view.findViewById(R.id.precio_text);
-        qtytext = (EditText) view.findViewById(R.id.cantidad_text);
         spinneradd = (Spinner) view.findViewById(R.id.spinner);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
         spinneradd.setAdapter(arrayAdapter);

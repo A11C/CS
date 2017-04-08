@@ -137,43 +137,41 @@ public final class CompuStore {
     }
 
     public boolean InsertCategory(String text) {
-        boolean b = true;
+        boolean match = true;
         List<Category> categories = getAllCategories();
         ContentValues values = new ContentValues();
 
         if (text.isEmpty()) {
-            b = false;
+            match = false;
         }
 
         for(Category category : categories) {
             if (category.getDescription().toUpperCase().equals(text.toUpperCase())) {
-
-                b = false;
+                match = false;
             }
         }
 
-        if (b) {
+        if (match) {
             values.put(CategoriesTable.Columns.DESCRIPTION, text);
-
             db.insert(CategoriesTable.NAME, null, values);
         }
 
-        return b;
+        return match;
     }
 
     public boolean categorydelete(int id, boolean dlt) {
         boolean c = false;
         boolean d = true;
         boolean e = true;
-        List<Category> a = getAllCategories();
-        List<Product> b = getAllProducts();
+        List<Category> categories = getAllCategories();
+        List<Product> products = getAllProducts();
 
-        for(Category category : a) {
+        for(Category category : categories) {
             if (e) {
                 if (category.getId() == id) {
                     e = false;
                     if (d) {
-                        for(Product product : b) {
+                        for(Product product : products) {
                             if (product.getCategory_id() == id) {
                                 c = true;
                                 d = false;

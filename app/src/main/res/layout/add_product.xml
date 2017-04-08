@@ -27,26 +27,17 @@
         android:text="@string/tag_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/category_tag"
+        android:layout_below="@id/category_tag"
         android:padding="10dp"
         android:textSize="24sp"/>
     <TextView
         android:id="@+id/precio_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/description_tag"
+        android:layout_below="@id/description_tag"
         android:padding="10sp"
         android:textSize="24sp"
         android:text="@string/tag_precio"/>
-
-    <TextView
-        android:id="@+id/cantidad_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/precio_tag"
-        android:padding="10dp"
-        android:textSize="24sp"
-        android:text="@string/tag_cantidad"/>
 
     <Spinner
         android:id="@+id/spinner"
@@ -57,16 +48,16 @@
         android:textSize="24sp"
         android:padding="10dp"
         android:textColor="@android:color/black"
-        android:layout_below="@+id/title_product"
-        android:layout_toEndOf="@+id/category_tag"
-        android:layout_above="@+id/description_tag"/>
+        android:layout_below="@id/title_product"
+        android:layout_toEndOf="@id/category_tag"
+        android:layout_above="@id/description_tag"/>
 
     <EditText
         android:id="@+id/description_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/category_tag"
-        android:layout_toEndOf="@+id/description_tag"
+        android:layout_toEndOf="@id/description_tag"
         android:inputType="text"
         tool:ignore="LabelFor" />
 
@@ -74,19 +65,11 @@
         android:id="@+id/precio_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/description_tag"
-        android:layout_toEndOf="@+id/precio_tag"
+        android:layout_below="@id/description_tag"
+        android:layout_toEndOf="@id/precio_tag"
         android:inputType="number"
         android:hint="Precio en centavos"
         tool:ignore="LabelFor" />
 
-    <EditText
-        android:id="@+id/cantidad_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/precio_tag"
-        android:layout_toEndOf="@id/cantidad_tag"
-        android:inputType="number"
-        tool:ignore="LabelFor" />
 
 </RelativeLayout>
