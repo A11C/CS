@@ -109,31 +109,24 @@ public final class CompuStore {
         return category;
     }
 
-    public boolean updateCategory(String des, int id) {
-        boolean b = true;
+    public boolean updateCategory(String description, int id) {
+        boolean response = true;
         List<Category> a = getAllCategories();
-
-        if (des.isEmpty()) {
-            b = false;
+        if (description.isEmpty()) {
+            response = false;
         }
-
         for(Category category : a) {
-            if (category.getDescription().toUpperCase().equals(des.toUpperCase())) {
-                b = false;
+            if (category.getDescription().toUpperCase().equals(description.toUpperCase())) {
+                response = false;
             }
         }
-
-        if (b) {
+        if (response) {
             ContentValues values = new ContentValues();
-            values.put(CategoriesTable.Columns.DESCRIPTION, des);
-
-            db.update(CategoriesTable.NAME,
-                    values,
-                    CategoriesTable.Columns.ID+ "= ?",
-                    new String[] {Integer.toString(id)});
+            values.put(CategoriesTable.Columns.DESCRIPTION, description);
+            db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID+ "= ?", new String[] {Integer.toString(id)});
         }
 
-        return b;
+        return response;
     }
 
     public boolean InsertCategory(String text) {
@@ -159,25 +152,25 @@ public final class CompuStore {
         return match;
     }
 
-    public boolean categorydelete(int id, boolean dlt) {
-        boolean c = false;
-        boolean d = true;
-        boolean e = true;
+    public boolean categorydelete(int id, boolean delete) {
+        boolean match = false;
+        boolean match2 = true;
+        boolean match3 = true;
         List<Category> categories = getAllCategories();
         List<Product> products = getAllProducts();
 
         for(Category category : categories) {
-            if (e) {
+            if (match3) {
                 if (category.getId() == id) {
-                    e = false;
-                    if (d) {
+                    match3 = false;
+                    if (match2) {
                         for(Product product : products) {
                             if (product.getCategory_id() == id) {
-                                c = true;
-                                d = false;
+                                match = true;
+                                match2 = false;
                             }
                             else {
-                                if (dlt){
+                                if (delete){
                                     db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[] {Integer.toString(id)});
                                 }
                             }
@@ -187,7 +180,7 @@ public final class CompuStore {
             }
         }
 
-        return  c;
+        return  match;
     }
 
     public List<Product> getAllProducts() {
