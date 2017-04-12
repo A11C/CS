@@ -153,9 +153,7 @@ public final class CompuStore {
     }
 
     public boolean categorydelete(int id, boolean delete) {
-        boolean match = false;
-        boolean match2 = true;
-        boolean match3 = true;
+        boolean match = false; boolean match2 = true; boolean match3 = true;
         List<Category> categories = getAllCategories();
         List<Product> products = getAllProducts();
 

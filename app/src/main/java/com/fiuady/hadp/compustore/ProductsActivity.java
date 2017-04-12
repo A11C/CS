@@ -43,7 +43,7 @@ public class ProductsActivity extends AppCompatActivity {
             qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
-        public void bindProduct(final Product product) {
+        private void bindProduct(final Product product) {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -174,7 +174,7 @@ public class ProductsActivity extends AppCompatActivity {
         recyclerview = (RecyclerView) findViewById(R.id.productos_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(arrayAdapter);
 
         arrayAdapter.add("Todas");
@@ -238,7 +238,7 @@ public class ProductsActivity extends AppCompatActivity {
         desctext = (EditText) view.findViewById(R.id.description_text);
         pricetext = (EditText) view.findViewById(R.id.precio_text);
         spinneradd = (Spinner) view.findViewById(R.id.spinner);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         spinneradd.setAdapter(arrayAdapter);
 
         List<Category> categories = compustore.getAllCategories();
