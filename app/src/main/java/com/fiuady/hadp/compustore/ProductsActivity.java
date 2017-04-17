@@ -36,10 +36,10 @@ public class ProductsActivity extends AppCompatActivity {
 
         public ProductHolder(View itemView) {
             super(itemView);
-            idtext = (TextView) itemView.findViewById(R.id.id_text);
+            idtext = (TextView) itemView.findViewById(R.id.idPr_text);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
-            desctext2 = (TextView) itemView.findViewById(R.id.description_text);
-            pricetext2 = (TextView) itemView.findViewById(R.id.price_text);
+            desctext2 = (TextView) itemView.findViewById(R.id.descriptionPr_text);
+            pricetext2 = (TextView) itemView.findViewById(R.id.pricePr_text);
             qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
@@ -114,10 +114,10 @@ public class ProductsActivity extends AppCompatActivity {
                     popup.show();
                 }
             });
-            idtext.setText(Integer.toString(product.getId()));
-            catidtext.setText(Integer.toString(product.getCategory_id()));
-            pricetext2.setText(Integer.toString(product.getPrice()));
-            qtytext2.setText(Integer.toString(product.getQuantity()));
+            idtext.setText(String.valueOf(product.getId()));
+            catidtext.setText(String.valueOf(product.getCategory_id()));
+            pricetext2.setText(String.valueOf(product.getPrice()));
+            qtytext2.setText(String.valueOf(product.getQuantity()));
             desctext2.setText(product.getDescription());
         }
     }
@@ -166,9 +166,9 @@ public class ProductsActivity extends AppCompatActivity {
         //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorProducts));
         // }
 
-        spinner = (Spinner) findViewById(R.id.spinner);
-        search = (ImageButton) findViewById(R.id.buscar_button);
-        searchtext = (EditText) findViewById(R.id.busqueda_text);
+        spinner = (Spinner) findViewById(R.id.spinnerCat);
+        search = (ImageButton) findViewById(R.id.buscarCat_button);
+        searchtext = (EditText) findViewById(R.id.busquedaCat_text);
         compustore = new CompuStore(this);
 
         recyclerview = (RecyclerView) findViewById(R.id.productos_rv);
@@ -183,39 +183,31 @@ public class ProductsActivity extends AppCompatActivity {
             arrayAdapter.add(category.getDescription());
         }
 
-        adapter = new ProductAdapter(compustore.getAllProducts());
-        recyclerview.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spinner.getSelectedItem().toString() != "Todas"){
-                    adapter = new ProductAdapter(compustore.getOneCategoryProduct(position-1));
-                    recyclerview.setAdapter(adapter);
-                }else{
-                    adapter = new ProductAdapter(compustore.getAllProducts());
-                    recyclerview.setAdapter(adapter);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (searchtext.getFreezesText()!=true){
-                    adapter = new ProductAdapter(compustore.getProductName(String.valueOf(searchtext.getText())));
-                    recyclerview.setAdapter(adapter);
-                    searchtext.setHint(String.valueOf(searchtext.getText()));
-                    searchtext.setText(null);
+                if (searchtext.getText()!= null){
+                    if (spinner.getSelectedItemPosition() != 0){
+                        adapter = new ProductAdapter(compustore.getProductByName(spinner.getSelectedItemPosition()-1, String.valueOf(searchtext.getText())));
+                        recyclerview.setAdapter(adapter);
+                    }else{
+                        adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
+                        recyclerview.setAdapter(adapter);
+                    }
+                }
+                else{
+                    if (spinner.getSelectedItemPosition() != 0){
+                        adapter = new ProductAdapter(compustore.getOneCategoryProduct(spinner.getSelectedItemPosition()-1));
+                        recyclerview.setAdapter(adapter);
+                    }else{
+                        adapter = new ProductAdapter(compustore.getAllProducts());
+                        recyclerview.setAdapter(adapter);
+                    }
+
 
                 }
+                searchtext.setHint(String.valueOf(searchtext.getText()));
+                searchtext.setText(null);
             }
         });
 
@@ -237,7 +229,7 @@ public class ProductsActivity extends AppCompatActivity {
 
         desctext = (EditText) view.findViewById(R.id.description_text);
         pricetext = (EditText) view.findViewById(R.id.precio_text);
-        spinneradd = (Spinner) view.findViewById(R.id.spinner);
+        spinneradd = (Spinner) view.findViewById(R.id.spinnerPr);
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
         spinneradd.setAdapter(arrayAdapter);
 
