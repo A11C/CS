@@ -57,7 +57,7 @@ public class ProductsActivity extends AppCompatActivity {
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ProductsActivity.this);
                                 View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
                                 editText = (EditText) view.findViewById(R.id.dialog_text);
 
                                 dialogTitle.setText(R.string.title_AddProducto);
