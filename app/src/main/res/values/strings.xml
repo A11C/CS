@@ -43,7 +43,7 @@
     <string name="title_AddProducto">Nuevo Producto</string>
     <string name="title_NewClient">Cliente nuevo</string>
 
-    <string name="stock">Agregar a stock </string>
+    <string name="stock">Agregar stock </string>
 
     <string name="new_client">Nombre de cliente nuevo: </string>
 
