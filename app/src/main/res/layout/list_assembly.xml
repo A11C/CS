@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/id_tag"
+        android:id="@+id/idAs_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -15,29 +15,29 @@
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/id_text"
+        android:id="@+id/idAs_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/id_tag"
+        android:layout_toEndOf="@id/idAs_tag"
         android:text="@string/tag_caregoriaID"
         android:textSize="18sp"
         tools:text="...ID.."/>
     <TextView
-        android:id="@+id/description_tag"
+        android:id="@+id/descriptionAs_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/id_tag"
+        android:layout_below="@id/idAs_tag"
         android:text="@string/tag_description"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/description_text"
+        android:id="@+id/descriptionAs_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/description_tag"
-        android:layout_below="@id/id_text"
+        android:layout_toEndOf="@id/descriptionAs_tag"
+        android:layout_below="@id/idAs_text"
         android:text="@string/tag_description"
         android:textSize="18sp"
         tools:text="...Descripción.."/>

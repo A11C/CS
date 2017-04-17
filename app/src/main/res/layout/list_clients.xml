@@ -7,7 +7,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/id_tag"
+        android:id="@+id/idCl_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -16,50 +16,50 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/id_text"
+        android:id="@+id/idCl_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/id_tag"
+        android:layout_toEndOf="@id/idCl_tag"
         android:text="@string/tag_caregoriaID"
         android:textSize="18sp"
         tools:text="...ID.." />
 
     <TextView
-        android:id="@+id/nombre_tag"
+        android:id="@+id/nombreCl_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/id_tag"
+        android:layout_below="@id/idCl_tag"
         android:text="@string/tag_nombre"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/nombre_text"
+        android:id="@+id/nombreCl_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/id_tag"
-        android:layout_toEndOf="@id/nombre_tag"
+        android:layout_below="@id/idCl_tag"
+        android:layout_toEndOf="@id/nombreCl_tag"
         android:text="@string/tag_caregoriaID"
         android:textSize="18sp"
         tools:text="...Nombre.." />
 
     <TextView
-        android:id="@+id/apellido_tag"
+        android:id="@+id/apellidoCl_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/nombre_tag"
+        android:layout_below="@id/nombreCl_tag"
         android:text="@string/tag_apellido"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/apellido_text"
+        android:id="@+id/apellidoCl_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/nombre_tag"
-        android:layout_toEndOf="@id/apellido_tag"
+        android:layout_below="@id/nombreCl_tag"
+        android:layout_toEndOf="@id/apellidoCl_tag"
         android:text="@string/tag_apellido"
         android:textSize="18sp"
         tools:text="...Apellido.." />
@@ -69,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/apellido_text"
+        android:layout_below="@id/apellidoCl_text"
         android:text="@string/tag_direccion"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -78,7 +78,7 @@
         android:id="@+id/direc_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/apellido_text"
+        android:layout_below="@id/apellidoCl_text"
         android:layout_toEndOf="@id/direc_tag"
         android:text="@string/tag_direccion"
         android:textSize="18sp"

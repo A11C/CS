@@ -47,7 +47,7 @@
 
 
             <ImageButton
-                android:id="@+id/Button_Ventass"
+                android:id="@+id/Button_Ventas"
                 android:layout_width="100dp"
                 android:layout_height="280dp"
                 android:layout_weight="1"

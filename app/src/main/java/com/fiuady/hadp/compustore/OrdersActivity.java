@@ -2,12 +2,14 @@ package com.fiuady.hadp.compustore;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.os.Build;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.DatePicker;
@@ -53,16 +55,47 @@ public class OrdersActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orders);
-        spinnercl = (Spinner) findViewById(R.id.spinnerOr);
-        spinneror = (Spinner) findViewById(R.id.spinnerC);
+        spinnercl = (Spinner) findViewById(R.id.spinnerC);
+        spinneror = (Spinner) findViewById(R.id.spinnerOr);
         dateini = (TextView) findViewById(R.id.dateini);
         chkdf = (CheckBox) findViewById(R.id.orderFf_checkbox);
         chkdi = (CheckBox) findViewById(R.id.orderFi_checkbox);
         datefin = (TextView) findViewById(R.id.datefin);
+
+
+
+
+
+
+     /*  setContentView(R.layout.checkbox_orders);
+        spinneror = (Spinner) findViewById(R.id.spinnerOr);
+*/
+    /*    ArrayAdapter<String> adapter = ArrayAdapter.createFromResource(this,R.layout.checkbox_orders);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);*/
+       // spinneror.setAdapter(adapter);
+
+//        ArrayAdapter arrayAdapter=new ArrayAdapter(this, R.layout.checkbox_clients);
+//        arrayAdapter.getContext(R.layout.checkbox_orders);
+
+//        spinneror.setAdapter(arrayAdapter);
+//        spinneror = (Spinner) findViewById(R.id.spinnerOr);
+
+     //   ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
+       // spinneror.setAdapter(arrayAdapter);
+
+
+//        ArrayAdapter arrayAdapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item);
+//       arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinneror.setAdapter(arrayAdapter);
+//        spinneror.setAdapter(ArrayAdapter.createFromResource(R.layout.checkbox_clients));
+
+
 
         chkdf.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -87,6 +120,7 @@ public class OrdersActivity extends AppCompatActivity {
                     newFragment.show(getSupportFragmentManager(),"datePicker");
                     dateini.setText(string);
                 }
+
             }
         });
 
@@ -94,5 +128,7 @@ public class OrdersActivity extends AppCompatActivity {
         //    getWindow().setNavigationBarColor(getResources().getColor(R.color.colorOrders));
         //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorOrders));
         //}
+
     }
-}
+
+  }

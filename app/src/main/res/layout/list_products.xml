@@ -6,7 +6,7 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/id_tag"
+        android:id="@+id/idPr_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -15,10 +15,10 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/id_text"
+        android:id="@+id/idPr_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toEndOf="@id/id_tag"
+        android:layout_toEndOf="@id/idPr_tag"
         android:text="@string/tag_caregoriaID"
         android:textSize="18sp"
         tools:text="...ID.." />
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/id_tag"
+        android:layout_below="@id/idPr_tag"
         android:text="@string/tag_caregoriaID"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -37,14 +37,14 @@
         android:id="@+id/categoryID_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/id_tag"
+        android:layout_below="@id/idPr_tag"
         android:layout_toEndOf="@id/categoryID_tag"
         android:text="@string/tag_caregoriaID"
         android:textSize="18sp"
         tools:text="...Categoría.." />
 
     <TextView
-        android:id="@+id/description_tag"
+        android:id="@+id/descriptionPr_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -54,31 +54,31 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/description_text"
+        android:id="@+id/descriptionPr_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/categoryID_tag"
-        android:layout_toEndOf="@id/description_tag"
+        android:layout_toEndOf="@id/descriptionPr_tag"
         android:text="@string/tag_description"
         android:textSize="18sp"
         tools:text="...Descripción.." />
 
     <TextView
-        android:id="@+id/price_tag"
+        android:id="@+id/pricePr_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/description_text"
+        android:layout_below="@id/descriptionPr_text"
         android:text="@string/tag_precio"
         android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/price_text"
+        android:id="@+id/pricePr_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description_text"
-        android:layout_toEndOf="@id/price_tag"
+        android:layout_below="@id/descriptionPr_text"
+        android:layout_toEndOf="@id/pricePr_tag"
         android:text="@string/tag_precio"
         android:textSize="18sp"
         tools:text="...Precio.." />
@@ -88,7 +88,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/price_tag"
+        android:layout_below="@id/pricePr_tag"
         android:text="@string/tag_cantidad"
         android:textSize="18sp"
         android:textStyle="bold" />
@@ -97,7 +97,7 @@
         android:id="@+id/qty_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/price_tag"
+        android:layout_below="@id/pricePr_tag"
         android:layout_toEndOf="@id/qty_tag"
         android:text="@string/tag_qty"
         android:textSize="18sp"
