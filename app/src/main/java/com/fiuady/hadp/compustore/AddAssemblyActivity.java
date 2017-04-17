@@ -26,10 +26,10 @@ public class AddAssemblyActivity extends AppCompatActivity {
 
         public ProductHolder(View itemView) {
             super(itemView);
-            idtext = (TextView) itemView.findViewById(R.id.id_text);
+            idtext = (TextView) itemView.findViewById(R.id.idPr_text);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
             desctext2 = (TextView) itemView.findViewById(R.id.description_text);
-            pricetext2 = (TextView) itemView.findViewById(R.id.price_text);
+            pricetext2 = (TextView) itemView.findViewById(R.id.pricePr_text);
             qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
         }
 

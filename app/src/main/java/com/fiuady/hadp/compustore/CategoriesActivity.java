@@ -52,7 +52,7 @@ public class CategoriesActivity extends AppCompatActivity {
                             if (item.getTitle().equals(menu.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(CategoriesActivity.this);
                                 View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
                                 editText = (EditText) view.findViewById(R.id.dialog_text);
                                 dialogTitle.setText(R.string.Edita_categoria);
 
@@ -171,7 +171,7 @@ public class CategoriesActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-        dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+        dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
         editText = (EditText) view.findViewById(R.id.dialog_text);
         dialogTitle.setText(R.string.Agrega_categoria);
         builder.setCancelable(false);

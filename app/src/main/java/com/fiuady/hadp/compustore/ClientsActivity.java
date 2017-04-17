@@ -37,9 +37,9 @@ public class ClientsActivity extends AppCompatActivity {
 
         public ClientHolder(View itemView) {
             super(itemView);
-            idtext = (TextView) itemView.findViewById(R.id.id_text);
-            nombtext = (TextView) itemView.findViewById(R.id.nombre_text);
-            lnombtext = (TextView) itemView.findViewById(R.id.apellido_text);
+            idtext = (TextView) itemView.findViewById(R.id.idCl_text);
+            nombtext = (TextView) itemView.findViewById(R.id.nombreCl_text);
+            lnombtext = (TextView) itemView.findViewById(R.id.apellidoCl_text);
             directext = (TextView) itemView.findViewById(R.id.direc_text);
             tel1text = (TextView) itemView.findViewById(R.id.tel1_text);
             tel2text = (TextView) itemView.findViewById(R.id.tel2_text);
@@ -61,7 +61,7 @@ public class ClientsActivity extends AppCompatActivity {
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ClientsActivity.this);
                                 View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
                                 editText = (EditText) view.findViewById(R.id.dialog_text);
 
                                 dialogTitle.setText(R.string.title_AddProducto);
@@ -240,16 +240,16 @@ public class ClientsActivity extends AppCompatActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View view = getLayoutInflater().inflate(R.layout.new_client, null);
 
-        nomtxt = (EditText) view.findViewById(R.id.nombre_text);
-        lnomtxt = (EditText) view.findViewById(R.id.apellido_text);
-        dirtxt = (EditText) view.findViewById(R.id.direc_text);
+        nomtxt = (EditText) view.findViewById(R.id.nombreCln_text);
+        lnomtxt = (EditText) view.findViewById(R.id.apellidoCln_text);
+        dirtxt = (EditText) view.findViewById(R.id.direcCln_text);
         lad1txt = (EditText) view.findViewById(R.id.ladat1_text);
         lad2txt = (EditText) view.findViewById(R.id.ladat2_text);
         lad3txt = (EditText) view.findViewById(R.id.ladat3_text);
         p1txt = (EditText) view.findViewById(R.id.phonet1_text);
         p2txt = (EditText) view.findViewById(R.id.phonet2_text);
         p3txt = (EditText) view.findViewById(R.id.phonet3_text);
-        emailtxt = (EditText) view. findViewById(R.id.email_text);
+        emailtxt = (EditText) view. findViewById(R.id.emailCln_text);
 
        //List<Client> clients = compustore.getAllCategories();
         //for (Client client : clients) {

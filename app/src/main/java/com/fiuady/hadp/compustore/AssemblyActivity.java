@@ -48,7 +48,7 @@ public class AssemblyActivity extends AppCompatActivity {
                             if (item.getTitle().equals(menu.getMenu().getItem(0).getTitle())) {
                                 AlertDialog.Builder builder = new AlertDialog.Builder(AssemblyActivity.this);
                                 View view = getLayoutInflater().inflate(R.layout.agregar_ensamble, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittle);
+                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
                                 editText = (EditText) view.findViewById(R.id.dialog_text);
 
                                 dialogTitle.setText(R.string.Edita_ensamble);
