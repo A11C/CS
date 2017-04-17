@@ -31,6 +31,7 @@
     <string name="tag_clientID">ID Cliente: </string>
     <string name="tag_fecha">Fecha: </string>
     <string name="tag_cambios">Registro de cambios: </string>
+    <string name="dialog_addp">Agregar Producto</string>
 
     <string name="order_pendiente">Pendiente: </string>
     <string name="order_cancelado">Cancelado: </string>
@@ -61,14 +62,11 @@
     <string name="Error_operacion">No se ha completado la operación</string>
 
 
-
     <string name="texto_guardar">Guardar</string>
     <string name="texto_cancelar">Cancelar</string>
     <string name="texto_modificar">Modificar</string>
     <string name="texto_eliminar">Eliminar</string>
     <string name="sure_text">¿Seguro?</string>
-
-
 
 
 </resources>
