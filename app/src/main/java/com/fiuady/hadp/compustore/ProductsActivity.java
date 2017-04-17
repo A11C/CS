@@ -1,5 +1,7 @@
 package com.fiuady.hadp.compustore;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +18,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fiuady.db.Category;
 import com.fiuady.db.CompuStore;
@@ -26,13 +31,171 @@ import java.util.List;
 
 public class ProductsActivity extends AppCompatActivity {
 
-    private EditText editText;
-    private TextView dialogTitle;
-    private Spinner spinneradd;
+
+    public static class mDialogFragment extends DialogFragment {
+
+        private int Num, Qty;
+        private String Desc;
+        private EditText editText, precio;
+        private TextView dialogTitle;
+        private Spinner spinner;
+        private NumberPicker picker;
+        private CompuStore compustore;
+
+        static mDialogFragment newInstance(int num) {
+            mDialogFragment dF = new mDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("num", num);
+            dF.setArguments(args);
+            return dF;
+        }
+
+        static mDialogFragment newInstance2(int num, int qty) {
+            mDialogFragment dF = new mDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("num", num);
+            args.putInt("qty", qty);
+            dF.setArguments(args);
+            return dF;
+        }
+
+        static mDialogFragment newInstance3(int num, String description) {
+            mDialogFragment dF = new mDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("num", num);
+            args.putString("description", description);
+            dF.setArguments(args);
+            return dF;
+        }
+
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Num = getArguments().getInt("num");
+            switch (Num) {
+                case 0:
+                    return DialogMod();
+                case 1:
+                    Qty = getArguments().getInt("qty");
+                    return DialogStock();
+                case 2:
+                    Desc = getArguments().getString("description");
+                    return DialogErase();
+                case 3:
+                    return DialogAdd();
+            }
+            return super.onCreateDialog(savedInstanceState);
+        }
+
+        public AlertDialog DialogMod() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.add_product, null);
+            dialogTitle = (TextView) view.findViewById(R.id.title_product);
+            editText = (EditText) view.findViewById(R.id.description_text);
+            precio = (EditText) view.findViewById(R.id.precio_text);
+            spinner = (Spinner) view.findViewById(R.id.spinnerPr);
+            dialogTitle.setText(R.string.title_ModProducto);
+            compustore = new CompuStore(getActivity());
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(arrayAdapter);
+
+            List<Category> categories = compustore.getAllCategories();
+            for (Category category : categories) {
+                arrayAdapter.add(category.getDescription());
+            }
+
+            builder.setCancelable(false);
+            builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setView(view);
+            return builder.create();
+        }
+        public AlertDialog DialogErase(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setCancelable(false);
+            builder.setTitle(getString(R.string.title_EliminarProducto));
+            builder.setMessage("El siguiente producto será eliminado: " + Desc);
+
+            builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                }
+            });
+            return builder.create();
+        }
+
+        public AlertDialog DialogStock(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(getString(R.string.stock));
+            picker = new NumberPicker(getActivity());
+            picker.setMinValue(Qty);
+            picker.setValue(Qty);
+            picker.setMaxValue(Qty+100);
+
+            builder.setCancelable(false);
+            builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setView(picker);
+            return builder.create();
+        }
+
+        public AlertDialog DialogAdd(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.add_product, null);
+            editText = (EditText) view.findViewById(R.id.description_text);
+            precio = (EditText) view.findViewById(R.id.precio_text);
+            spinner = (Spinner) view.findViewById(R.id.spinnerPr);
+            compustore = new CompuStore(getActivity());
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(arrayAdapter);
+
+            List<Category> categories = compustore.getAllCategories();
+            for (Category category : categories) {
+                arrayAdapter.add(category.getDescription());
+            }
+
+            builder.setCancelable(false);
+            builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            builder.setView(view);
+            return builder.create();
+        }
+    }
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
         private TextView idtext, catidtext, desctext2, pricetext2, qtytext2;
+
 
         public ProductHolder(View itemView) {
             super(itemView);
@@ -44,69 +207,32 @@ public class ProductsActivity extends AppCompatActivity {
         }
 
         private void bindProduct(final Product product) {
+
+
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final PopupMenu popup = new PopupMenu(ProductsActivity.this, itemView);
                     popup.getMenuInflater().inflate(R.menu.menu_option_products, popup.getMenu());
 
+                    if (compustore.ProductInAssembly(product.getId())) {
+                        popup.getMenu().removeItem(R.id.menu_2);
+                    }
+
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ProductsActivity.this);
-                                View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
-                                editText = (EditText) view.findViewById(R.id.dialog_text);
-
-                                dialogTitle.setText(R.string.title_AddProducto);
-
-                                builder.setCancelable(false);
-                                builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        AlertDialog.Builder build = new AlertDialog.Builder(ProductsActivity.this);
-                                        build.setCancelable(false);
-                                        build.setTitle(getString(R.string.edit_category));
-                                        build.setMessage(R.string.sure_text);
-
-                                        build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.dismiss();
-                                            }
-                                        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-//
-                                            }
-                                        });
-
-                                        build.create().show();
-                                    }
-                                });
-                                builder.setView(view);
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            } else {
-                                AlertDialog.Builder build = new AlertDialog.Builder(ProductsActivity.this);
-                                build.setCancelable(false);
-                                build.setTitle(getString(R.string.delete_category));
-                                build.setMessage(R.string.sure_text);
-
-                                build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-//
-                                    }
-                                });
-
-                                build.create().show();
+                                mDialogFragment fragment = mDialogFragment.newInstance(0);
+                                fragment.show(getFragmentManager(),"ModFragment");
+                            } else if(item.getTitle().equals(popup.getMenu().getItem(1).getTitle())){
+                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getQuantity());
+                                fragment.show(getFragmentManager(),"StockFragment");
+                            } else{
+                                mDialogFragment fragment = mDialogFragment.newInstance3(2, product.getDescription());
+                                fragment.show(getFragmentManager(),"EraseFragment");
                             }
                             return true;
                         }
@@ -210,10 +336,6 @@ public class ProductsActivity extends AppCompatActivity {
                 searchtext.setText(null);
             }
         });
-
-
-
-
     }
 
     @Override
@@ -224,41 +346,9 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.add_product, null);
-
-        desctext = (EditText) view.findViewById(R.id.description_text);
-        pricetext = (EditText) view.findViewById(R.id.precio_text);
-        spinneradd = (Spinner) view.findViewById(R.id.spinnerPr);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item);
-        spinneradd.setAdapter(arrayAdapter);
-
-        List<Category> categories = compustore.getAllCategories();
-        for (Category category : categories) {
-            arrayAdapter.add(category.getDescription());
-        }
-
-        builder.setCancelable(false);
-
-        builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //   if (compustore.insertProduct(desctext.getText().toString(),)) {
-                //       Toast.makeText(ProductsActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                //       adapter = new ProductAdapter(compustore.getAllProducts());
-                //       recyclerview.setAdapter(adapter);
-                //   } else {
-                //      Toast.makeText(ProductsActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
-                //   }
-            }
-        });
-
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        mDialogFragment fragment = mDialogFragment.newInstance(3);
+        fragment.show(getFragmentManager(),"AddFragment");
         return super.onOptionsItemSelected(item);
     }
+
 }

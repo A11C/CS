@@ -121,6 +121,34 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
             arrayAdapter.add(category.getDescription());
         }
 
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (searchtext.getText()!= null){
+                    if (spinner.getSelectedItemPosition() != 0){
+                        adapter = new ProductAdapter(compustore.getProductByName(spinner.getSelectedItemPosition()-1, String.valueOf(searchtext.getText())));
+                        recyclerview.setAdapter(adapter);
+                    }else{
+                        adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
+                        recyclerview.setAdapter(adapter);
+                    }
+                }
+                else{
+                    if (spinner.getSelectedItemPosition() != 0){
+                        adapter = new ProductAdapter(compustore.getOneCategoryProduct(spinner.getSelectedItemPosition()-1));
+                        recyclerview.setAdapter(adapter);
+                    }else{
+                        adapter = new ProductAdapter(compustore.getAllProducts());
+                        recyclerview.setAdapter(adapter);
+                    }
+
+
+                }
+                searchtext.setHint(String.valueOf(searchtext.getText()));
+                searchtext.setText(null);
+            }
+        });
+
 
     }
 

@@ -16,7 +16,7 @@ class CategoryCursor extends CursorWrapper {
         super(cursor);
     }
 
-    public Category getCategory(){
+    public Category getCategory() {
         Cursor cursor = getWrappedCursor();
         return new Category(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.CategoriesTable.Columns.ID)),
                 cursor.getString(cursor.getColumnIndex(InventoryCSDbSchema.CategoriesTable.Columns.DESCRIPTION)));
@@ -28,7 +28,7 @@ class ProductCursor extends CursorWrapper {
         super(cursor);
     }
 
-    public Product getProduct(){
+    public Product getProduct() {
         Cursor cursor = getWrappedCursor();
         return new Product(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.ProductsTable.Columns.ID)),
                 cursor.getInt(cursor.getColumnIndex(ProductsTable.Columns.CATEGORY_ID)),
@@ -38,21 +38,24 @@ class ProductCursor extends CursorWrapper {
     }
 }
 
-class AssemblyCursor extends CursorWrapper{
-    public AssemblyCursor(Cursor cursor) {super(cursor);}
+class AssemblyCursor extends CursorWrapper {
+    public AssemblyCursor(Cursor cursor) {
+        super(cursor);
+    }
 
-    public Assembly getAssembly()
-    {
+    public Assembly getAssembly() {
         Cursor cursor = getWrappedCursor();
         return new Assembly(cursor.getInt(cursor.getColumnIndex(InventoryCSDbSchema.AssembliesTable.Columns.ID)),
                 cursor.getString(cursor.getColumnIndex(AssembliesTable.Columns.DESCRIPTION)));
     }
 }
 
-class AssemblyProductCursor extends CursorWrapper{
-    public AssemblyProductCursor(Cursor cursor){super(cursor);}
+class AssemblyProductCursor extends CursorWrapper {
+    public AssemblyProductCursor(Cursor cursor) {
+        super(cursor);
+    }
 
-    public AssemblyProduct getAssemblyProduct(){
+    public AssemblyProduct getAssemblyProduct() {
         Cursor cursor = getWrappedCursor();
         return new AssemblyProduct(cursor.getInt(cursor.getColumnIndex(AssemblyProductsTable.Columns.ID)),
                 cursor.getInt(cursor.getColumnIndex(AssemblyProductsTable.Columns.PRODUCT_ID)),
@@ -60,10 +63,12 @@ class AssemblyProductCursor extends CursorWrapper{
     }
 }
 
-class ClientCursor extends CursorWrapper{
-    public ClientCursor(Cursor cursor){super(cursor);}
+class ClientCursor extends CursorWrapper {
+    public ClientCursor(Cursor cursor) {
+        super(cursor);
+    }
 
-    public Client getClient(){
+    public Client getClient() {
         Cursor cursor = getWrappedCursor();
         return new Client(cursor.getInt(cursor.getColumnIndex(CustomersTable.Columns.ID)),
                 cursor.getString(cursor.getColumnIndex(CustomersTable.Columns.FIRST_NAME)),
@@ -92,7 +97,7 @@ public final class CompuStore {
         ArrayList<Category> list = new ArrayList<>();
 
         CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories ORDER BY id", null));
-        while(cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             list.add(cursor.getCategory());
         }
         cursor.close();
@@ -100,7 +105,7 @@ public final class CompuStore {
         return list;
     }
 
-    public Category getOneCategory(int id){
+    public Category getOneCategory(int id) {
         Category category;
         CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories WHERE id =" + id, null));
         category = cursor.getCategory();
@@ -115,7 +120,7 @@ public final class CompuStore {
         if (description.isEmpty()) {
             response = false;
         }
-        for(Category category : a) {
+        for (Category category : a) {
             if (category.getDescription().toUpperCase().equals(description.toUpperCase())) {
                 response = false;
             }
@@ -123,7 +128,7 @@ public final class CompuStore {
         if (response) {
             ContentValues values = new ContentValues();
             values.put(CategoriesTable.Columns.DESCRIPTION, description);
-            db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID+ "= ?", new String[] {Integer.toString(id)});
+            db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
         }
 
         return response;
@@ -138,7 +143,7 @@ public final class CompuStore {
             match = false;
         }
 
-        for(Category category : categories) {
+        for (Category category : categories) {
             if (category.getDescription().toUpperCase().equals(text.toUpperCase())) {
                 match = false;
             }
@@ -153,23 +158,24 @@ public final class CompuStore {
     }
 
     public boolean categorydelete(int id, boolean delete) {
-        boolean match = false; boolean match2 = true; boolean match3 = true;
+        boolean match = false;
+        boolean match2 = true;
+        boolean match3 = true;
         List<Category> categories = getAllCategories();
         List<Product> products = getAllProducts();
 
-        for(Category category : categories) {
+        for (Category category : categories) {
             if (match3) {
                 if (category.getId() == id) {
                     match3 = false;
                     if (match2) {
-                        for(Product product : products) {
+                        for (Product product : products) {
                             if (product.getCategory_id() == id) {
                                 match = true;
                                 match2 = false;
-                            }
-                            else {
-                                if (delete){
-                                    db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[] {Integer.toString(id)});
+                            } else {
+                                if (delete) {
+                                    db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
                                 }
                             }
                         }
@@ -178,14 +184,26 @@ public final class CompuStore {
             }
         }
 
-        return  match;
+        return match;
+    }
+
+    public boolean ProductInAssembly(int id) {
+        boolean match = true;
+
+        List<AssemblyProduct> assemblies = getAllAssemblyProductsById(id);
+
+        if (assemblies.isEmpty()) {
+            match = false;
+        }
+
+        return match;
     }
 
     public List<Product> getAllProducts() {
         ArrayList<Product> list = new ArrayList<>();
 
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products ORDER BY description", null));
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }
         cursor.close();
@@ -193,12 +211,12 @@ public final class CompuStore {
         return list;
     }
 
-   public List<Product> getOneCategoryProduct(int id){
+    public List<Product> getOneCategoryProduct(int id) {
         ArrayList<Product> list = new ArrayList<>();
 
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE category_id = " + id + " ORDER BY description", null));
-        while(cursor.moveToNext()) {
-           list.add(cursor.getProduct());
+        while (cursor.moveToNext()) {
+            list.add(cursor.getProduct());
         }
         cursor.close();
 
@@ -209,51 +227,51 @@ public final class CompuStore {
         ArrayList<Product> list = new ArrayList<>();
 
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products ORDER BY description", null));
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }
         cursor.close();
 
         ArrayList<Product> list_filter = new ArrayList<>();
         for (Product product : list) {
-            if (product.getDescription().contains(name)){
+            if (product.getDescription().contains(name)) {
                 list_filter.add(product);
             }
         }
-        if(list_filter.isEmpty()){
+        if (list_filter.isEmpty()) {
             return list;
-        }else{
+        } else {
             return list_filter;
         }
     }
 
-    public List<Product> getProductByName(int id, String name){
+    public List<Product> getProductByName(int id, String name) {
         ArrayList<Product> list = new ArrayList<>();
 
         //ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE description LIKE '%" + name + "%' ORDER BY description", null));
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE category_id = " + id + " ORDER BY description", null));
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }
         cursor.close();
 
         ArrayList<Product> list_filter = new ArrayList<>();
         for (Product product : list) {
-            if (product.getDescription().contains(name)){
+            if (product.getDescription().contains(name)) {
                 list_filter.add(product);
             }
         }
-        if(list_filter.isEmpty()){
+        if (list_filter.isEmpty()) {
             return list;
-        }else{
+        } else {
             return list_filter;
         }
     }
 
-    public List<Assembly> getAllAssemblies(){
+    public List<Assembly> getAllAssemblies() {
         ArrayList<Assembly> list = new ArrayList<>();
 
-        AssemblyCursor cursor = new AssemblyCursor(db.rawQuery("SELECT * FROM assemblies ORDER BY description",null));
+        AssemblyCursor cursor = new AssemblyCursor(db.rawQuery("SELECT * FROM assemblies ORDER BY description", null));
         while (cursor.moveToNext()) {
             list.add(cursor.getAssembly());
         }
@@ -262,11 +280,11 @@ public final class CompuStore {
     }
 
 
-    public List<AssemblyProduct> getAllAssemblyProductsid(){
+    public List<AssemblyProduct> getAllAssemblyProductsById(int id) {
         ArrayList<AssemblyProduct> list = new ArrayList<>();
 
-        AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("SELECT * FROM assembly_products ORDER BY id",null));
-        while (cursor.moveToNext()){
+        AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("SELECT * FROM assembly_products WHERE product_id = " + id + " ORDER BY id", null));
+        while (cursor.moveToNext()) {
             list.add(cursor.getAssemblyProduct());
         }
         cursor.close();
@@ -274,10 +292,10 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Client> getAllClients(){
+    public List<Client> getAllClients() {
         ArrayList<Client> list = new ArrayList<>();
 
-        ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers ORDER BY last_name",null));
+        ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers ORDER BY last_name", null));
         while (cursor.moveToNext()) {
 
             list.add(cursor.getClient());
@@ -287,11 +305,11 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Client> getClientName(String name){
+    public List<Client> getClientName(String name) {
         ArrayList<Client> list = new ArrayList<>();
 
         ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers WHERE first_name LIKE '%" + name + "%' ORDER BY description", null));
-        while(cursor.moveToNext()) {
+        while (cursor.moveToNext()) {
             list.add(cursor.getClient());
         }
         cursor.close();
