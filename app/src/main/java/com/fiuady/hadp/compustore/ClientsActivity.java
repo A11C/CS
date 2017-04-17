@@ -17,9 +17,12 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.fiuady.MultiSelectionSpinner;
 import com.fiuady.db.Client;
 import com.fiuady.db.CompuStore;
+import com.fiuady.db.StateC;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientsActivity extends AppCompatActivity {
@@ -184,7 +187,30 @@ public class ClientsActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.clients_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        
+
+        final String[] select_qualification = {
+                "Filtrar por:", "Nombre", "Apellido", "Dirección", "Teléfono","E-mail"};
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_clients);
+
+        ArrayList<StateC> listC = new ArrayList<>();
+
+        for (int i = 0; i < select_qualification.length; i++) {
+            StateC stateC = new StateC();
+            stateC.setTitle(select_qualification[i]);
+            stateC.setSelected(false);
+            listC.add(stateC);
+        }
+
+        MultiSelectionSpinner multiSelectionSpinner = new MultiSelectionSpinner(ClientsActivity.this, 0,
+                listC);
+        spinner.setAdapter(multiSelectionSpinner);
+       // Spinner spinner=(Spinner)findViewById(R.id.input1);
+
+        //List<String> list = new ArrayList<String>();
+        //list.add("List1");
+        //list.add("List2");
+        //spinner.setOnItemClickListener();
+
 
         //spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         //   @Override
@@ -207,18 +233,7 @@ public class ClientsActivity extends AppCompatActivity {
 
         //}
 
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (searchtext.getFreezesText() != true) {
-                    adapter = new ClientAdapter(compustore.getClientName(String.valueOf(searchtext.getText())));
-                    recyclerview.setAdapter(adapter);
-                    searchtext.setHint(String.valueOf(searchtext.getText()));
-                    searchtext.setText(null);
 
-                }
-            }
-        });
 
     }
 

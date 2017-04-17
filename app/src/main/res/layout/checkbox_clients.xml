@@ -1,55 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/textCL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:text="text"
+        android:textAlignment="gravity" />
 
     <CheckBox
-        android:id="@+id/nombre_checkbox"
+        android:id="@+id/checkboxCL"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:text="@string/tag_nombre"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-
-    <CheckBox
-        android:id="@+id/apellido_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/nombre_checkbox"
-        android:text="@string/tag_apellido"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-    <CheckBox
-        android:id="@+id/direc_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/apellido_checkbox"
-        android:text="@string/tag_direccion"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-    <CheckBox
-        android:id="@+id/tel_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/direc_checkbox"
-        android:text="@string/tag_telefono"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-    <CheckBox
-        android:id="@+id/email_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/tel_checkbox"
-        android:text="@string/tag_email"
-        android:textSize="18sp"
-        android:textStyle="bold"/>
-
-         />
-
-
-</LinearLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:c
+        android:contextClickable="false"
+        tools:contextClickable="false" />
+</RelativeLayout>
