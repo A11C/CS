@@ -184,14 +184,7 @@ public class ClientsActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.clients_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-
-        ArrayAdapter arrayAdapter = ArrayAdapter.createFromResource(this, R.array.datos, android.R.layout.simple_spinner_dropdown_item);
-        arrayAdapter.setDropDownViewResource(R.layout.checkbox_clients);
-        spinner.setAdapter(arrayAdapter);
-
-
-        adapter = new ClientAdapter(compustore.getAllClients());
-        recyclerview.setAdapter(adapter);
+        
 
         //spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
         //   @Override

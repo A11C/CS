@@ -205,16 +205,49 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Product> getProductName(String name){
+    public List<Product> getAllProductsByName(String name) {
         ArrayList<Product> list = new ArrayList<>();
 
-        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE description LIKE '%" + name + "%' ORDER BY description", null));
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products ORDER BY description", null));
         while(cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }
         cursor.close();
 
-        return list;
+        ArrayList<Product> list_filter = new ArrayList<>();
+        for (Product product : list) {
+            if (product.getDescription().contains(name)){
+                list_filter.add(product);
+            }
+        }
+        if(list_filter.isEmpty()){
+            return list;
+        }else{
+            return list_filter;
+        }
+    }
+
+    public List<Product> getProductByName(int id, String name){
+        ArrayList<Product> list = new ArrayList<>();
+
+        //ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE description LIKE '%" + name + "%' ORDER BY description", null));
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE category_id = " + id + " ORDER BY description", null));
+        while(cursor.moveToNext()) {
+            list.add(cursor.getProduct());
+        }
+        cursor.close();
+
+        ArrayList<Product> list_filter = new ArrayList<>();
+        for (Product product : list) {
+            if (product.getDescription().contains(name)){
+                list_filter.add(product);
+            }
+        }
+        if(list_filter.isEmpty()){
+            return list;
+        }else{
+            return list_filter;
+        }
     }
 
     public List<Assembly> getAllAssemblies(){

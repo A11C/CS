@@ -33,10 +33,10 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
 
         public ProductHolder(View itemView) {
             super(itemView);
-            idtext = (TextView) itemView.findViewById(R.id.id_text);
+            idtext = (TextView) itemView.findViewById(R.id.idPr_text);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
-            desctext2 = (TextView) itemView.findViewById(R.id.description_text);
-            pricetext2 = (TextView) itemView.findViewById(R.id.price_text);
+            desctext2 = (TextView) itemView.findViewById(R.id.descriptionPr_text);
+            pricetext2 = (TextView) itemView.findViewById(R.id.pricePr_text);
             qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
@@ -56,10 +56,10 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
                     popupMenu.show();
                 }
             });
-            idtext.setText(Integer.toString(product.getId()));
-            catidtext.setText(Integer.toString(product.getCategory_id()));
-            pricetext2.setText(Integer.toString(product.getPrice()));
-            qtytext2.setText(Integer.toString(product.getQuantity()));
+            idtext.setText(String.valueOf(product.getId()));
+            catidtext.setText(String.valueOf(product.getCategory_id()));
+            pricetext2.setText(String.valueOf(product.getPrice()));
+            qtytext2.setText(String.valueOf(product.getQuantity()));
             desctext2.setText(product.getDescription());
         }
     }
@@ -104,9 +104,9 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
         relativeLayout = (RelativeLayout) findViewById(R.id.rl_products);
         relativeLayout.setBackgroundColor(getResources().getColor(R.color.colorAssembliesbg));
 
-        spinner = (Spinner) findViewById(R.id.spinner);
-        search = (ImageButton) findViewById(R.id.buscar_button);
-        searchtext = (EditText) findViewById(R.id.busqueda_text);
+        spinner = (Spinner) findViewById(R.id.spinnerCat);
+        search = (ImageButton) findViewById(R.id.buscarCat_button);
+        searchtext = (EditText) findViewById(R.id.busquedaCat_text);
         compustore = new CompuStore(this);
 
         recyclerview = (RecyclerView) findViewById(R.id.productos_rv);
@@ -121,41 +121,6 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
             arrayAdapter.add(category.getDescription());
         }
 
-        adapter = new ProductAdapter(compustore.getAllProducts());
-        recyclerview.setAdapter(adapter);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (spinner.getSelectedItem().toString() != "Todas"){
-                    adapter = new ProductAdapter(compustore.getOneCategoryProduct(position-1));
-                    recyclerview.setAdapter(adapter);
-                }else{
-                    adapter = new ProductAdapter(compustore.getAllProducts());
-                    recyclerview.setAdapter(adapter);
-                }
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-
-        });
-
-        search.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (searchtext.getFreezesText()!=true){
-                    adapter = new ProductAdapter(compustore.getProductName(String.valueOf(searchtext.getText())));
-                    recyclerview.setAdapter(adapter);
-                    searchtext.setHint(String.valueOf(searchtext.getText()));
-                    searchtext.setText(null);
-
-                }
-            }
-        });
 
     }
 
