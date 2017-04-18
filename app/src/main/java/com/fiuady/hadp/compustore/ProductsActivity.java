@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -31,10 +30,11 @@ import java.util.List;
 
 public class ProductsActivity extends AppCompatActivity {
 
+    private String QUERY = null;
 
     public static class mDialogFragment extends DialogFragment {
 
-        private int Num, Qty, Catid, Price;
+        private int Num, Qty, Catid, Price, Id;
         private String Desc;
         private EditText editText, precio;
         private TextView dialogTitle;
@@ -42,31 +42,34 @@ public class ProductsActivity extends AppCompatActivity {
         private NumberPicker picker;
         private CompuStore compustore;
 
-        static mDialogFragment newInstance(int num, int catid, int price, String desc) {
+        static mDialogFragment newInstance(int num, int catid, int price, String desc, int id) {
             mDialogFragment dF = new mDialogFragment();
             Bundle args = new Bundle();
             args.putInt("num", num);
             args.putInt("catid", catid);
             args.putInt("price", price);
             args.putString("desc", desc);
+            args.putInt("id",id);
             dF.setArguments(args);
             return dF;
         }
 
-        static mDialogFragment newInstance2(int num, int qty) {
+        static mDialogFragment newInstance2(int num, int qty, int id) {
             mDialogFragment dF = new mDialogFragment();
             Bundle args = new Bundle();
             args.putInt("num", num);
             args.putInt("qty", qty);
+            args.putInt("id",id);
             dF.setArguments(args);
             return dF;
         }
 
-        static mDialogFragment newInstance3(int num, String description) {
+        static mDialogFragment newInstance3(int num, String description, int id) {
             mDialogFragment dF = new mDialogFragment();
             Bundle args = new Bundle();
             args.putInt("num", num);
             args.putString("desc", description);
+            args.putInt("id",id);
             dF.setArguments(args);
             return dF;
         }
@@ -89,12 +92,15 @@ public class ProductsActivity extends AppCompatActivity {
                     Catid = getArguments().getInt("catid");
                     Price = getArguments().getInt("price");
                     Desc = getArguments().getString("desc");
+                    Id = getArguments().getInt("id");
                     return DialogMod();
                 case 1:
                     Qty = getArguments().getInt("qty");
+                    Id = getArguments().getInt("id");
                     return DialogStock();
                 case 2:
                     Desc = getArguments().getString("desc");
+                    Id = getArguments().getInt("id");
                     return DialogErase();
                 case 3:
                     return DialogAdd();
@@ -117,7 +123,7 @@ public class ProductsActivity extends AppCompatActivity {
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(arrayAdapter);
-            List<Category> categories = compustore.getAllCategories();
+            List<Category> categories = compustore.getAllCategoriesById();
             for (Category category : categories) {
                 arrayAdapter.add(category.getDescription());
             }
@@ -130,12 +136,20 @@ public class ProductsActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
+                    if ((!editText.getText().toString().isEmpty()) && (!precio.getText().toString().isEmpty())&& (!compustore.ProductExists(editText.getText().toString()))) {
+                        compustore.UpdateProduct(compustore.getOneCategory(spinner.getSelectedItem().toString()), editText.getText().toString(), Integer.valueOf(precio.getText().toString()), Id);
+                        ((ProductsActivity)getActivity()).UpdateAdapter();
+                        Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.InvalidProduct, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             builder.setView(view);
             return builder.create();
         }
+
         public AlertDialog DialogErase(){
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setCancelable(false);
@@ -149,6 +163,8 @@ public class ProductsActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
+                    compustore.DeleteProduct(Id);
+                    ((ProductsActivity)getActivity()).UpdateAdapter();
                     Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -171,7 +187,9 @@ public class ProductsActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
+                    compustore.AddStockProduct(Id, picker.getValue());
+                    ((ProductsActivity)getActivity()).UpdateAdapter();
+                    Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                 }
             });
             builder.setView(picker);
@@ -190,7 +208,7 @@ public class ProductsActivity extends AppCompatActivity {
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(arrayAdapter);
 
-            List<Category> categories = compustore.getAllCategories();
+            List<Category> categories = compustore.getAllCategoriesById();
             for (Category category : categories) {
                 arrayAdapter.add(category.getDescription());
             }
@@ -202,26 +220,39 @@ public class ProductsActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    dialog.dismiss();
+                    if ((!editText.getText().toString().isEmpty()) && (!precio.getText().toString().isEmpty())&& (!compustore.ProductExists(editText.getText().toString()))) {
+                        if (compustore.getOneCategory(spinner.getSelectedItem().toString())!=-1) {
+                            compustore.InsertProduct(compustore.getOneCategory(spinner.getSelectedItem().toString()), editText.getText().toString(), Integer.valueOf(precio.getText().toString()));
+                            ((ProductsActivity)getActivity()).UpdateAdapter();
+                            Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(getActivity(), R.string.InvalidProduct, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
             builder.setView(view);
             return builder.create();
         }
+
     }
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView idtext, catidtext, desctext2, pricetext2, qtytext2;
+        private TextView idtext, catidtext, desctext, pricetext, qtytext;
 
 
         public ProductHolder(View itemView) {
             super(itemView);
             idtext = (TextView) itemView.findViewById(R.id.idPr_text);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
-            desctext2 = (TextView) itemView.findViewById(R.id.descriptionPr_text);
-            pricetext2 = (TextView) itemView.findViewById(R.id.pricePr_text);
-            qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
+            desctext = (TextView) itemView.findViewById(R.id.descriptionPr_text);
+            pricetext = (TextView) itemView.findViewById(R.id.pricePr_text);
+            qtytext = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
         private void bindProduct(final Product product) {
@@ -243,13 +274,13 @@ public class ProductsActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
-                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getCategory_id(), product.getPrice(), product.getDescription());
+                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getCategory_id(), product.getPrice(), product.getDescription(), product.getId());
                                 fragment.show(getFragmentManager(),"ModFragment");
                             } else if(item.getTitle().equals(popup.getMenu().getItem(1).getTitle())){
-                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getQuantity());
+                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getQuantity(), product.getId());
                                 fragment.show(getFragmentManager(),"StockFragment");
                             } else{
-                                mDialogFragment fragment = mDialogFragment.newInstance3(2, product.getDescription());
+                                mDialogFragment fragment = mDialogFragment.newInstance3(2, product.getDescription(), product.getId());
                                 fragment.show(getFragmentManager(),"EraseFragment");
                             }
                             return true;
@@ -260,9 +291,9 @@ public class ProductsActivity extends AppCompatActivity {
             });
             idtext.setText(String.valueOf(product.getId()));
             catidtext.setText(String.valueOf(product.getCategory_id()));
-            pricetext2.setText(String.valueOf(product.getPrice()));
-            qtytext2.setText(String.valueOf(product.getQuantity()));
-            desctext2.setText(product.getDescription());
+            pricetext.setText(String.valueOf(product.getPrice()));
+            qtytext.setText(String.valueOf(product.getQuantity()));
+            desctext.setText(product.getDescription());
         }
     }
 
@@ -297,7 +328,7 @@ public class ProductsActivity extends AppCompatActivity {
     private Spinner spinner;
     private ImageButton search;
 
-    private EditText desctext, pricetext, qtytext, searchtext;
+    private EditText searchtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -322,7 +353,7 @@ public class ProductsActivity extends AppCompatActivity {
         spinner.setAdapter(arrayAdapter);
 
         arrayAdapter.add("Todas");
-        final List<Category> categories = compustore.getAllCategories();
+        final List<Category> categories = compustore.getAllCategoriesById();
         for (Category category : categories) {
             arrayAdapter.add(category.getDescription());
         }
@@ -330,27 +361,27 @@ public class ProductsActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (searchtext.getText()!= null){
-                    if (spinner.getSelectedItemPosition() != 0){
-                        adapter = new ProductAdapter(compustore.getProductByName(spinner.getSelectedItemPosition()-1, String.valueOf(searchtext.getText())));
-                        recyclerview.setAdapter(adapter);
-                    }else{
-                        adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
-                        recyclerview.setAdapter(adapter);
-                    }
-                }
-                else{
-                    if (spinner.getSelectedItemPosition() != 0){
-                        adapter = new ProductAdapter(compustore.getAllProductsById(spinner.getSelectedItemPosition()-1));
-                        recyclerview.setAdapter(adapter);
-                    }else{
-                        adapter = new ProductAdapter(compustore.getAllProducts());
-                        recyclerview.setAdapter(adapter);
-                    }
-
-
-                }
+                //if (searchtext.getText()!= null){
+                //    if (spinner.getSelectedItemPosition() != 0){
+                //        adapter = new ProductAdapter(compustore.getProductByName(compustore.getOneCategory(spinner.getSelectedItem().toString()), String.valueOf(searchtext.getText())));
+                //        recyclerview.setAdapter(adapter);
+                //    }else{
+                //        adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
+                //        recyclerview.setAdapter(adapter);
+                //    }
+                //}
+                //else{
+                //    if (spinner.getSelectedItemPosition() != 0){
+                //        adapter = new ProductAdapter(compustore.getAllProductsById(compustore.getOneCategory(spinner.getSelectedItem().toString())));
+                //        recyclerview.setAdapter(adapter);
+                //    }else{
+                //        adapter = new ProductAdapter(compustore.getAllProducts());
+                //        recyclerview.setAdapter(adapter);
+                //    }
+                //}
                 searchtext.setHint(String.valueOf(searchtext.getText()));
+                QUERY = searchtext.getText().toString();
+                UpdateAdapter();
                 searchtext.setText(null);
             }
         });
@@ -367,6 +398,27 @@ public class ProductsActivity extends AppCompatActivity {
         mDialogFragment fragment = mDialogFragment.newInstance4(3);
         fragment.show(getFragmentManager(),"AddFragment");
         return super.onOptionsItemSelected(item);
+    }
+
+    public void UpdateAdapter(){
+        if (QUERY!= null){
+            if (spinner.getSelectedItemPosition() != 0){
+                adapter = new ProductAdapter(compustore.getProductByName(compustore.getOneCategory(spinner.getSelectedItem().toString()), String.valueOf(searchtext.getText())));
+                recyclerview.setAdapter(adapter);
+            }else{
+                adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
+                recyclerview.setAdapter(adapter);
+            }
+        }
+        else{
+            if (spinner.getSelectedItemPosition() != 0){
+                adapter = new ProductAdapter(compustore.getAllProductsById(compustore.getOneCategory(spinner.getSelectedItem().toString())));
+                recyclerview.setAdapter(adapter);
+            }else{
+                adapter = new ProductAdapter(compustore.getAllProducts());
+                recyclerview.setAdapter(adapter);
+            }
+        }
     }
 
 }

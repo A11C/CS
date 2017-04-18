@@ -55,7 +55,7 @@
 
     <TextView
         android:id="@+id/descriptionPr_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/categoryID_tag"
         android:layout_toEndOf="@id/descriptionPr_tag"

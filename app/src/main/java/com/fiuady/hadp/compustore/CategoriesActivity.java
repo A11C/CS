@@ -86,8 +86,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if ((editText.getText() != null) && (!compustore.CategoryDescriptionExists(editText.getText().toString()))) {
+                    if ((!editText.getText().toString().isEmpty()) && (!compustore.CategoryExists(editText.getText().toString()))) {
                         compustore.InsertCategory(editText.getText().toString());
+                        ((CategoriesActivity) getActivity()).UpdateAdapter();
                         Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), R.string.Error_operacion, Toast.LENGTH_SHORT).show();
@@ -116,8 +117,9 @@ public class CategoriesActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_modificar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    if ((editText.getText() != null) && (!compustore.CategoryDescriptionExists(editText.getText().toString()))) {
-                        compustore.updateCategory(editText.getText().toString(), Id);
+                    if ((!editText.getText().toString().isEmpty()) && (!compustore.CategoryExists(editText.getText().toString()))) {
+                        compustore.UpdateCategory(editText.getText().toString(), Id);
+                        ((CategoriesActivity) getActivity()).UpdateAdapter();
                         Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(getActivity(), R.string.Error_operacion, Toast.LENGTH_SHORT).show();
@@ -142,6 +144,7 @@ public class CategoriesActivity extends AppCompatActivity {
             }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
                     compustore.CategoryDelete(Id);
+                    ((CategoriesActivity) getActivity()).UpdateAdapter();
                     Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -149,11 +152,6 @@ public class CategoriesActivity extends AppCompatActivity {
             return builder.create();
         }
 
-        @Override
-        public void onDestroyView() {
-            super.onDestroyView();
-            ((CategoriesActivity) getActivity()).updateAdapter();
-        }
     }
 
     private class CategoryHolder extends RecyclerView.ViewHolder {
@@ -246,7 +244,6 @@ public class CategoriesActivity extends AppCompatActivity {
         recyclerview = (RecyclerView) findViewById(R.id.activity_categories);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CategoryAdapter(compustore.getAllCategories());
-
         recyclerview.setAdapter(adapter);
     }
 
@@ -265,7 +262,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
     }
 
-    public void updateAdapter() {
+    public void UpdateAdapter() {
         adapter = new CategoryAdapter(compustore.getAllCategories());
         recyclerview.setAdapter(adapter);
     }
