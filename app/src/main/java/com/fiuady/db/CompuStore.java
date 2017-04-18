@@ -82,6 +82,20 @@ class ClientCursor extends CursorWrapper {
 
 }
 
+class OrderCursor extends CursorWrapper {
+    public OrderCursor(Cursor cursor) {
+        super(cursor);
+    }
+
+    public Order getOrder(){
+        Cursor cursor = getWrappedCursor();
+        return new Order(cursor.getInt(cursor.getColumnIndex(OrdersTable.Columns.ID)),
+                cursor.getInt(cursor.getColumnIndex(OrdersTable.Columns.STATUS_ID)),
+                cursor.getInt(cursor.getColumnIndex(OrdersTable.Columns.CUSTOMER_ID)),
+                cursor.getString(cursor.getColumnIndex(OrdersTable.Columns.DATE)),
+                cursor.getString(cursor.getColumnIndex(OrdersTable.Columns.CHANGE_LOG)));
+    }
+}
 
 public final class CompuStore {
 
@@ -330,6 +344,16 @@ public final class CompuStore {
         return list;
     }
 
+    public void DeleteAssembly (int id){
+        db.delete(AssembliesTable.NAME, AssembliesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
+    }
+
+    public void InsertAssembly (String description){
+        ContentValues values = new ContentValues();
+        values.put(AssembliesTable.Columns.DESCRIPTION, description);
+        db.insert(AssembliesTable.NAME, null, values);
+    }
+
     public List<Client> getAllClients() {
         ArrayList<Client> list = new ArrayList<>();
 
@@ -349,6 +373,18 @@ public final class CompuStore {
         ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers WHERE first_name LIKE '%" + name + "%' ORDER BY description", null));
         while (cursor.moveToNext()) {
             list.add(cursor.getClient());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public List<Order> getAllOrders(){
+        ArrayList<Order> list = new ArrayList<>();
+
+        OrderCursor cursor = new OrderCursor(db.rawQuery("SELECT * FROM orders ORDER BY id",null));
+        while (cursor.moveToNext()){
+            list.add(cursor.getOrder());
         }
         cursor.close();
 
