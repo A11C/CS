@@ -97,6 +97,19 @@ class OrderCursor extends CursorWrapper {
     }
 }
 
+class OrderAssemblyCursor extends CursorWrapper{
+    public OrderAssemblyCursor(Cursor cursor){
+        super (cursor);
+    }
+
+    public OrderAssembly getOrderAssembly(){
+        Cursor cursor = getWrappedCursor();
+        return new OrderAssembly(cursor.getInt(cursor.getColumnIndex(OrderAssembliesTable.Columns.ID)),
+                cursor.getInt(cursor.getColumnIndex(OrderAssembliesTable.Columns.ASSEMBLY_ID)),
+                cursor.getInt(cursor.getColumnIndex(OrderAssembliesTable.Columns.QUANTITY)));
+    }
+}
+
 public final class CompuStore {
 
     private SQLiteDatabase db;
@@ -354,6 +367,18 @@ public final class CompuStore {
         db.insert(AssembliesTable.NAME, null, values);
     }
 
+    public boolean AssemblyInOrder(int id){
+        boolean match = true;
+
+        List<OrderAssembly> orderAssemblies = getAllOrderAssemblyById(id);
+
+        if (orderAssemblies.isEmpty()) {
+            match = false;
+        }
+
+        return match;
+    }
+
     public List<Client> getAllClients() {
         ArrayList<Client> list = new ArrayList<>();
 
@@ -385,6 +410,18 @@ public final class CompuStore {
         OrderCursor cursor = new OrderCursor(db.rawQuery("SELECT * FROM orders ORDER BY id",null));
         while (cursor.moveToNext()){
             list.add(cursor.getOrder());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public List<OrderAssembly> getAllOrderAssemblyById(int id){
+        ArrayList<OrderAssembly> list = new ArrayList<>();
+
+        OrderAssemblyCursor cursor = new OrderAssemblyCursor(db.rawQuery("SELECT * FROM order_assemblies WHERE assembly_id = " + id + " ORDER BY id",null));
+        while (cursor.moveToNext()){
+            list.add(cursor.getOrderAssembly());
         }
         cursor.close();
 

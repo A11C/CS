@@ -266,7 +266,7 @@ public class ProductsActivity extends AppCompatActivity {
                     popup.getMenuInflater().inflate(R.menu.menu_option_products, popup.getMenu());
 
                     if (compustore.ProductInAssembly(product.getId())) {
-                        popup.getMenu().removeItem(R.id.menu_2);
+                        popup.getMenu().removeItem(R.id.menu_2p);
                     }
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {

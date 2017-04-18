@@ -243,8 +243,7 @@ public class CategoriesActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.activity_categories);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CategoryAdapter(compustore.getAllCategories());
-        recyclerview.setAdapter(adapter);
+        UpdateAdapter();
     }
 
     @Override

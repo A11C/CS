@@ -2,15 +2,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_0"
+        android:id="@+id/menu_0p"
         android:title="@string/texto_modificar"/>
 
     <item
-        android:id="@+id/menu_1"
+        android:id="@+id/menu_1p"
         android:title="@string/stock"/>
 
     <item
-        android:id="@+id/menu_2"
+        android:id="@+id/menu_2p"
         android:title="@string/texto_eliminar"/>
 
 </menu>

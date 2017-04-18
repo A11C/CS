@@ -1,5 +1,7 @@
 package com.fiuady.hadp.compustore;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -8,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,6 +25,52 @@ import com.fiuady.db.CompuStore;
 import java.util.List;
 
 public class AssemblyActivity extends AppCompatActivity {
+
+    public static class mDialogFragment extends DialogFragment {
+
+        private int Id;
+        private String Desc;
+        private CompuStore compustore;
+
+        static mDialogFragment newInstance(int id, String desc) {
+            mDialogFragment dF = new mDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("id", id);
+            args.putString("desc", desc);
+            dF.setArguments(args);
+            return dF;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            super.onCreateDialog(savedInstanceState);
+            Id = getArguments().getInt("id");
+            Desc = getArguments().getString("desc");
+            return DialogErase();
+        }
+
+        public AlertDialog DialogErase() {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setCancelable(false);
+            builder.setTitle(getString(R.string.Elimina_ensamble));
+            builder.setMessage("El siguiente ensamble será eliminado: " + Desc);
+            compustore = new CompuStore(getActivity());
+
+            builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    compustore.DeleteAssembly(Id);
+                    ((AssemblyActivity) getActivity()).UpdateAdapter();
+                    Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                }
+            });
+            return builder.create();
+        }
+    }
+
     private EditText editText;
     private TextView dialogTitle;
 
@@ -41,51 +90,20 @@ public class AssemblyActivity extends AppCompatActivity {
                     final PopupMenu menu = new PopupMenu(AssemblyActivity.this, descriptionassembly);
                     menu.getMenuInflater().inflate(R.menu.menu_option_catassem, menu.getMenu());
 
+                    if (compustore.AssemblyInOrder(assembly.getId())) {
+                        menu.getMenu().removeItem(R.id.menu_1);
+                    }
+
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(menu.getMenu().getItem(0).getTitle())) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(AssemblyActivity.this);
-                                View view = getLayoutInflater().inflate(R.layout.agregar_ensamble, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
-                                editText = (EditText) view.findViewById(R.id.dialog_text);
-
-                                dialogTitle.setText(R.string.Edita_ensamble);
-
-                                builder.setCancelable(false);
-                                builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }).setPositiveButton(R.string.texto_modificar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                });
-                                builder.setView(view);
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
+                                Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
+                                startActivity(i);
                             } else {
-                                AlertDialog.Builder build = new AlertDialog.Builder(AssemblyActivity.this);
-                                build.setCancelable(false);
-                                build.setTitle(getString(R.string.Elimina_ensamble));
-                                build.setMessage("El siguiente ensamble será eliminado" + ": " + assembly.getDescripcion());
-
-                                build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        Toast.makeText(AssemblyActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                                      //  compustore.assemblydelete(assembly.getId(), true);
-                                        //adapter = new AssemblyAdapter(compustore.getAllCategories());
-                                        recyclerview.setAdapter(adapter);
-                                    }
-                                });
-
-                                build.create().show();
+                                mDialogFragment fragment = mDialogFragment.newInstance(assembly.getId(), assembly.getDescripcion());
+                                fragment.show(getFragmentManager(), "DialogErase");
                             }
                             return true;
                         }
@@ -144,9 +162,7 @@ public class AssemblyActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.activity_assemblies);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new AssemblyAdapter(compustore.getAllAssemblies());
-
-        recyclerview.setAdapter(adapter);
+        UpdateAdapter();
     }
 
     @Override
@@ -158,10 +174,18 @@ public class AssemblyActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
-        startActivity(i);
+        //Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
+        //startActivity(i);
+        int i = 0;
+        compustore.InsertAssembly("abcd" + i);
+        i++;
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void UpdateAdapter() {
+        adapter = new AssemblyAdapter(compustore.getAllAssemblies());
+        recyclerview.setAdapter(adapter);
     }
 }
 
