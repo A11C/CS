@@ -60,15 +60,7 @@ public class AssemblyActivity extends AppCompatActivity {
                                     }
                                 }).setPositiveButton(R.string.texto_modificar, new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
-                                        if (compustore.updateCategory(editText.getText().toString(), assembly.getId())) {
-                                            Toast.makeText(AssemblyActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                                          //  adapter = new AssemblyAdapter(compustore.getAllCategories());
-                                            recyclerview.setAdapter(adapter);
-                                        } else {
-                                            Toast.makeText(AssemblyActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
-
-
-                                        }
+                                        dialog.dismiss();
                                     }
                                 });
                                 builder.setView(view);

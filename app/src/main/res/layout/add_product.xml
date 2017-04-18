@@ -30,14 +30,7 @@
         android:layout_below="@id/category_tag"
         android:padding="10dp"
         android:textSize="24sp"/>
-    <TextView
-        android:id="@+id/precio_tag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/description_tag"
-        android:padding="10sp"
-        android:textSize="24sp"
-        android:text="@string/tag_precio"/>
+
 
     <Spinner
         android:id="@+id/spinnerPr"
@@ -61,11 +54,20 @@
         android:inputType="text"
         tool:ignore="LabelFor" />
 
+    <TextView
+        android:id="@+id/precio_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/description_text"
+        android:padding="10sp"
+        android:textSize="24sp"
+        android:text="@string/tag_precio"/>
+
     <EditText
         android:id="@+id/precio_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/description_tag"
+        android:layout_below="@id/description_text"
         android:layout_toEndOf="@id/precio_tag"
         android:inputType="number"
         android:hint="Precio en centavos"

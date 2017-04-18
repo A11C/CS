@@ -84,10 +84,11 @@ class ClientCursor extends CursorWrapper {
 
 
 public final class CompuStore {
-    private InventoryCSHelper inventoryCSHelper;
+
     private SQLiteDatabase db;
 
     public CompuStore(Context context) {
+        InventoryCSHelper inventoryCSHelper;
         inventoryCSHelper = new InventoryCSHelper(context);
         db = inventoryCSHelper.getWritableDatabase();
         inventoryCSHelper.backupDatabasefile(context);
@@ -107,83 +108,63 @@ public final class CompuStore {
 
     public Category getOneCategory(int id) {
         Category category;
-        CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories WHERE id =" + id, null));
+        CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories WHERE id = " + id, null));
         category = cursor.getCategory();
         cursor.close();
 
         return category;
     }
 
-    public boolean updateCategory(String description, int id) {
-        boolean response = true;
-        List<Category> a = getAllCategories();
-        if (description.isEmpty()) {
-            response = false;
-        }
-        for (Category category : a) {
-            if (category.getDescription().toUpperCase().equals(description.toUpperCase())) {
-                response = false;
-            }
-        }
-        if (response) {
-            ContentValues values = new ContentValues();
-            values.put(CategoriesTable.Columns.DESCRIPTION, description);
-            db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
-        }
-
-        return response;
-    }
-
-    public boolean InsertCategory(String text) {
+    public boolean CategoryInProduct(int id) {
         boolean match = true;
-        List<Category> categories = getAllCategories();
-        ContentValues values = new ContentValues();
 
-        if (text.isEmpty()) {
+        List<Product> products = getAllProductsById(id);
+
+        if (products.isEmpty()) {
             match = false;
-        }
-
-        for (Category category : categories) {
-            if (category.getDescription().toUpperCase().equals(text.toUpperCase())) {
-                match = false;
-            }
-        }
-
-        if (match) {
-            values.put(CategoriesTable.Columns.DESCRIPTION, text);
-            db.insert(CategoriesTable.NAME, null, values);
         }
 
         return match;
     }
 
-    public boolean categorydelete(int id, boolean delete) {
-        boolean match = false;
-        boolean match2 = true;
-        boolean match3 = true;
+    public void InsertCategory(String text) {
+
+        ContentValues values = new ContentValues();
+        values.put(CategoriesTable.Columns.DESCRIPTION, text);
+        db.insert(CategoriesTable.NAME, null, values);
+
+    }
+
+    public void updateCategory(String description, int id) {
+
+        ContentValues values = new ContentValues();
+        values.put(CategoriesTable.Columns.DESCRIPTION, description);
+        db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
+
+    }
+
+
+    public void CategoryDelete(int id) {
         List<Category> categories = getAllCategories();
-        List<Product> products = getAllProducts();
 
         for (Category category : categories) {
-            if (match3) {
-                if (category.getId() == id) {
-                    match3 = false;
-                    if (match2) {
-                        for (Product product : products) {
-                            if (product.getCategory_id() == id) {
-                                match = true;
-                                match2 = false;
-                            } else {
-                                if (delete) {
-                                    db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
-                                }
-                            }
-                        }
-                    }
-                }
+            if (category.getId() == id) {
+                db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
+                break;
             }
         }
+    }
 
+    public boolean CategoryDescriptionExists(String description) {
+        boolean match = false;
+
+        List<Category> categories = getAllCategories();
+        for (Category category : categories) {
+            if (category.getDescription().toUpperCase().equals(description.toUpperCase())) {
+                match = true;
+                break;
+            }
+        }
         return match;
     }
 
@@ -211,7 +192,7 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Product> getOneCategoryProduct(int id) {
+    public List<Product> getAllProductsById(int id) {
         ArrayList<Product> list = new ArrayList<>();
 
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products WHERE category_id = " + id + " ORDER BY description", null));

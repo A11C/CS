@@ -34,7 +34,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     public static class mDialogFragment extends DialogFragment {
 
-        private int Num, Qty;
+        private int Num, Qty, Catid, Price;
         private String Desc;
         private EditText editText, precio;
         private TextView dialogTitle;
@@ -42,10 +42,13 @@ public class ProductsActivity extends AppCompatActivity {
         private NumberPicker picker;
         private CompuStore compustore;
 
-        static mDialogFragment newInstance(int num) {
+        static mDialogFragment newInstance(int num, int catid, int price, String desc) {
             mDialogFragment dF = new mDialogFragment();
             Bundle args = new Bundle();
             args.putInt("num", num);
+            args.putInt("catid", catid);
+            args.putInt("price", price);
+            args.putString("desc", desc);
             dF.setArguments(args);
             return dF;
         }
@@ -63,7 +66,15 @@ public class ProductsActivity extends AppCompatActivity {
             mDialogFragment dF = new mDialogFragment();
             Bundle args = new Bundle();
             args.putInt("num", num);
-            args.putString("description", description);
+            args.putString("desc", description);
+            dF.setArguments(args);
+            return dF;
+        }
+
+        static mDialogFragment newInstance4(int num) {
+            mDialogFragment dF = new mDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("num", num);
             dF.setArguments(args);
             return dF;
         }
@@ -75,12 +86,15 @@ public class ProductsActivity extends AppCompatActivity {
             Num = getArguments().getInt("num");
             switch (Num) {
                 case 0:
+                    Catid = getArguments().getInt("catid");
+                    Price = getArguments().getInt("price");
+                    Desc = getArguments().getString("desc");
                     return DialogMod();
                 case 1:
                     Qty = getArguments().getInt("qty");
                     return DialogStock();
                 case 2:
-                    Desc = getArguments().getString("description");
+                    Desc = getArguments().getString("desc");
                     return DialogErase();
                 case 3:
                     return DialogAdd();
@@ -94,18 +108,20 @@ public class ProductsActivity extends AppCompatActivity {
             View view = inflater.inflate(R.layout.add_product, null);
             dialogTitle = (TextView) view.findViewById(R.id.title_product);
             editText = (EditText) view.findViewById(R.id.description_text);
+            editText.setText(Desc);
             precio = (EditText) view.findViewById(R.id.precio_text);
+            precio.setText(String.valueOf(Price));
             spinner = (Spinner) view.findViewById(R.id.spinnerPr);
             dialogTitle.setText(R.string.title_ModProducto);
             compustore = new CompuStore(getActivity());
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(arrayAdapter);
-
             List<Category> categories = compustore.getAllCategories();
             for (Category category : categories) {
                 arrayAdapter.add(category.getDescription());
             }
+            spinner.setSelection(Catid);
 
             builder.setCancelable(false);
             builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -125,6 +141,7 @@ public class ProductsActivity extends AppCompatActivity {
             builder.setCancelable(false);
             builder.setTitle(getString(R.string.title_EliminarProducto));
             builder.setMessage("El siguiente producto será eliminado: " + Desc);
+            compustore = new CompuStore(getActivity());
 
             builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
@@ -145,6 +162,7 @@ public class ProductsActivity extends AppCompatActivity {
             picker.setMinValue(Qty);
             picker.setValue(Qty);
             picker.setMaxValue(Qty+100);
+            compustore = new CompuStore(getActivity());
 
             builder.setCancelable(false);
             builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
@@ -225,7 +243,7 @@ public class ProductsActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
-                                mDialogFragment fragment = mDialogFragment.newInstance(0);
+                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getCategory_id(), product.getPrice(), product.getDescription());
                                 fragment.show(getFragmentManager(),"ModFragment");
                             } else if(item.getTitle().equals(popup.getMenu().getItem(1).getTitle())){
                                 mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getQuantity());
@@ -323,7 +341,7 @@ public class ProductsActivity extends AppCompatActivity {
                 }
                 else{
                     if (spinner.getSelectedItemPosition() != 0){
-                        adapter = new ProductAdapter(compustore.getOneCategoryProduct(spinner.getSelectedItemPosition()-1));
+                        adapter = new ProductAdapter(compustore.getAllProductsById(spinner.getSelectedItemPosition()-1));
                         recyclerview.setAdapter(adapter);
                     }else{
                         adapter = new ProductAdapter(compustore.getAllProducts());
@@ -346,7 +364,7 @@ public class ProductsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        mDialogFragment fragment = mDialogFragment.newInstance(3);
+        mDialogFragment fragment = mDialogFragment.newInstance4(3);
         fragment.show(getFragmentManager(),"AddFragment");
         return super.onOptionsItemSelected(item);
     }

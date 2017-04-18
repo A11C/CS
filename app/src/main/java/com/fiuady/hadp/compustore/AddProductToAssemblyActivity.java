@@ -135,7 +135,7 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
                 }
                 else{
                     if (spinner.getSelectedItemPosition() != 0){
-                        adapter = new ProductAdapter(compustore.getOneCategoryProduct(spinner.getSelectedItemPosition()-1));
+                        adapter = new ProductAdapter(compustore.getAllProductsById((spinner.getSelectedItemPosition()-1)));
                         recyclerview.setAdapter(adapter);
                     }else{
                         adapter = new ProductAdapter(compustore.getAllProducts());
