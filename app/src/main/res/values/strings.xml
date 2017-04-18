@@ -45,6 +45,7 @@
     <string name="title_ModProducto">Modificar Producto</string>
     <string name="title_EliminarProducto">Eliminar Producto</string>
     <string name="stock">Agregar stock </string>
+    <string name="InvalidProduct">Texto vacío o Producto Existente</string>
 
     <string name="new_client">Nombre de cliente nuevo: </string>
 
