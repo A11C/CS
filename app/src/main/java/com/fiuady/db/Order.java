@@ -1,51 +1,63 @@
 package com.fiuady.db;
 
+import java.util.Date;
+
 /**
  * Created by jessm on 18/04/2017.
  */
 
 public class Order {
-    private int id_or;
-    private int status;
-    private int customerId;
-    private int date;
+    private int id;
+    private int status_id;
+    private int customer_id;
+    private String date;
+    private String change_log;
 
-    public Order(int id_or, int status, int customerId, int date) {
-        this.id_or = id_or;
-        this.status= status;
-        this.customerId = customerId;
+    public Order(int id, int status_id, int customer_id, String date, String change_log) {
+        this.id = id;
+        this.status_id = status_id;
+        this.customer_id = customer_id;
         this.date = date;
+        this.change_log = change_log;
     }
 
-    public int getIdOr() {
-        return id_or;
+    public int getId() {
+        return id;
     }
 
-    public void setIdOr(int id) {
-        this.id_or = id_or;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public int getStatus() {
-        return status;
+    public int getStatus_id() {
+        return status_id;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStatus_id(int status_id) {
+        this.status_id = status_id;
     }
 
-    public int getCustomerId() {
-        return customerId;
+    public int getCustomer_id() {
+        return customer_id;
     }
 
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
+    public void setCustomer_id(int customer_id) {
+        this.customer_id = customer_id;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getChange_log() {
+        return change_log;
+    }
+
+    public void setChange_log(String change_log) {
+        this.change_log = change_log;
     }
 }
