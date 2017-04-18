@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="?android:listSeparatorTextViewStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/idPr_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="@string/tag_id"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/idPr_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/idPr_tag"
+        android:text="@string/tag_caregoriaID"
+        android:textSize="18sp"
+        tools:text="...ID.." />
+
+    <TextView
+        android:id="@+id/ProductID_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/idPr_tag"
+        android:text="@string/tag_ProductID"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/ProductID_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/idPr_tag"
+        android:layout_toEndOf="@id/ProductID_tag"
+        android:text="@string/tag_ProductID"
+        android:textSize="18sp"
+        tools:text="...ID Producto.." />
+
+
+
+    <TextView
+        android:id="@+id/qtyAsPr_tag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/ProductID_tag"
+        android:text="@string/tag_cantidad"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/qtyAsPr_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ProductID_tag"
+        android:layout_toEndOf="@id/qtyAsPr_tag"
+        android:text="@string/tag_qty"
+        android:textSize="18sp"
+        tools:text="...Cantidad.." />
+
+
+</RelativeLayout>

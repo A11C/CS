@@ -32,6 +32,7 @@
     <string name="tag_fecha">Fecha: </string>
     <string name="tag_cambios">Registro de cambios: </string>
     <string name="dialog_addp">Agregar Producto</string>
+    <string name="tag_ProductID">ID Producto:</string>
 
     <string name="order_pendiente">Pendiente: </string>
     <string name="order_cancelado">Cancelado: </string>

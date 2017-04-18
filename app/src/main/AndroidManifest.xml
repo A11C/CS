@@ -38,7 +38,8 @@
             android:name=".OrdersActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/tag_ordenes"
-            android:theme="@style/OrdersTheme" />
+            android:theme="@style/OrdersTheme"/>
+        <activity android:name=".AddOrderActivity"  android:label="Agregar Orden" android:theme="@style/OrdersTheme"/>
         <activity
             android:name=".ReportsActivity"
             android:label="@string/tag_reportes"

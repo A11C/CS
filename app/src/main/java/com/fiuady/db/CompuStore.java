@@ -306,7 +306,7 @@ public final class CompuStore {
         return list;
     }
 
-    public List<AssemblyProduct> getAllAssemblyProducts(int id) {
+    public List<AssemblyProduct> getAllAssemblyProducts() {
         ArrayList<AssemblyProduct> list = new ArrayList<>();
 
         AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("SELECT * FROM assembly_products ORDER BY id", null));
