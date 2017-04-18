@@ -97,6 +97,18 @@ public final class CompuStore {
     public List<Category> getAllCategories() {
         ArrayList<Category> list = new ArrayList<>();
 
+        CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories ORDER BY description", null));
+        while (cursor.moveToNext()) {
+            list.add(cursor.getCategory());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public List<Category> getAllCategoriesById() {
+        ArrayList<Category> list = new ArrayList<>();
+
         CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories ORDER BY id", null));
         while (cursor.moveToNext()) {
             list.add(cursor.getCategory());
@@ -106,13 +118,18 @@ public final class CompuStore {
         return list;
     }
 
-    public Category getOneCategory(int id) {
-        Category category;
-        CategoryCursor cursor = new CategoryCursor(db.rawQuery("SELECT * FROM product_categories WHERE id = " + id, null));
-        category = cursor.getCategory();
-        cursor.close();
+    public int getOneCategory(String description) {
 
-        return category;
+        List<Category> list = getAllCategoriesById();
+        int  category_id=-1;
+        for (Category category : list){
+           if(category.getDescription().equals(description)){
+               category_id = category.getId();
+               break;
+           }
+        }
+
+        return category_id;
     }
 
     public boolean CategoryInProduct(int id) {
@@ -128,34 +145,23 @@ public final class CompuStore {
     }
 
     public void InsertCategory(String text) {
-
         ContentValues values = new ContentValues();
         values.put(CategoriesTable.Columns.DESCRIPTION, text);
         db.insert(CategoriesTable.NAME, null, values);
-
     }
 
-    public void updateCategory(String description, int id) {
-
+    public void UpdateCategory(String description, int id) {
         ContentValues values = new ContentValues();
         values.put(CategoriesTable.Columns.DESCRIPTION, description);
         db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
-
     }
 
 
     public void CategoryDelete(int id) {
-        List<Category> categories = getAllCategories();
-
-        for (Category category : categories) {
-            if (category.getId() == id) {
-                db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
-                break;
-            }
-        }
+        db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
-    public boolean CategoryDescriptionExists(String description) {
+    public boolean CategoryExists(String description) {
         boolean match = false;
 
         List<Category> categories = getAllCategories();
@@ -165,18 +171,6 @@ public final class CompuStore {
                 break;
             }
         }
-        return match;
-    }
-
-    public boolean ProductInAssembly(int id) {
-        boolean match = true;
-
-        List<AssemblyProduct> assemblies = getAllAssemblyProductsById(id);
-
-        if (assemblies.isEmpty()) {
-            match = false;
-        }
-
         return match;
     }
 
@@ -249,6 +243,58 @@ public final class CompuStore {
         }
     }
 
+    public boolean ProductInAssembly(int id) {
+        boolean match = true;
+
+        List<AssemblyProduct> assemblies = getAllAssemblyProductsById(id);
+
+        if (assemblies.isEmpty()) {
+            match = false;
+        }
+
+        return match;
+    }
+
+    public boolean ProductExists(String description) {
+        boolean match = false;
+
+        List<Product> products = getAllProducts();
+        for (Product product : products) {
+            if (product.getDescription().toUpperCase().equals(description.toUpperCase())) {
+                match = true;
+                break;
+            }
+        }
+        return match;
+    }
+
+    public void UpdateProduct(int catid, String description, int precio, int id) {
+        ContentValues values = new ContentValues();
+        values.put(ProductsTable.Columns.DESCRIPTION, description);
+        values.put(ProductsTable.Columns.CATEGORY_ID, catid);
+        values.put(ProductsTable.Columns.PRICE, precio);
+        db.update(ProductsTable.NAME, values, ProductsTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
+    }
+
+    public void DeleteProduct(int id) {
+        db.delete(ProductsTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
+    }
+
+    public void InsertProduct(int catid, String description, int precio) {
+        ContentValues values = new ContentValues();
+        values.put(ProductsTable.Columns.DESCRIPTION, description);
+        values.put(ProductsTable.Columns.CATEGORY_ID, catid);
+        values.put(ProductsTable.Columns.PRICE, precio);
+        values.put(ProductsTable.Columns.QUANTITY, 0);
+        db.insert(ProductsTable.NAME, null, values);
+    }
+
+    public void AddStockProduct(int id, int qty){
+        ContentValues values = new ContentValues();
+        values.put(ProductsTable.Columns.QUANTITY,qty);
+        db.update(ProductsTable.NAME, values, ProductsTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
+    }
+
     public List<Assembly> getAllAssemblies() {
         ArrayList<Assembly> list = new ArrayList<>();
 
@@ -260,6 +306,17 @@ public final class CompuStore {
         return list;
     }
 
+    public List<AssemblyProduct> getAllAssemblyProducts(int id) {
+        ArrayList<AssemblyProduct> list = new ArrayList<>();
+
+        AssemblyProductCursor cursor = new AssemblyProductCursor(db.rawQuery("SELECT * FROM assembly_products ORDER BY id", null));
+        while (cursor.moveToNext()) {
+            list.add(cursor.getAssemblyProduct());
+        }
+        cursor.close();
+
+        return list;
+    }
 
     public List<AssemblyProduct> getAllAssemblyProductsById(int id) {
         ArrayList<AssemblyProduct> list = new ArrayList<>();
