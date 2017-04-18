@@ -270,6 +270,19 @@ public final class CompuStore {
         }
     }
 
+    public List<Product> getAllProductsInAssembly(int id){
+        ArrayList<Product> list = new ArrayList<>();
+
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT p.id, p.category_id, p.description, p.price, p.qty FROM products p " +
+                "INNER JOIN assembly_products ap ON (ap.product_id = p.id) WHERE ap.id = " + id + " ORDER BY p.description",null));
+        while (cursor.moveToNext()){
+            list.add(cursor.getProduct());
+        }
+        cursor.close();
+
+        return list;
+    }
+
     public boolean ProductInAssembly(int id) {
         boolean match = true;
 

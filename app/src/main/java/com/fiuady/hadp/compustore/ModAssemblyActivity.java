@@ -1,14 +1,16 @@
 package com.fiuady.hadp.compustore;
 
-
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -18,7 +20,12 @@ import com.fiuady.db.Product;
 
 import java.util.List;
 
-public class AddAssemblyActivity extends AppCompatActivity {
+
+public class ModAssemblyActivity extends AppCompatActivity {
+
+    public static final String IdAssembly = "id";
+    public static final String DescAssembly ="description";
+    private int Id;
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
@@ -28,7 +35,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
             super(itemView);
             idtext = (TextView) itemView.findViewById(R.id.idPr_text);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
-            desctext2 = (TextView) itemView.findViewById(R.id.description_text);
+            desctext2 = (TextView) itemView.findViewById(R.id.descriptionPr_text);
             pricetext2 = (TextView) itemView.findViewById(R.id.pricePr_text);
             qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
         }
@@ -69,7 +76,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
     }
 
 
-    private RecyclerView recyclerViewP;
+    private RecyclerView recyclerview;
     private EditText desctext, pricetext, qtytext;
     private CompuStore compustore;
     private ProductAdapter adapter;
@@ -79,6 +86,16 @@ public class AddAssemblyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assembly);
+        desctext = (EditText) findViewById(R.id.descass_text);
+
+        Intent i = new Intent();
+        Id = i.getIntExtra("id", 0);
+        desctext.setText(i.getStringExtra("desc"));
+        compustore = new CompuStore(this);
+        recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
+        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        UpdateAdapter();
+
     }
 
     @Override
@@ -90,8 +107,13 @@ public class AddAssemblyActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        Intent i = new Intent(AddAssemblyActivity.this, AddProductToAssemblyActivity.class);
+        Intent i = new Intent(ModAssemblyActivity.this, AddProductToAssemblyActivity.class);
         startActivity(i);
         return super.onOptionsItemSelected(item);
+    }
+
+    public void UpdateAdapter(){
+        adapter = new ProductAdapter(compustore.getAllProductsInAssembly(Id));
+        recyclerview.setAdapter(adapter);
     }
 }

@@ -99,7 +99,9 @@ public class AssemblyActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(menu.getMenu().getItem(0).getTitle())) {
-                                Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
+                                Intent i = new Intent(AssemblyActivity.this, ModAssemblyActivity.class);
+                                i.putExtra(ModAssemblyActivity.IdAssembly, assembly.getId());
+                                i.putExtra(ModAssemblyActivity.DescAssembly, assembly.getDescripcion());
                                 startActivity(i);
                             } else {
                                 mDialogFragment fragment = mDialogFragment.newInstance(assembly.getId(), assembly.getDescripcion());

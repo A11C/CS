@@ -31,6 +31,18 @@
             android:label="@string/tag_ensambles"
             android:theme="@style/AssembliesTheme" />
         <activity
+            android:name=".ModAssemblyActivity"
+            android:label="Modificar Ensamble"
+            android:theme="@style/AssembliesTheme" />
+        <activity
+            android:name=".AddAssemblyActivity"
+            android:label="Agregar Ensamble"
+            android:theme="@style/AssembliesTheme" />
+        <activity
+            android:name=".AddProductToAssemblyActivity"
+            android:label="@string/dialog_addp"
+            android:theme="@style/AssembliesTheme" />
+        <activity
             android:name=".ClientsActivity"
             android:label="@string/tag_clientes"
             android:theme="@style/ClientsTheme" />
@@ -38,14 +50,15 @@
             android:name=".OrdersActivity"
             android:configChanges="screenSize|orientation"
             android:label="@string/tag_ordenes"
-            android:theme="@style/OrdersTheme"/>
-        <activity android:name=".AddOrderActivity"  android:label="Agregar Orden" android:theme="@style/OrdersTheme"/>
+            android:theme="@style/OrdersTheme" />
+        <activity
+            android:name=".AddOrderActivity"
+            android:label="Agregar Orden"
+            android:theme="@style/OrdersTheme" />
         <activity
             android:name=".ReportsActivity"
             android:label="@string/tag_reportes"
             android:theme="@style/ReportsTheme" />
-        <activity android:name=".AddAssemblyActivity"  android:label="Agregar Ensamble" android:theme="@style/AssembliesTheme"/>
-        <activity android:name=".AddProductToAssemblyActivity" android:label="@string/dialog_addp" android:theme="@style/AssembliesTheme"/>
     </application>
 
 </manifest>
