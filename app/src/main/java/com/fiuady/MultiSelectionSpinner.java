@@ -1,7 +1,6 @@
 package com.fiuady;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.fiuady.db.StateC;
 import com.fiuady.hadp.compustore.R;
 
 import java.util.ArrayList;

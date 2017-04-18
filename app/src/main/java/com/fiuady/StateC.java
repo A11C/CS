@@ -1,4 +1,4 @@
-package com.fiuady.db;
+package com.fiuady;
 
 /**
  * Created by jessm on 17/04/2017.
