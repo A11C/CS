@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    >
 
     <TextView
         android:id="@+id/descass_tag"
@@ -14,10 +15,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/Btn_guardar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_guardar"
+        android:layout_below="@id/descass_text"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"/>
+    <Button
+        android:id="@+id/Btn_cancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/texto_cancelar"
+        android:layout_below="@id/descass_text"
+        android:layout_toEndOf="@id/Btn_guardar"
+
+        android:layout_centerHorizontal="true" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/add_productrv"
-        android:layout_below="@id/descass_text"
+        android:layout_below="@id/Btn_cancelar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+
 
 </RelativeLayout>
