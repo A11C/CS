@@ -12,6 +12,7 @@
     <string name="tag_add_orden">Agregar orden</string>
     <string name="tag_mod_ass">Modificar ensamble</string>
     <string name="tag_add_ass">Agregar ensamle</string>
+    <string name="tag_mod_client">Modificar cliente</string>
 
     <string name="tag_busqueda">Búsqueda por texto</string>
     <string name="tag_description">Descripción: </string>

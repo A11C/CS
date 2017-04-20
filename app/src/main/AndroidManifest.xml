@@ -67,6 +67,10 @@
             android:name=".AddAssemblyToOrderActivity"
             android:label="@string/tag_add_ass"
             android:theme="@style/OrdersTheme"/>
+        <activity
+            android:name=".ModClientActivity"
+            android:label="@string/tag_mod_client"
+            android:theme="@style/ClientsTheme"/>
     </application>
 
 </manifest>
