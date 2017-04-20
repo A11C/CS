@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="?android:listSeparatorTextViewStyle"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/idAs_tag"
@@ -16,7 +16,7 @@
 
     <TextView
         android:id="@+id/idAs_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/idAs_tag"
         android:text="@string/tag_caregoriaID"
@@ -34,7 +34,7 @@
 
     <TextView
         android:id="@+id/descriptionAs_text"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toEndOf="@id/descriptionAs_tag"
         android:layout_below="@id/idAs_text"

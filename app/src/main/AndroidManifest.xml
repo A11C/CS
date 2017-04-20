@@ -59,6 +59,9 @@
             android:name=".ReportsActivity"
             android:label="@string/tag_reportes"
             android:theme="@style/ReportsTheme" />
+        <activity
+            android:name=".ModOrderActivity"
+            android:theme="@style/OrdersTheme" />
     </application>
 
 </manifest>
