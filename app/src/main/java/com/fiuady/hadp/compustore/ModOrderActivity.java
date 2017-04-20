@@ -42,6 +42,16 @@ public class ModOrderActivity extends AppCompatActivity {
         private void BindModOrder (final Assembly assembly){
             idAStext.setText(Integer.toString(assembly.getId()));
             desAStext.setText((assembly.getDescripcion()));
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final PopupMenu menu3 = new PopupMenu(ModOrderActivity.this, itemView);
+                    menu3.getMenuInflater().inflate(R.menu.menu_option_catassem, menu3.getMenu());
+                    menu3.show();
+                }
+            });
+
         }
     }
 
@@ -85,5 +95,11 @@ public class ModOrderActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent i = new Intent(ModOrderActivity.this,AddAssemblyToOrderActivity.class);
+        startActivity(i);
+        return super.onOptionsItemSelected(item);
     }
 }

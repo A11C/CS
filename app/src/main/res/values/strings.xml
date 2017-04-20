@@ -8,11 +8,17 @@
     <string name="tag_clientes">Clientes</string>
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
+    <string name="tag_mod_orden">Modificar orden</string>
+    <string name="tag_add_orden">Agregar orden</string>
+    <string name="tag_mod_ass">Modificar ensamble</string>
+    <string name="tag_add_ass">Agregar ensamle</string>
+    <string name="tag_mod_client">Modificar cliente</string>
+
     <string name="tag_busqueda">Búsqueda por texto</string>
     <string name="tag_description">Descripción: </string>
     <string name="tag_precio">Precio: </string>
     <string name="tag_cantidad">Cantidad: </string>
-    <string name="tag_faltantes">Productos Faltantes</string>
+    <string name="tag_faltantes">Productos faltantes</string>
     <string name="tag_orderconfirmation">Confirmación de órdenes</string>
     <string name="tag_resumenventas">Resumen de ventas</string>
     <string name="tag_id">ID: </string>

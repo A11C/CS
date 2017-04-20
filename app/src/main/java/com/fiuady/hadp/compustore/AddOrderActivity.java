@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -47,7 +48,14 @@ public class AddOrderActivity extends AppCompatActivity {
             idPrtext.setText(Integer.toString(order.getId()));
             ProductIDtext.setText(Integer.toString(order.getProduct_id()));
             qtyAsPrtext.setText(Integer.toString(order.getQty()));
-
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final PopupMenu menu3 = new PopupMenu(AddOrderActivity.this, itemView);
+                    menu3.getMenuInflater().inflate(R.menu.menu_option_catassem, menu3.getMenu());
+                    menu3.show();
+                }
+            });
         }
     }
 
@@ -108,7 +116,7 @@ public class AddOrderActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        Intent i = new Intent(AddOrderActivity.this, OrdersActivity.class);
+        Intent i = new Intent(AddOrderActivity.this,AddAssemblyToOrderActivity.class);
         startActivity(i);
         return super.onOptionsItemSelected(item);
     }

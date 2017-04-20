@@ -1,6 +1,7 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -54,65 +55,15 @@ public class ClientsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     final PopupMenu popup = new PopupMenu(ClientsActivity.this, itemView);
-                    popup.getMenuInflater().inflate(R.menu.menu_option_products, popup.getMenu());
+                    popup.getMenuInflater().inflate(R.menu.menu_option_catassem, popup.getMenu());
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(popup.getMenu().getItem(0).getTitle())) {
-                                AlertDialog.Builder builder = new AlertDialog.Builder(ClientsActivity.this);
-                                View view = getLayoutInflater().inflate(R.layout.agregar_categoria, null);
-                                dialogTitle = (TextView) view.findViewById(R.id.dialog_tittleCat);
-                                editText = (EditText) view.findViewById(R.id.dialog_text);
-
-                                dialogTitle.setText(R.string.title_AddProducto);
-
-                                builder.setCancelable(false);
-                                builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        AlertDialog.Builder build = new AlertDialog.Builder(ClientsActivity.this);
-                                        build.setCancelable(false);
-                                        build.setTitle(getString(R.string.edit_category));
-                                        build.setMessage(R.string.sure_text);
-
-                                        build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-                                                dialog.dismiss();
-                                            }
-                                        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-                                            public void onClick(DialogInterface dialog, int id) {
-//
-                                            }
-                                        });
-
-                                        build.create().show();
-                                    }
-                                });
-                                builder.setView(view);
-                                AlertDialog dialog = builder.create();
-                                dialog.show();
-                            } else {
-                                AlertDialog.Builder build = new AlertDialog.Builder(ClientsActivity.this);
-                                build.setCancelable(false);
-                                build.setTitle(getString(R.string.delete_category));
-                                build.setMessage(R.string.sure_text);
-
-                                build.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.dismiss();
-                                    }
-                                }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-//
-                                    }
-                                });
-
-                                build.create().show();
+                                Intent i = new Intent(ClientsActivity.this, ModClientActivity.class);
+                                startActivity(i);
                             }
                             return true;
                         }
@@ -148,6 +99,7 @@ public class ClientsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ClientHolder holder, int position) {
             holder.bindClient(clients.get(position));
+
         }
 
         @Override
@@ -186,6 +138,9 @@ public class ClientsActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.clients_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
+
+        adapter = new ClientAdapter(compustore.getAllClients());
+        recyclerview.setAdapter(adapter);
 
         final String[] select_qualification = {
                 "Filtrar por:", "Nombre", "Apellido", "Dirección", "Teléfono","E-mail"};
