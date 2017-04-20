@@ -27,17 +27,20 @@ import java.util.List;
 
 public class AddProductToAssemblyActivity extends AppCompatActivity {
 
+    public static final int CODE_REQUEST = 1;
+    private String QUERY = null;
+
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView idtext, catidtext, desctext2, pricetext2, qtytext2;
+        private TextView idtext, catidtext, desctext, pricetext, qtytext;
 
         public ProductHolder(View itemView) {
             super(itemView);
             idtext = (TextView) itemView.findViewById(R.id.idPr_text);
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
-            desctext2 = (TextView) itemView.findViewById(R.id.descriptionPr_text);
-            pricetext2 = (TextView) itemView.findViewById(R.id.pricePr_text);
-            qtytext2 = (TextView) itemView.findViewById(R.id.qty_text);
+            desctext = (TextView) itemView.findViewById(R.id.descriptionPr_text);
+            pricetext = (TextView) itemView.findViewById(R.id.pricePr_text);
+            qtytext = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
         private void bindProduct(final Product product) {
@@ -50,6 +53,7 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
+
                             return true;
                         }
                     });
@@ -58,9 +62,9 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
             });
             idtext.setText(String.valueOf(product.getId()));
             catidtext.setText(String.valueOf(product.getCategory_id()));
-            pricetext2.setText(String.valueOf(product.getPrice()));
-            qtytext2.setText(String.valueOf(product.getQuantity()));
-            desctext2.setText(product.getDescription());
+            pricetext.setText(String.valueOf(product.getPrice()));
+            qtytext.setText(String.valueOf(product.getQuantity()));
+            desctext.setText(product.getDescription());
         }
     }
 
@@ -116,7 +120,7 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
         spinner.setAdapter(arrayAdapter);
 
         arrayAdapter.add("Todas");
-        final List<Category> categories = compustore.getAllCategories();
+        final List<Category> categories = compustore.getAllCategoriesById();
         for (Category category : categories) {
             arrayAdapter.add(category.getDescription());
         }
@@ -124,33 +128,51 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (searchtext.getText()!= null){
-                    if (spinner.getSelectedItemPosition() != 0){
-                        adapter = new ProductAdapter(compustore.getProductByName(spinner.getSelectedItemPosition()-1, String.valueOf(searchtext.getText())));
-                        recyclerview.setAdapter(adapter);
-                    }else{
-                        adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
-                        recyclerview.setAdapter(adapter);
-                    }
-                }
-                else{
-                    if (spinner.getSelectedItemPosition() != 0){
-                        adapter = new ProductAdapter(compustore.getAllProductsById((spinner.getSelectedItemPosition()-1)));
-                        recyclerview.setAdapter(adapter);
-                    }else{
-                        adapter = new ProductAdapter(compustore.getAllProducts());
-                        recyclerview.setAdapter(adapter);
-                    }
-
-
-                }
+                //if (searchtext.getText()!= null){
+                //    if (spinner.getSelectedItemPosition() != 0){
+                //        adapter = new ProductAdapter(compustore.getProductByName(compustore.getOneCategory(spinner.getSelectedItem().toString()), String.valueOf(searchtext.getText())));
+                //        recyclerview.setAdapter(adapter);
+                //    }else{
+                //        adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
+                //        recyclerview.setAdapter(adapter);
+                //    }
+                //}
+                //else{
+                //    if (spinner.getSelectedItemPosition() != 0){
+                //        adapter = new ProductAdapter(compustore.getAllProductsById(compustore.getOneCategory(spinner.getSelectedItem().toString())));
+                //        recyclerview.setAdapter(adapter);
+                //    }else{
+                //        adapter = new ProductAdapter(compustore.getAllProducts());
+                //        recyclerview.setAdapter(adapter);
+                //    }
+                //}
                 searchtext.setHint(String.valueOf(searchtext.getText()));
+                QUERY = searchtext.getText().toString();
+                UpdateAdapter();
                 searchtext.setText(null);
             }
         });
-
-
     }
 
+    public void UpdateAdapter(){
+        if (QUERY!= null){
+            if (spinner.getSelectedItemPosition() != 0){
+                adapter = new ProductAdapter(compustore.getProductByName(compustore.getOneCategory(spinner.getSelectedItem().toString()), String.valueOf(searchtext.getText())));
+                recyclerview.setAdapter(adapter);
+            }else{
+                adapter = new ProductAdapter(compustore.getAllProductsByName(String.valueOf(searchtext.getText())));
+                recyclerview.setAdapter(adapter);
+            }
+        }
+        else{
+            if (spinner.getSelectedItemPosition() != 0){
+                adapter = new ProductAdapter(compustore.getAllProductsById(compustore.getOneCategory(spinner.getSelectedItem().toString())));
+                recyclerview.setAdapter(adapter);
+            }else{
+                adapter = new ProductAdapter(compustore.getAllProducts());
+                recyclerview.setAdapter(adapter);
+            }
+        }
+    }
 
 }

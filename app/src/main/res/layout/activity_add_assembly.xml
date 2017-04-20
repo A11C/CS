@@ -10,7 +10,7 @@
 
     <EditText
         android:id="@+id/descass_text"
-        android:layout_below="@id/descass_text"
+        android:layout_below="@id/descass_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

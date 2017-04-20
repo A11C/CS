@@ -100,8 +100,8 @@ public class AssemblyActivity extends AppCompatActivity {
 
                             if (item.getTitle().equals(menu.getMenu().getItem(0).getTitle())) {
                                 Intent i = new Intent(AssemblyActivity.this, ModAssemblyActivity.class);
-                                i.putExtra(ModAssemblyActivity.IdAssembly, assembly.getId());
-                                i.putExtra(ModAssemblyActivity.DescAssembly, assembly.getDescripcion());
+                                i.putExtra(ModAssemblyActivity.EXTRA_IDASSEMBLY, assembly.getId());
+                                i.putExtra(ModAssemblyActivity.EXTRA_DESCASSEMBLY, assembly.getDescripcion());
                                 startActivity(i);
                             } else {
                                 mDialogFragment fragment = mDialogFragment.newInstance(assembly.getId(), assembly.getDescripcion());

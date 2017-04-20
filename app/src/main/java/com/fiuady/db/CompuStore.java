@@ -273,7 +273,7 @@ public final class CompuStore {
     public List<Product> getAllProductsInAssembly(int id){
         ArrayList<Product> list = new ArrayList<>();
 
-        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT p.id, p.category_id, p.description, p.price, p.qty FROM products p " +
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT p.id, p.category_id, p.description, p.price, ap.qty FROM products p " +
                 "INNER JOIN assembly_products ap ON (ap.product_id = p.id) WHERE ap.id = " + id + " ORDER BY p.description",null));
         while (cursor.moveToNext()){
             list.add(cursor.getProduct());
@@ -390,6 +390,16 @@ public final class CompuStore {
         }
 
         return match;
+    }
+
+    public void AddQtyProductInAssembly(int pid, int id, int qty){
+        ContentValues values = new ContentValues();
+        values.put(AssemblyProductsTable.Columns.QUANTITY,qty);
+        db.update(AssemblyProductsTable.NAME, values, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
+    }
+
+    public void DeleteProductInAssembly(int pid, int id){
+        db.delete(AssemblyProductsTable.NAME, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
     }
 
     public List<Client> getAllClients() {
