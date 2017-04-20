@@ -71,6 +71,19 @@
             android:name=".ModClientActivity"
             android:label="@string/tag_mod_client"
             android:theme="@style/ClientsTheme"/>
+        <activity
+            android:name=".ReportsProductsActivity"
+            android:label="@string/tag_faltantes"
+            android:theme="@style/ReportsTheme"/>
+        <activity
+            android:name=".ReportsOrdersActivity"
+            android:label="@string/tag_orderconfirmation"
+            android:theme="@style/ReportsTheme"/>
+        <activity
+            android:name=".ReportsResumeActivity"
+            android:label="@string/tag_resumenventas"
+            android:theme="@style/ReportsTheme"/>
+
     </application>
 
 </manifest>
