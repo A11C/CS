@@ -32,11 +32,11 @@
             android:theme="@style/AssembliesTheme" />
         <activity
             android:name=".ModAssemblyActivity"
-            android:label="Modificar Ensamble"
+            android:label="@string/tag_mod_ass"
             android:theme="@style/AssembliesTheme" />
         <activity
             android:name=".AddAssemblyActivity"
-            android:label="Agregar Ensamble"
+            android:label="@string/tag_add_ass"
             android:theme="@style/AssembliesTheme" />
         <activity
             android:name=".AddProductToAssemblyActivity"
@@ -53,7 +53,7 @@
             android:theme="@style/OrdersTheme" />
         <activity
             android:name=".AddOrderActivity"
-            android:label="Agregar Orden"
+            android:label="@string/tag_add_orden"
             android:theme="@style/OrdersTheme" />
         <activity
             android:name=".ReportsActivity"
@@ -61,7 +61,12 @@
             android:theme="@style/ReportsTheme" />
         <activity
             android:name=".ModOrderActivity"
+            android:label="@string/tag_mod_orden"
             android:theme="@style/OrdersTheme" />
+        <activity
+            android:name=".AddAssemblyToOrderActivity"
+            android:label="@string/tag_add_ass"
+            android:theme="@style/OrdersTheme"/>
     </application>
 
 </manifest>

@@ -8,6 +8,11 @@
     <string name="tag_clientes">Clientes</string>
     <string name="tag_reportes">Reportes</string>
     <string name="tag_agregar">Agregar</string>
+    <string name="tag_mod_orden">Modificar orden</string>
+    <string name="tag_add_orden">Agregar orden</string>
+    <string name="tag_mod_ass">Modificar ensamble</string>
+    <string name="tag_add_ass">Agregar ensamle</string>
+
     <string name="tag_busqueda">Búsqueda por texto</string>
     <string name="tag_description">Descripción: </string>
     <string name="tag_precio">Precio: </string>

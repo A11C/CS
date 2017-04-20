@@ -148,6 +148,7 @@ public class ClientsActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ClientHolder holder, int position) {
             holder.bindClient(clients.get(position));
+
         }
 
         @Override

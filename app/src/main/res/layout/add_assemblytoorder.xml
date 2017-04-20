@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/rl_products"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            tools:context="com.fiuady.android.compustore.ProductsActivity">
+
+
+            <EditText
+                android:id="@+id/busquedaAATO_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/busquedaCat_tag"
+                android:padding="10dp"
+                android:textSize="24sp"
+                tools:ignore="LabelFor,TextFields" />
+
+            <ImageButton
+                android:id="@+id/buscarAATO_button"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/busquedaCat_tag"
+                android:background="#ffffff"
+                android:scaleType="fitCenter"
+                android:src="@android:drawable/ic_search_category_default"
+                tools:ignore="ContentDescription" />
+
+        </RelativeLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/AATO_rv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+</RelativeLayout>
