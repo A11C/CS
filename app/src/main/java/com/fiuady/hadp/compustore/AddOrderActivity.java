@@ -32,22 +32,22 @@ import java.util.List;
 public class AddOrderActivity extends AppCompatActivity {
     private class OrderHolder extends RecyclerView.ViewHolder {
 
-        private TextView idPrtext, ProductIDtext, qtyAsPrtext;
+        private TextView idPrtext,Desctext;
 
         public OrderHolder(View itemView) {
             super(itemView);
-            idPrtext = (TextView) itemView.findViewById(R.id.idPr_text);
-            ProductIDtext = (TextView) itemView.findViewById(R.id.ProductID_text);
-            qtyAsPrtext = (TextView) itemView.findViewById(R.id.qtyAsPr_text);
+            idPrtext = (TextView) itemView.findViewById(R.id.idAs_text);
+            Desctext = (TextView) itemView.findViewById(R.id.descriptionAs_text);
+
 
 
         }
 
-        private void bindOrder(final AssemblyProduct order) {
+        private void bindOrder(final Assembly order) {
 
             idPrtext.setText(Integer.toString(order.getId()));
-            ProductIDtext.setText(Integer.toString(order.getProduct_id()));
-            qtyAsPrtext.setText(Integer.toString(order.getQty()));
+            Desctext.setText((order.getDescripcion()));
+
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -61,13 +61,13 @@ public class AddOrderActivity extends AppCompatActivity {
 
     private class OrderAdapter extends RecyclerView.Adapter<OrderHolder>{
 
-        private List<AssemblyProduct> orders;
+        private List<Assembly> orders;
 
-        public OrderAdapter(List<AssemblyProduct> orders) { this.orders = orders; }
+        public OrderAdapter(List<Assembly> orders) { this.orders = orders; }
 
         @Override
         public OrderHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = getLayoutInflater().inflate(R.layout.list_assemblyproducts, parent, false);
+            View view = getLayoutInflater().inflate(R.layout.list_assembly, parent, false);
             return new AddOrderActivity.OrderHolder(view);
         }
 
@@ -95,7 +95,7 @@ public class AddOrderActivity extends AppCompatActivity {
 
         recyclerview = (RecyclerView) findViewById(R.id.clients_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new OrderAdapter(compustore.getAllAssemblyProducts());
+        adapter = new OrderAdapter(compustore.getAllAssemblies());
         spinner_clients = (Spinner) findViewById(R.id.spinner_clients);
         recyclerview.setAdapter(adapter);
 
