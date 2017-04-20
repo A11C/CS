@@ -69,6 +69,10 @@
     <string name="texto_cancelar">Cancelar</string>
     <string name="texto_modificar">Modificar</string>
     <string name="texto_eliminar">Eliminar</string>
+    <string name="texto_modificar_estado">Modificar estado</string>
+    <string name="texto_modificar_orden">Modificar orden</string>
+    <string name="texto_regresar_estado">Regresar estado a...</string>
+    <string name="texto_avanzar_estado">Avanzar estado a...</string>
     <string name="sure_text">¿Seguro?</string>
 
 
