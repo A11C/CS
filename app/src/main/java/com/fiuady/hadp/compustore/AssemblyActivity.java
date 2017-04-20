@@ -176,11 +176,8 @@ public class AssemblyActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
-        //Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
-        //startActivity(i);
-        int i = 0;
-        compustore.InsertAssembly("abcd" + i);
-        i++;
+        Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
+        startActivity(i);
 
         return super.onOptionsItemSelected(item);
     }

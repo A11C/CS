@@ -176,8 +176,8 @@ public class ProductsActivity extends AppCompatActivity {
             builder.setTitle(getString(R.string.stock));
             picker = new NumberPicker(getActivity());
             picker.setMinValue(Qty);
-            picker.setValue(Qty+1);
             picker.setMaxValue(Qty+100);
+            picker.setValue(Qty+1);
             compustore = new CompuStore(getActivity());
 
             builder.setCancelable(false);

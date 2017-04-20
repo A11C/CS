@@ -1,6 +1,7 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -27,6 +28,7 @@ import java.util.List;
 
 public class AddProductToAssemblyActivity extends AppCompatActivity {
 
+    public static final String EXTRA_PID = "com.fiuady.hadp.compustore.extra_pid";
     public static final int CODE_REQUEST = 1;
     private String QUERY = null;
 
@@ -53,7 +55,10 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
                     popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
                         public boolean onMenuItemClick(MenuItem item) {
-
+                            Intent data = new Intent();
+                            data.putExtra(EXTRA_PID, product.getId());
+                            setResult(RESULT_OK,data);
+                            finish();
                             return true;
                         }
                     });

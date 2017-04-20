@@ -85,7 +85,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(getString(R.string.stock));
             picker = new NumberPicker(getActivity());
-            picker.setMinValue(Qty);
+            picker.setMinValue(1);
             picker.setMaxValue(Qty + 10);
             picker.setValue(Qty+1);
             //compustore = new CompuStore(getActivity());
@@ -240,6 +240,25 @@ public class ModAssemblyActivity extends AppCompatActivity {
         startActivityForResult(i, AddProductToAssemblyActivity.CODE_REQUEST);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK){
+            //Intent i = getIntent();
+            //Product product = compustore.getProductById(i.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1));
+            //Toast.makeText(ModAssemblyActivity.this, String.valueOf(data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)), Toast.LENGTH_SHORT).show();
+            for (Product product : compustore.getAllProducts()){
+                if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)){
+                    product.setQuantity(1);
+                    products.add(product);
+                }
+            }
+            UpdateAdapter();
+
+        }
     }
 
     public void UpdateAdapter() {
