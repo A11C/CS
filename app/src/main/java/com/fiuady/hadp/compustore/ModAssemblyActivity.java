@@ -272,6 +272,17 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int orientation = newConfig.orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }
+        else {
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

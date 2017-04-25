@@ -1,9 +1,11 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -112,6 +114,17 @@ public class AddOrderActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
+    }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int orientation = newConfig.orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }
+        else {
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
     }
 
     @Override

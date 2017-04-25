@@ -3,9 +3,11 @@ package com.fiuady.hadp.compustore;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -260,7 +262,17 @@ public class OrdersActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.agregar, menu);
             return true;
         }
-
+     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int orientation = newConfig.orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }
+        else {
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+    }
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {

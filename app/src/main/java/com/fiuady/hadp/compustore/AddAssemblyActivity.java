@@ -5,9 +5,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -261,7 +263,17 @@ public class AddAssemblyActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
     }
-
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int orientation = newConfig.orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }
+        else {
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 

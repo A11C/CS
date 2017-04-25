@@ -4,9 +4,11 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -165,7 +167,9 @@ public class AssemblyActivity extends AppCompatActivity {
         recyclerview = (RecyclerView) findViewById(R.id.activity_assemblies);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         UpdateAdapter();
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -1,9 +1,11 @@
 package com.fiuady.hadp.compustore;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -78,6 +80,17 @@ public class ModOrderActivity extends AppCompatActivity {
         }
 
     }
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        int orientation = newConfig.orientation;
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }
+        else {
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,4 +115,5 @@ public class ModOrderActivity extends AppCompatActivity {
         startActivity(i);
         return super.onOptionsItemSelected(item);
     }
+
 }
