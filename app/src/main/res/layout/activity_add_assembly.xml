@@ -14,24 +14,41 @@
         android:layout_below="@id/descass_tag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/aux_view"
+        android:layout_width="5dp"
+        android:layout_height="match_parent"
+        android:layout_below="@id/descass_text"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/add_productrv" />
 
-    <Button
+     <Button
         android:id="@+id/Btn_guardar"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+         android:background="@color/colorAssemblies"
+        android:backgroundTint="@color/colorAssembliesbg"
+        android:gravity="center"
         android:text="@string/texto_guardar"
-        android:layout_below="@id/descass_text"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"/>
+        android:textColor="#ffffff"
+         android:layout_below="@+id/descass_text"
+         android:layout_toStartOf="@+id/aux_view" />
+
     <Button
         android:id="@+id/Btn_cancelar"
+        style="@style/Widget.AppCompat.Button.Borderless"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/colorAssemblies"
+        android:backgroundTint="@color/colorAssembliesbg"
         android:text="@string/texto_cancelar"
-        android:layout_below="@id/descass_text"
-        android:layout_toEndOf="@id/Btn_guardar"
-
-        android:layout_centerHorizontal="true" />
+        android:textColor="#ffffff"
+        android:layout_alignBaseline="@+id/Btn_guardar"
+        android:layout_alignBottom="@+id/Btn_guardar"
+        android:layout_toEndOf="@+id/aux_view" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/add_productrv"
