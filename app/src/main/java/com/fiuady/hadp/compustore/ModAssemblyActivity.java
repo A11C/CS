@@ -28,6 +28,8 @@ import com.fiuady.db.CompuStore;
 import com.fiuady.db.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -43,14 +45,14 @@ public class ModAssemblyActivity extends AppCompatActivity {
         private int Num, Qty, Id, Pid;
         private String Desc;
         private NumberPicker picker;
-       // private CompuStore compustore;
+        // private CompuStore compustore;
 
         static mDialogFragment newInstance(int num, int qty, int pid) {
             mDialogFragment dF = new mDialogFragment();
             Bundle args = new Bundle();
             args.putInt("num", num);
             args.putInt("pid", pid);
-            args.putInt("qty",qty);
+            args.putInt("qty", qty);
             dF.setArguments(args);
             return dF;
         }
@@ -90,7 +92,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
             picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(Qty + 10);
-            picker.setValue(Qty+1);
+            picker.setValue(Qty + 1);
             //compustore = new CompuStore(getActivity());
 
             builder.setCancelable(false);
@@ -100,7 +102,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ((ModAssemblyActivity) getActivity()).UpdateProduct(Pid,picker.getValue());
+                    ((ModAssemblyActivity) getActivity()).UpdateProduct(Pid, picker.getValue());
                     //compustore.AddQtyProductInAssembly(Pid, Id, picker.getValue());
                     ((ModAssemblyActivity) getActivity()).UpdateAdapter();
                     Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
@@ -123,7 +125,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ((ModAssemblyActivity)getActivity()).DeleteProduct(Pid);
+                    ((ModAssemblyActivity) getActivity()).DeleteProduct(Pid);
                     //compustore.DeleteProductInAssembly(Pid,Id);
                     ((ModAssemblyActivity) getActivity()).UpdateAdapter();
                     Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
@@ -159,10 +161,10 @@ public class ModAssemblyActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(popupMenu.getMenu().getItem(0).getTitle())) {
-                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getQuantity(),product.getId());
+                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getQuantity(), product.getId());
                                 fragment.show(getFragmentManager(), "QtyDialog");
                             } else {
-                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getDescription(),product.getId());
+                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getDescription(), product.getId());
                                 fragment.show(getFragmentManager(), "EraseDialog");
                             }
 
@@ -273,51 +275,91 @@ public class ModAssemblyActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode == RESULT_OK){
+        if (resultCode == RESULT_OK) {
             //Intent i = getIntent();
             //Product product = compustore.getProductById(i.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1));
             //Toast.makeText(ModAssemblyActivity.this, String.valueOf(data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)), Toast.LENGTH_SHORT).show();
-            for (Product product : compustore.getAllProducts()){
-                if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)){
-                    product.setQuantity(1);
-                    products.add(product);
+            boolean repeated = false;
+            for (Product product : products) {
+                if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1)) {
+                    Toast.makeText(ModAssemblyActivity.this, "El producto ya se encuentra en el ensamble", Toast.LENGTH_SHORT).show();
+                    repeated = true;
+                    break;
                 }
             }
+            if (!repeated) {
+                for (Product product : compustore.getAllProducts()) {
+                    if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1)) {
+                        product.setQuantity(1);
+                        products.add(product);
+                        break;
+                    }
+                }
+            }
+
             UpdateAdapter();
 
         }
     }
 
     public void UpdateAdapter() {
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getDescription().compareTo(o2.getDescription());
+            }
+        });
         adapter = new ProductAdapter(products);
         recyclerview.setAdapter(adapter);
     }
 
-    public void DeleteProduct(int pid){
-        int erase=-1;
-        for(Product product :  products){
-            if(product.getId()== pid){
+    public void DeleteProduct(int pid) {
+        int erase = -1;
+        for (Product product : products) {
+            if (product.getId() == pid) {
                 erase = products.indexOf(product);
             }
         }
         products.remove(erase);
     }
 
-    public void UpdateProduct(int pid, int qty){
-
-        for (Product product : products){
-            if(product.getId() == pid){
+    public void UpdateProduct(int pid, int qty) {
+        for (Product product : products) {
+            if (product.getId() == pid) {
                 product.setQuantity(qty);
             }
         }
     }
 
     public void UpdateAssembly() {
+        boolean repeated = true;
         compustore.UpdateAssembly(desctext.getText().toString(), Id);
-        for (Product product : products) {
-            Toast.makeText(ModAssemblyActivity.this, "id " +Id+ " pid "+product.getId()+" qty "+product.getQuantity(), Toast.LENGTH_SHORT).show();
-            //compustore.InsertAssemblyProduct(id, product.getId(), product.getQuantity());
+        for (Product product1 : compustore.getAllProductsInAssembly(Id)) {
+            for (Product product : products) {
+                if ((product1.getId() == product.getId()) && (product1.getQuantity() != product.getQuantity())) {
+                    compustore.UpdateQtyProductInAssembly(product1.getId(), Id, product.getQuantity());
+                    repeated = true;
+                } else {
+                    repeated = false;
+                }
+            }
+            if (!repeated || products.isEmpty()) {
+                compustore.DeleteProductInAssembly(product1.getId(), Id);
+            }
         }
+        for (Product product : products) {
+            for (Product product1 : compustore.getAllProductsInAssembly(Id)) {
+                if (product1.getId() == product.getId()) {
+                    repeated = true;
+                } else {
+                    repeated = false;
+                }
+            }
+            if (!repeated){
+                compustore.InsertAssemblyProduct(Id, product.getId(), product.getQuantity());
+            }
+        }
+
         setResult(RESULT_OK);
         finish();
     }

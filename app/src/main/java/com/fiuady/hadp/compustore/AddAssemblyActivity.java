@@ -27,6 +27,8 @@ import com.fiuady.db.CompuStore;
 import com.fiuady.db.Product;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class AddAssemblyActivity extends AppCompatActivity {
@@ -228,66 +230,85 @@ public class AddAssemblyActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         btnsave.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int id = -1;
-                    if (!desctext.getText().toString().isEmpty() && !compustore.AssemblyExists(desctext.getText().toString())) {
-                        compustore.InsertAssembly(desctext.getText().toString());
-                        for (Assembly assembly : compustore.getAllAssemblies()) {
-                            if (assembly.getDescripcion().equals(desctext.getText().toString())) {
-                                id = assembly.getId();
-                            }
+            @Override
+            public void onClick(View v) {
+                int id = -1;
+                if (!desctext.getText().toString().isEmpty() && !compustore.AssemblyExists(desctext.getText().toString())) {
+                    compustore.InsertAssembly(desctext.getText().toString());
+                    for (Assembly assembly : compustore.getAllAssemblies()) {
+                        if (assembly.getDescripcion().equals(desctext.getText().toString())) {
+                            id = assembly.getId();
                         }
-                        for (Product product : products) {
-                            //Toast.makeText(AddAssemblyActivity.this, "id " +id+ " pid "+product.getId()+" qty "+product.getQuantity(), Toast.LENGTH_SHORT).show();
-                            compustore.InsertAssemblyProduct(id, product.getId(), product.getQuantity());
-                        }
-                        setResult(RESULT_OK);
-                        finish();
-                    }else{
-                        Toast.makeText(AddAssemblyActivity.this, R.string.InvalidAssembly, Toast.LENGTH_SHORT).show();
                     }
+                    for (Product product : products) {
+                        //Toast.makeText(AddAssemblyActivity.this, "id " +id+ " pid "+product.getId()+" qty "+product.getQuantity(), Toast.LENGTH_SHORT).show();
+                        compustore.InsertAssemblyProduct(id, product.getId(), product.getQuantity());
+                    }
+                    setResult(RESULT_OK);
+                    finish();
+                } else {
+                    Toast.makeText(AddAssemblyActivity.this, R.string.InvalidAssembly, Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
 
-        }
+    }
 
-        @Override
-        public boolean onCreateOptionsMenu (Menu menu){
-            getMenuInflater().inflate(R.menu.agregar, menu);
-            return true;
-        }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.agregar, menu);
+        return true;
+    }
 
-        @Override
-        public boolean onOptionsItemSelected (MenuItem item){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
 
-            Intent i = new Intent(this, AddProductToAssemblyActivity.class);
-            startActivityForResult(i, AddProductToAssemblyActivity.CODE_REQUEST);
+        Intent i = new Intent(this, AddProductToAssemblyActivity.class);
+        startActivityForResult(i, AddProductToAssemblyActivity.CODE_REQUEST);
 
-            return super.onOptionsItemSelected(item);
-        }
+        return super.onOptionsItemSelected(item);
+    }
 
-        @Override
-        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            if (resultCode == RESULT_OK) {
-                //Intent i = getIntent();
-                //Product product = compustore.getProductById(i.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1));
-                //Toast.makeText(this, String.valueOf(data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)), Toast.LENGTH_SHORT).show();
+        if (resultCode == RESULT_OK) {
+            //Intent i = getIntent();
+            //Product product = compustore.getProductById(i.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1));
+            //Toast.makeText(this, String.valueOf(data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)), Toast.LENGTH_SHORT).show();
+            boolean repeated = false;
+            for (Product product : products) {
+                if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1)) {
+                    Toast.makeText(AddAssemblyActivity.this, "El producto ya se encuentra en el ensamble", Toast.LENGTH_SHORT).show();
+                    repeated = true;
+                    break;
+                }
+            }
+            if (!repeated) {
                 for (Product product : compustore.getAllProducts()) {
                     if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1)) {
                         product.setQuantity(1);
                         products.add(product);
+                        break;
                     }
                 }
-                UpdateAdapter();
-
             }
+
+            UpdateAdapter();
+
         }
+    }
 
     public void UpdateAdapter() {
+        Collections.sort(products, new Comparator<Product>() {
+            @Override
+            public int compare(Product o1, Product o2) {
+                return o1.getDescription().compareTo(o2.getDescription());
+            }
+        });
         adapter = new ProductAdapter(products);
         recyclerview.setAdapter(adapter);
     }

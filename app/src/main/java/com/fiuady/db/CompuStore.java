@@ -371,6 +371,7 @@ public final class CompuStore {
     }
 
     public void DeleteAssembly (int id){
+        DeleteAllProductsInAssembly(id);
         db.delete(AssembliesTable.NAME, AssembliesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
@@ -392,7 +393,7 @@ public final class CompuStore {
         return match;
     }
 
-    public void AddQtyProductInAssembly(int pid, int id, int qty){
+    public void UpdateQtyProductInAssembly(int pid, int id, int qty){
         ContentValues values = new ContentValues();
         values.put(AssemblyProductsTable.Columns.QUANTITY,qty);
         db.update(AssemblyProductsTable.NAME, values, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
@@ -400,6 +401,10 @@ public final class CompuStore {
 
     public void DeleteProductInAssembly(int pid, int id){
         db.delete(AssemblyProductsTable.NAME, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
+    }
+
+    public void DeleteAllProductsInAssembly(int id){
+        db.delete(AssemblyProductsTable.NAME, AssemblyProductsTable.Columns.ID + " = " + id, null);
     }
 
     public boolean AssemblyExists(String description){
