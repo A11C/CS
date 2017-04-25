@@ -102,7 +102,7 @@ public class AssemblyActivity extends AppCompatActivity {
                                 Intent i = new Intent(AssemblyActivity.this, ModAssemblyActivity.class);
                                 i.putExtra(ModAssemblyActivity.EXTRA_IDASSEMBLY, assembly.getId());
                                 i.putExtra(ModAssemblyActivity.EXTRA_DESCASSEMBLY, assembly.getDescripcion());
-                                startActivity(i);
+                                startActivityForResult(i,ModAssemblyActivity.REQUESTCODE);
                             } else {
                                 mDialogFragment fragment = mDialogFragment.newInstance(assembly.getId(), assembly.getDescripcion());
                                 fragment.show(getFragmentManager(), "DialogErase");
@@ -177,9 +177,20 @@ public class AssemblyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Intent i = new Intent(AssemblyActivity.this, AddAssemblyActivity.class);
-        startActivity(i);
+        startActivityForResult(i, AddAssemblyActivity.REQUESTCODE);
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==1 && resultCode==RESULT_OK){
+            Toast.makeText(AssemblyActivity.this, R.string.EnsambleAdd, Toast.LENGTH_SHORT).show();
+        }else if(requestCode==0 && resultCode==RESULT_OK){
+            Toast.makeText(AssemblyActivity.this, R.string.EnsambleMod, Toast.LENGTH_SHORT).show();
+        }
+        UpdateAdapter();
     }
 
     public void UpdateAdapter() {

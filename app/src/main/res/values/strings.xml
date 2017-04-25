@@ -66,6 +66,9 @@
     <string name="Edita_ensamble">Editar ensamble</string>
     <string name="Elimina_ensamble">Eliminar ensamble</string>
     <string name="Agrega_ensamble">Nombre de ensamble nuevo</string>
+    <string name="InvalidAssembly">Texto vacío o Ensamble Existente</string>
+    <string name="EnsambleAdd">Ensamble agregado correctamente</string>
+    <string name="EnsambleMod">Ensamble modificado correctamente</string>
 
     <string name="Confirma_operacion">Se ha realizado exitosamente </string>
     <string name="Error_operacion">No se ha completado la operación</string>

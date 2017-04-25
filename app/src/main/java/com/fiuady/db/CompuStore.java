@@ -322,7 +322,7 @@ public final class CompuStore {
 
     public void InsertProduct(int catid, String description, int precio) {
         ContentValues values = new ContentValues();
-        values.put(ProductsTable.Columns.DESCRIPTION, description);
+        values.put(ProductsTable.Columns.DESCRIPTION, description.toUpperCase());
         values.put(ProductsTable.Columns.CATEGORY_ID, catid);
         values.put(ProductsTable.Columns.PRICE, precio);
         values.put(ProductsTable.Columns.QUANTITY, 0);
@@ -401,6 +401,37 @@ public final class CompuStore {
     public void DeleteProductInAssembly(int pid, int id){
         db.delete(AssemblyProductsTable.NAME, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
     }
+
+    public boolean AssemblyExists(String description){
+        boolean match = false;
+
+        List<Assembly> assemblies = getAllAssemblies();
+        for (Assembly assembly : assemblies){
+            if(assembly.getDescripcion().toUpperCase().equals(description.toUpperCase())){
+                match = true;
+                break;
+            }
+        }
+
+        return match;
+    }
+
+
+    public void UpdateAssembly(String description, int id){
+        ContentValues values = new ContentValues();
+        values.put(AssembliesTable.Columns.DESCRIPTION, description);
+        db.update(AssembliesTable.NAME, values, AssembliesTable.Columns.ID + " = ?", new String[]{Integer.toString(id)});
+    }
+
+    public void InsertAssemblyProduct(int id, int pid, int qty){
+        ContentValues values = new ContentValues();
+        values.put(AssemblyProductsTable.Columns.ID, id);
+        values.put(AssemblyProductsTable.Columns.PRODUCT_ID, pid);
+        values.put(AssemblyProductsTable.Columns.QUANTITY, qty);
+
+        db.insert(AssemblyProductsTable.NAME, null, values);
+    }
+
 
     public List<Client> getAllClients() {
         ArrayList<Client> list = new ArrayList<>();

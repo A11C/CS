@@ -15,12 +15,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fiuady.db.Assembly;
 import com.fiuady.db.CompuStore;
 import com.fiuady.db.Product;
 
@@ -29,7 +31,7 @@ import java.util.List;
 
 public class AddAssemblyActivity extends AppCompatActivity {
 
-    private int Id;
+    public static final int REQUESTCODE = 1;
 
     public static class mDialogFragment extends DialogFragment {
 
@@ -43,7 +45,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
             Bundle args = new Bundle();
             args.putInt("num", num);
             args.putInt("pid", pid);
-            args.putInt("qty",qty);
+            args.putInt("qty", qty);
             dF.setArguments(args);
             return dF;
         }
@@ -83,7 +85,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
             picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(Qty + 10);
-            picker.setValue(Qty+1);
+            picker.setValue(Qty + 1);
             //compustore = new CompuStore(getActivity());
 
             builder.setCancelable(false);
@@ -93,7 +95,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ((AddAssemblyActivity) getActivity()).UpdateProduct(Pid,picker.getValue());
+                    ((AddAssemblyActivity) getActivity()).UpdateProduct(Pid, picker.getValue());
                     //compustore.AddQtyProductInAssembly(Pid, Id, picker.getValue());
                     ((AddAssemblyActivity) getActivity()).UpdateAdapter();
                     Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
@@ -116,7 +118,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
                 }
             }).setPositiveButton(R.string.texto_eliminar, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
-                    ((AddAssemblyActivity)getActivity()).DeleteProduct(Pid);
+                    ((AddAssemblyActivity) getActivity()).DeleteProduct(Pid);
                     //compustore.DeleteProductInAssembly(Pid,Id);
                     ((AddAssemblyActivity) getActivity()).UpdateAdapter();
                     Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
@@ -152,10 +154,10 @@ public class AddAssemblyActivity extends AppCompatActivity {
                         public boolean onMenuItemClick(MenuItem item) {
 
                             if (item.getTitle().equals(popupMenu.getMenu().getItem(0).getTitle())) {
-                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getQuantity(),product.getId());
+                                mDialogFragment fragment = mDialogFragment.newInstance(0, product.getQuantity(), product.getId());
                                 fragment.show(getFragmentManager(), "QtyDialog");
                             } else {
-                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getDescription(),product.getId());
+                                mDialogFragment fragment = mDialogFragment.newInstance2(1, product.getDescription(), product.getId());
                                 fragment.show(getFragmentManager(), "EraseDialog");
                             }
 
@@ -204,73 +206,106 @@ public class AddAssemblyActivity extends AppCompatActivity {
     private EditText desctext;
     private CompuStore compustore;
     private ProductAdapter adapter;
-    ArrayList<Product> products;
+    private Button btnsave, btncancel;
+    private ArrayList<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assembly);
         desctext = (EditText) findViewById(R.id.descass_text);
+        btnsave = (Button) findViewById(R.id.Btn_guardar);
+        btncancel = (Button) findViewById(R.id.Btn_cancelar);
         compustore = new CompuStore(this);
         recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        products = new ArrayList<>();
+        products = new ArrayList<Product>();
+        UpdateAdapter();
 
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.agregar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        Intent i = new Intent(this, AddProductToAssemblyActivity.class);
-        startActivityForResult(i, AddProductToAssemblyActivity.CODE_REQUEST);
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == RESULT_OK){
-            //Intent i = getIntent();
-            //Product product = compustore.getProductById(i.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1));
-            //Toast.makeText(this, String.valueOf(data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)), Toast.LENGTH_SHORT).show();
-            for (Product product : compustore.getAllProducts()){
-                if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)){
-                    product.setQuantity(1);
-                    products.add(product);
-                }
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
-            UpdateAdapter();
+        });
+        btnsave.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int id = -1;
+                    if (!desctext.getText().toString().isEmpty() && !compustore.AssemblyExists(desctext.getText().toString())) {
+                        compustore.InsertAssembly(desctext.getText().toString());
+                        for (Assembly assembly : compustore.getAllAssemblies()) {
+                            if (assembly.getDescripcion().equals(desctext.getText().toString())) {
+                                id = assembly.getId();
+                            }
+                        }
+                        for (Product product : products) {
+                            //Toast.makeText(AddAssemblyActivity.this, "id " +id+ " pid "+product.getId()+" qty "+product.getQuantity(), Toast.LENGTH_SHORT).show();
+                            compustore.InsertAssemblyProduct(id, product.getId(), product.getQuantity());
+                        }
+                        setResult(RESULT_OK);
+                        finish();
+                    }else{
+                        Toast.makeText(AddAssemblyActivity.this, R.string.InvalidAssembly, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
 
         }
-    }
+
+        @Override
+        public boolean onCreateOptionsMenu (Menu menu){
+            getMenuInflater().inflate(R.menu.agregar, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onOptionsItemSelected (MenuItem item){
+
+            Intent i = new Intent(this, AddProductToAssemblyActivity.class);
+            startActivityForResult(i, AddProductToAssemblyActivity.CODE_REQUEST);
+
+            return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        protected void onActivityResult ( int requestCode, int resultCode, Intent data){
+            super.onActivityResult(requestCode, resultCode, data);
+
+            if (resultCode == RESULT_OK) {
+                //Intent i = getIntent();
+                //Product product = compustore.getProductById(i.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1));
+                //Toast.makeText(this, String.valueOf(data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID,-1)), Toast.LENGTH_SHORT).show();
+                for (Product product : compustore.getAllProducts()) {
+                    if (product.getId() == data.getIntExtra(AddProductToAssemblyActivity.EXTRA_PID, -1)) {
+                        product.setQuantity(1);
+                        products.add(product);
+                    }
+                }
+                UpdateAdapter();
+
+            }
+        }
 
     public void UpdateAdapter() {
         adapter = new ProductAdapter(products);
         recyclerview.setAdapter(adapter);
     }
 
-    public void DeleteProduct(int pid){
-        int erase=-1;
-        for(Product product :  products){
-            if(product.getId()== pid){
+    public void DeleteProduct(int pid) {
+        int erase = -1;
+        for (Product product : products) {
+            if (product.getId() == pid) {
                 erase = products.indexOf(product);
             }
         }
         products.remove(erase);
     }
 
-    public void UpdateProduct(int pid, int qty){
+    public void UpdateProduct(int pid, int qty) {
 
-        for (Product product : products){
-            if(product.getId() == pid){
+        for (Product product : products) {
+            if (product.getId() == pid) {
                 product.setQuantity(qty);
             }
         }

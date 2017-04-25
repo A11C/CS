@@ -16,12 +16,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.fiuady.db.Assembly;
 import com.fiuady.db.CompuStore;
 import com.fiuady.db.Product;
 
@@ -33,6 +35,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
     public static final String EXTRA_IDASSEMBLY = " com.fiuady.hadp.compustore.extra_id";
     public static final String EXTRA_DESCASSEMBLY = " com.fiuady.hadp.compustore.extra_description";
+    public static final int REQUESTCODE = 0;
     private int Id;
 
     public static class mDialogFragment extends DialogFragment {
@@ -208,6 +211,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
     private EditText desctext;
     private CompuStore compustore;
     private ProductAdapter adapter;
+    private Button btnsave, btncancel;
     List<Product> products;
 
     @Override
@@ -215,15 +219,38 @@ public class ModAssemblyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assembly);
         desctext = (EditText) findViewById(R.id.descass_text);
+        btnsave = (Button) findViewById(R.id.Btn_guardar);
+        btncancel = (Button) findViewById(R.id.Btn_cancelar);
 
         Intent i = getIntent();
         Id = i.getIntExtra(EXTRA_IDASSEMBLY, 0);
         compustore = new CompuStore(this);
         products = (compustore.getAllProductsInAssembly(Id));
-        desctext.setText(i.getStringExtra(EXTRA_DESCASSEMBLY));
+        final String description = i.getStringExtra(EXTRA_DESCASSEMBLY);
+        desctext.setText(description);
         recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         UpdateAdapter();
+
+        btncancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        btnsave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (desctext.getText().toString().toUpperCase().equals(description.toUpperCase())) {
+                    UpdateAssembly();
+                } else if (!desctext.getText().toString().isEmpty() && !compustore.AssemblyExists(desctext.getText().toString())) {
+                    UpdateAssembly();
+                } else {
+                    Toast.makeText(ModAssemblyActivity.this, R.string.InvalidAssembly, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 
@@ -283,5 +310,15 @@ public class ModAssemblyActivity extends AppCompatActivity {
                 product.setQuantity(qty);
             }
         }
+    }
+
+    public void UpdateAssembly() {
+        compustore.UpdateAssembly(desctext.getText().toString(), Id);
+        for (Product product : products) {
+            Toast.makeText(ModAssemblyActivity.this, "id " +Id+ " pid "+product.getId()+" qty "+product.getQuantity(), Toast.LENGTH_SHORT).show();
+            //compustore.InsertAssemblyProduct(id, product.getId(), product.getQuantity());
+        }
+        setResult(RESULT_OK);
+        finish();
     }
 }
