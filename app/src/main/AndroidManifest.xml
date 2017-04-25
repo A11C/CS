@@ -36,6 +36,7 @@
             android:theme="@style/AssembliesTheme" />
         <activity
             android:name=".AddAssemblyActivity"
+            android:configChanges="screenSize|orientation"
             android:label="@string/tag_add_ass"
             android:theme="@style/AssembliesTheme" />
         <activity

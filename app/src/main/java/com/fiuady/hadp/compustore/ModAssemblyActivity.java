@@ -3,11 +3,13 @@ package com.fiuady.hadp.compustore;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
@@ -355,7 +357,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
                     repeated = false;
                 }
             }
-            if (!repeated){
+            if (!repeated || compustore.getAllProductsInAssembly(Id).isEmpty()){
                 compustore.InsertAssemblyProduct(Id, product.getId(), product.getQuantity());
             }
         }
@@ -363,4 +365,5 @@ public class ModAssemblyActivity extends AppCompatActivity {
         setResult(RESULT_OK);
         finish();
     }
+
 }
