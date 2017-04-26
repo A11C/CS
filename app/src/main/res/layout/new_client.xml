@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title_client"
         android:padding="10dp"
-        android:textSize="24sp"/>
+        android:textSize="22sp"/>
 
     <TextView
         android:id="@+id/apellidoCln_tag"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/nombreCln_tag"
         android:padding="10dp"
-        android:textSize="24sp"/>
+        android:textSize="22sp"/>
     <TextView
         android:id="@+id/direcCln_tag"
         android:layout_width="wrap_content"
@@ -37,8 +37,7 @@
         android:layout_below="@id/apellidoCln_tag"
         android:text="@string/tag_direccion"
         android:padding="10sp"
-        android:textSize="24sp"
-        />
+        android:textSize="22sp" />
 
     <TextView
         android:id="@+id/telCln_tag"
@@ -46,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/direcCln_tag"
         android:padding="10dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:text="@string/tag_telefono"/>
     <TextView
         android:id="@+id/tel2Cln_tag"
@@ -54,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/telCln_tag"
         android:padding="10dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:text="@string/tag_telefono2"/>
     <TextView
         android:id="@+id/tel3Cln_tag"
@@ -62,7 +61,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tel2Cln_tag"
         android:padding="10dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:text="@string/tag_telefono3"/>
     <TextView
         android:id="@+id/emailCln_tag"
@@ -70,15 +69,16 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tel3Cln_tag"
         android:padding="10dp"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:text="@string/tag_email"/>
+
     <EditText
         android:id="@+id/nombreCln_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/title_client"
         android:layout_toEndOf="@id/nombreCln_tag"
-        android:inputType="text"
+        android:inputType="textCapWords"
         tool:ignore="LabelFor" />
 
     <EditText
@@ -87,7 +87,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/nombreCln_tag"
         android:layout_toEndOf="@id/apellidoCln_tag"
-        android:inputType="text"
+        android:inputType="textCapWords"
         tool:ignore="LabelFor" />
 
     <EditText
@@ -105,8 +105,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/direcCln_tag"
         android:layout_toEndOf="@id/telCln_tag"
-        android:inputType="number"
         android:hint="(Lada)"
+        android:inputType="number|phone"
         android:maxLength="3"
         android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
@@ -117,21 +117,22 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/direcCln_tag"
         android:layout_toEndOf="@id/ladat1_text"
-        android:inputType="phone"
         android:hint="(phone)"
+        android:inputType="number|phone"
         android:maxLength="7"
         android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
+
     <EditText
         android:id="@+id/ladat2_text"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/telCln_tag"
         android:layout_toEndOf="@id/tel2Cln_tag"
-        android:inputType="number"
-        android:textAlignment="center"
         android:hint="(Lada)"
+        android:inputType="number|phone"
         android:maxLength="3"
+        android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
 
     <EditText
@@ -140,19 +141,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/telCln_tag"
         android:layout_toEndOf="@id/ladat2_text"
-        android:inputType="phone"
         android:hint="(phone)"
+        android:inputType="number|phone"
         android:maxLength="7"
         android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
+
     <EditText
         android:id="@+id/ladat3_text"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tel2Cln_tag"
         android:layout_toEndOf="@id/tel3Cln_tag"
-        android:inputType="number"
         android:hint="(Lada)"
+        android:inputType="number|phone"
         android:maxLength="3"
         android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />
@@ -163,8 +165,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tel2Cln_tag"
         android:layout_toEndOf="@id/ladat3_text"
-        android:inputType="phone"
         android:hint="(phone)"
+        android:inputType="number|phone"
         android:maxLength="7"
         android:textAlignment="center"
         tool:ignore="HardcodedText,LabelFor" />

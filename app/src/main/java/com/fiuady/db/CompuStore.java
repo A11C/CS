@@ -501,6 +501,33 @@ public final class CompuStore {
         return list;
     }
 
+    public void InsertClient(String fn, String ln, String dir, String p1, String p2, String p3, String email){
+        ContentValues values = new ContentValues();
+
+        values.put(CustomersTable.Columns.FIRST_NAME, fn);
+        values.put(CustomersTable.Columns.LAST_NAME, ln);
+        values.put(CustomersTable.Columns.ADDRESS, dir);
+        values.put(CustomersTable.Columns.PHONE1, p1);
+        values.put(CustomersTable.Columns.PHONE2, p2);
+        values.put(CustomersTable.Columns.PHONE3, p3);
+        values.put(CustomersTable.Columns.E_MAIL, email);
+
+        db.insert(CustomersTable.NAME, null, values);
+    }
+
+    public boolean ClientHaveOrder(int id){
+        boolean match = true;
+
+        List<Order> orders = getAllOrders();
+        for (Order order : orders){
+            if (order.getCustomer_id() == id){
+                match = false;
+                break;
+            }
+        }
+        return match;
+    }
+
     public List<Order> getAllOrders(){
         ArrayList<Order> list = new ArrayList<>();
 

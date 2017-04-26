@@ -1,13 +1,17 @@
 package com.fiuady.hadp.compustore;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fiuady.MultiSelectionSpinner;
 import com.fiuady.db.Client;
@@ -27,10 +32,80 @@ import java.util.List;
 
 public class ClientsActivity extends AppCompatActivity {
 
+    public static class mDialogFragment extends DialogFragment {
+
+        private int Num;
+        private CompuStore compustore;
+        private EditText nomtxt, lnomtxt,
+                dirtxt, lad1txt, lad2txt, lad3txt,
+                p1txt, p2txt, p3txt, emailtxt;
+        static mDialogFragment newInstance(int num){
+            mDialogFragment dF = new mDialogFragment();
+            Bundle args = new Bundle();
+            args.putInt("num",num);
+            dF.setArguments(args);
+            return dF;
+        }
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            Num = getArguments().getInt("num");
+            switch (Num) {
+                case 0:
+                return DialogAdd();
+            }
+            return super.onCreateDialog(savedInstanceState);
+        }
+
+        public AlertDialog DialogAdd(){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            LayoutInflater inflater = getActivity().getLayoutInflater();
+            View view = inflater.inflate(R.layout.new_client, null);
+
+            nomtxt = (EditText) view.findViewById(R.id.nombreCln_text);
+            lnomtxt = (EditText) view.findViewById(R.id.apellidoCln_text);
+            dirtxt = (EditText) view.findViewById(R.id.direcCln_text);
+            lad1txt = (EditText) view.findViewById(R.id.ladat1_text);
+            lad2txt = (EditText) view.findViewById(R.id.ladat2_text);
+            lad3txt = (EditText) view.findViewById(R.id.ladat3_text);
+            p1txt = (EditText) view.findViewById(R.id.phonet1_text);
+            p2txt = (EditText) view.findViewById(R.id.phonet2_text);
+            p3txt = (EditText) view.findViewById(R.id.phonet3_text);
+            emailtxt = (EditText) view. findViewById(R.id.emailCln_text);
+            compustore = new CompuStore(getActivity());
+
+            builder.setCancelable(false);
+
+            builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    if((!nomtxt.getText().toString().isEmpty()) && (!lnomtxt.getText().toString().isEmpty()) && (!dirtxt.getText().toString().isEmpty())){
+                        compustore.InsertClient(nomtxt.getText().toString(), lnomtxt.getText().toString(), dirtxt.getText().toString(),
+                                lad1txt.getText().toString()+"-"+p1txt.getText().toString(),
+                                lad2txt.getText().toString()+"-"+p2txt.getText().toString(),
+                                lad3txt.getText().toString()+"-"+p3txt.getText().toString(),
+                                emailtxt.getText().toString());
+                        ((ClientsActivity)getActivity()).UpdateAdapter();
+                        Toast.makeText(getActivity(), R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.InvalidClient, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), R.string.Error_operacion, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+            builder.setView(view);
+            return builder.create();
+        }
+    }
+
     private EditText editText;
     private TextView dialogTitle;
     private Spinner spinneradd;
-    Client client;
 
     private class ClientHolder extends RecyclerView.ViewHolder {
 
@@ -56,6 +131,10 @@ public class ClientsActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     final PopupMenu popup = new PopupMenu(ClientsActivity.this, itemView);
                     popup.getMenuInflater().inflate(R.menu.menu_option_catassem, popup.getMenu());
+
+                    if(!compustore.ClientHaveOrder(client.getId())){
+                        popup.getMenu().removeItem(R.id.menu_1);
+                    }
 
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -113,13 +192,7 @@ public class ClientsActivity extends AppCompatActivity {
     private ClientAdapter adapter;
     private Spinner spinner;
     private ImageButton search;
-
-   //private EditText desctext, pricetext, qtytext, searchtext;
-   //private TextView cattag, desctag, pricetag, qtytag;
-
-    private EditText searchtext, nomtxt, lnomtxt,
-                    dirtxt, lad1txt, lad2txt, lad3txt,
-                    p1txt, p2txt, p3txt, emailtxt;
+    private EditText searchtext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +212,7 @@ public class ClientsActivity extends AppCompatActivity {
         recyclerview = (RecyclerView) findViewById(R.id.clients_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
-        adapter = new ClientAdapter(compustore.getAllClients());
-        recyclerview.setAdapter(adapter);
+        UpdateAdapter();
 
         final String[] select_qualification = {
                 "Filtrar por:", "Nombre", "Apellido", "Dirección", "Teléfono","E-mail"};
@@ -199,46 +271,13 @@ public class ClientsActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View view = getLayoutInflater().inflate(R.layout.new_client, null);
-
-        nomtxt = (EditText) view.findViewById(R.id.nombreCln_text);
-        lnomtxt = (EditText) view.findViewById(R.id.apellidoCln_text);
-        dirtxt = (EditText) view.findViewById(R.id.direcCln_text);
-        lad1txt = (EditText) view.findViewById(R.id.ladat1_text);
-        lad2txt = (EditText) view.findViewById(R.id.ladat2_text);
-        lad3txt = (EditText) view.findViewById(R.id.ladat3_text);
-        p1txt = (EditText) view.findViewById(R.id.phonet1_text);
-        p2txt = (EditText) view.findViewById(R.id.phonet2_text);
-        p3txt = (EditText) view.findViewById(R.id.phonet3_text);
-        emailtxt = (EditText) view. findViewById(R.id.emailCln_text);
-
-       //List<Client> clients = compustore.getAllCategories();
-        //for (Client client : clients) {
-        //    arrayAdapter.add(client.getDescription());
-        //}
-
-        builder.setCancelable(false);
-
-        builder.setNegativeButton(R.string.texto_cancelar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        }).setPositiveButton(R.string.texto_guardar, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                //   if (compustore.insertProduct(desctext.getText().toString(),)) {
-                //       Toast.makeText(ProductsActivity.this, R.string.Confirma_operacion, Toast.LENGTH_SHORT).show();
-                //       adapter = new ClientAdapter(compustore.getAllProducts());
-                //       recyclerview.setAdapter(adapter);
-                //   } else {
-                //      Toast.makeText(ProductsActivity.this, R.string.Error_operacion, Toast.LENGTH_SHORT).show();
-                //   }
-            }
-        });
-
-        builder.setView(view);
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        mDialogFragment fragment = mDialogFragment.newInstance(0);
+        fragment.show(getFragmentManager(),"AddDialog");
         return super.onOptionsItemSelected(item);
+    }
+
+    public void UpdateAdapter(){
+        adapter = new ClientAdapter(compustore.getAllClients());
+        recyclerview.setAdapter(adapter);
     }
 }
