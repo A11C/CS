@@ -1,108 +1,599 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingStart="16dp"
+    >
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
     <android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/cardView"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true">
+        card_view:cardElevation="8dp"
+       >
 
         <RelativeLayout
+            android:id="@+id/rl_mes1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rl_mes1">
+            >
 
             <TextView
                 android:id="@+id/text_mes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
                 android:text="@string/mes_ene"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                tools:textColor="@android:color/background_dark"
-                android:layout_centerHorizontal="true"
-                />
+                tools:textColor="#d36dd3" />
 
             <TextView
                 android:id="@+id/total_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/text_mes"
+                android:layout_toStartOf="@+id/text_mes"
                 android:text="@string/total_tag"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/background_dark"
-                android:layout_below="@+id/text_mes"
-                android:layout_toStartOf="@+id/text_mes" />
+                tools:textColor="#d36dd3" />
 
             <TextView
                 android:id="@+id/total_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/text_mes"
+                android:layout_toEndOf="@id/total_tag"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                android:layout_toEndOf="@id/total_tag"
-                android:layout_below="@id/text_mes"
-                tools:textColor="@android:color/darker_gray"
                 tools:text="...Total.."
-                 />
+                tools:textColor="@android:color/darker_gray" />
 
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
-    
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView2"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes2">
+
+                <TextView
+                    android:id="@+id/text_mes2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_feb"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total2_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes2"
+                    android:layout_toStartOf="@+id/text_mes2" />
+
+                <TextView
+                    android:id="@+id/total2_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total2_tag"
+                    android:layout_below="@id/text_mes2"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView3"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes3">
+
+                <TextView
+                    android:id="@+id/text_mes3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_mar"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total3_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes3"
+                    android:layout_toStartOf="@+id/text_mes3" />
+
+                <TextView
+                    android:id="@+id/total3_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total3_tag"
+                    android:layout_below="@id/text_mes3"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cardView">
+        android:id="@+id/cardView4"
+        card_view:cardElevation="8dp">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/rl_mes2">
+            android:id="@+id/rl_mes4">
 
             <TextView
-                android:id="@+id/text_mes2"
+                android:id="@+id/text_mes4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mes_feb"
+                android:text="@string/mes_ab"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                tools:textColor="@android:color/background_dark"
+                tools:textColor="#d36dd3"
                 android:layout_centerHorizontal="true"
                 />
 
             <TextView
-                android:id="@+id/total2_tag"
+                android:id="@+id/total4_tag"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/total_tag"
                 android:textSize="30sp"
-                android:textStyle="bold"
-                tools:textColor="@android:color/background_dark"
-                android:layout_below="@+id/text_mes2"
-                android:layout_toStartOf="@+id/text_mes2" />
+                tools:textColor="#d36dd3"
+                android:layout_below="@+id/text_mes4"
+                android:layout_toStartOf="@+id/text_mes4" />
 
             <TextView
-                android:id="@+id/total2_text"
+                android:id="@+id/total4_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="30sp"
                 android:textStyle="bold"
-                android:layout_toEndOf="@id/total2_tag"
-                android:layout_below="@id/text_mes2"
+                android:layout_toEndOf="@id/total4_tag"
+                android:layout_below="@id/text_mes4"
                 tools:textColor="@android:color/darker_gray"
                 tools:text="...Total.."
                 />
-
 
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cardView5"
+        card_view:cardElevation="8dp">
 
-</RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/rl_mes5">
+
+            <TextView
+                android:id="@+id/text_mes5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mes_may"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                tools:textColor="#d36dd3"
+                android:layout_centerHorizontal="true"
+                />
+
+            <TextView
+                android:id="@+id/total5_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total_tag"
+                android:textSize="30sp"
+                tools:textColor="#d36dd3"
+                android:layout_below="@+id/text_mes5"
+                android:layout_toStartOf="@+id/text_mes5" />
+
+            <TextView
+                android:id="@+id/total5_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:layout_toEndOf="@id/total5_tag"
+                android:layout_below="@id/text_mes5"
+                tools:textColor="@android:color/darker_gray"
+                tools:text="...Total.."
+                />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView6"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes6">
+
+                <TextView
+                    android:id="@+id/text_mes6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_jun"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total6_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes6"
+                    android:layout_toStartOf="@+id/text_mes6" />
+
+                <TextView
+                    android:id="@+id/total6_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total6_tag"
+                    android:layout_below="@id/text_mes6"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView7"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes7">
+
+                <TextView
+                    android:id="@+id/text_mes7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_jul"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total7_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes7"
+                    android:layout_toStartOf="@+id/text_mes7" />
+
+                <TextView
+                    android:id="@+id/total7_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total7_tag"
+                    android:layout_below="@id/text_mes7"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView8"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes8">
+
+                <TextView
+                    android:id="@+id/text_mes8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_ago"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total8_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes8"
+                    android:layout_toStartOf="@+id/text_mes8" />
+
+                <TextView
+                    android:id="@+id/total8_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total8_tag"
+                    android:layout_below="@id/text_mes8"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView9"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes9">
+
+                <TextView
+                    android:id="@+id/text_mes9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_sep"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total9_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes9"
+                    android:layout_toStartOf="@+id/text_mes9" />
+
+                <TextView
+                    android:id="@+id/total9_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total9_tag"
+                    android:layout_below="@id/text_mes9"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView10"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes10">
+
+                <TextView
+                    android:id="@+id/text_mes10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_oct"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total10_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes10"
+                    android:layout_toStartOf="@+id/text_mes10" />
+
+                <TextView
+                    android:id="@+id/total10_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total10_tag"
+                    android:layout_below="@id/text_mes10"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView11"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes11">
+
+                <TextView
+                    android:id="@+id/text_mes11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_nov"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total11_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes11"
+                    android:layout_toStartOf="@+id/text_mes11" />
+
+                <TextView
+                    android:id="@+id/total11_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total11_tag"
+                    android:layout_below="@id/text_mes11"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/cardView12"
+            card_view:cardElevation="8dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/rl_mes12">
+
+                <TextView
+                    android:id="@+id/text_mes12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mes_dic"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    tools:textColor="#d36dd3"
+                    android:layout_centerHorizontal="true"
+                    />
+
+                <TextView
+                    android:id="@+id/total12_tag"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total_tag"
+                    android:textSize="30sp"
+                    tools:textColor="#d36dd3"
+                    android:layout_below="@+id/text_mes12"
+                    android:layout_toStartOf="@+id/text_mes12" />
+
+                <TextView
+                    android:id="@+id/total12_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_toEndOf="@id/total12_tag"
+                    android:layout_below="@id/text_mes12"
+                    tools:textColor="@android:color/darker_gray"
+                    tools:text="...Total.."
+                    />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+
+    </LinearLayout>
+
+</ScrollView>
