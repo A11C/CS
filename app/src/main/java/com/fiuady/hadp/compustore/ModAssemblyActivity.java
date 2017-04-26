@@ -3,8 +3,10 @@ package com.fiuady.hadp.compustore;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
 import android.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
@@ -68,6 +70,8 @@ public class ModAssemblyActivity extends AppCompatActivity {
             dF.setArguments(args);
             return dF;
         }
+
+
 
 
         @Override
@@ -233,7 +237,12 @@ public class ModAssemblyActivity extends AppCompatActivity {
         final String description = i.getStringExtra(EXTRA_DESCASSEMBLY);
         desctext.setText(description);
         recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }else{
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+
         UpdateAdapter();
 
         btncancel.setOnClickListener(new View.OnClickListener() {
@@ -314,6 +323,8 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
         }
     }
+
+
 
     public void UpdateAdapter() {
         Collections.sort(products, new Comparator<Product>() {
