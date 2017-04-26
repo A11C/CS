@@ -35,7 +35,10 @@ import java.util.List;
 
 public class AddAssemblyActivity extends AppCompatActivity {
 
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_ID = "id";
     public static final int REQUESTCODE = 1;
+    private int Id;
 
     public static class mDialogFragment extends DialogFragment {
 
@@ -134,7 +137,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView idtext, catidtext, desctext, pricetext, qtytext;
+        private TextView idtext, catidtext, desctext, pricetext, qtytext, qtytag;
 
         public ProductHolder(View itemView) {
             super(itemView);
@@ -142,6 +145,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
             desctext = (TextView) itemView.findViewById(R.id.descriptionPr_text);
             pricetext = (TextView) itemView.findViewById(R.id.pricePr_text);
+            qtytag = (TextView) itemView.findViewById(R.id.qty_tag);
             qtytext = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
@@ -177,6 +181,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
             pricetext.setText(String.valueOf(product.getPrice()));
             qtytext.setText(String.valueOf(product.getQuantity()));
             desctext.setText(product.getDescription());
+            qtytag.setText("Cantidad Requerida: ");
         }
     }
 
@@ -221,9 +226,23 @@ public class AddAssemblyActivity extends AppCompatActivity {
         btnsave = (Button) findViewById(R.id.Btn_guardar);
         btncancel = (Button) findViewById(R.id.Btn_cancelar);
         compustore = new CompuStore(this);
+        final String description;
+
+        if(savedInstanceState != null){
+            description = savedInstanceState.getString(KEY_DESCRIPTION);
+            desctext.setText(description);
+            Id = savedInstanceState.getInt(KEY_ID);
+            products = new ArrayList<Product>(compustore.RestoreProducts());
+        } else {
+            products = new ArrayList<Product>();
+        }
         recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
-        recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        products = new ArrayList<Product>();
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }else{
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+
         UpdateAdapter();
 
         btncancel.setOnClickListener(new View.OnClickListener() {
@@ -263,17 +282,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
     }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        int orientation = newConfig.orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        }
-        else {
-            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
-        }
-    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -308,10 +317,9 @@ public class AddAssemblyActivity extends AppCompatActivity {
                     }
                 }
             }
-
             UpdateAdapter();
-
         }
+        compustore.RestoreProducts();
     }
 
     public void UpdateAdapter() {
@@ -344,5 +352,12 @@ public class AddAssemblyActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        compustore.SaveProducts(products);
+        outState.putString(KEY_DESCRIPTION,desctext.getText().toString());
+        outState.putInt(KEY_ID,Id);
+        super.onSaveInstanceState(outState);
+    }
 
 }

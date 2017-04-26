@@ -34,7 +34,7 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView idtext, catidtext, desctext, pricetext, qtytext;
+        private TextView idtext, catidtext, desctext, pricetext, qtytext, qtytag;
 
         public ProductHolder(View itemView) {
             super(itemView);
@@ -42,6 +42,7 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
             desctext = (TextView) itemView.findViewById(R.id.descriptionPr_text);
             pricetext = (TextView) itemView.findViewById(R.id.pricePr_text);
+            qtytag = (TextView) itemView.findViewById(R.id.qty_tag);
             qtytext = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
@@ -70,6 +71,7 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
             pricetext.setText(String.valueOf(product.getPrice()));
             qtytext.setText(String.valueOf(product.getQuantity()));
             desctext.setText(product.getDescription());
+            qtytag.setText("Cantidad Disponible: ");
         }
     }
 
@@ -180,4 +182,9 @@ public class AddProductToAssemblyActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

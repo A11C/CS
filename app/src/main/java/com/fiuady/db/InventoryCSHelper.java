@@ -60,15 +60,15 @@ public final class InventoryCSHelper extends SQLiteOpenHelper{
             InputStream is = context.getAssets().open(filename);
             reader = new BufferedReader(new InputStreamReader(is));
 
-            StringBuilder statemnt = new StringBuilder();
+            StringBuilder statement = new StringBuilder();
             for (String line; (line = reader.readLine()) != null;){
                 if (!TextUtils.isEmpty(line) && !line.startsWith("--")) {
-                    statemnt.append(line.trim());
+                    statement.append(line.trim());
                 }
 
                 if (line.endsWith(";")){
-                    db.execSQL(statemnt.toString());
-                    statemnt.setLength(0);
+                    db.execSQL(statement.toString());
+                    statement.setLength(0);
                 }
             }
         } catch (IOException e){

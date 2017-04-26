@@ -335,6 +335,44 @@ public final class CompuStore {
         db.update(ProductsTable.NAME, values, ProductsTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
+    public void SaveProducts(ArrayList<Product> products){
+
+        db.execSQL("CREATE TABLE [products_aux]( " +
+                " [id] INTEGER PRIMARY KEY, " +
+                " [category_id] INTEGER NOT NULL REFERENCES product_categories([id]), " +
+                " [description] TEXT NOT NULL, " +
+                " [price] INTEGER NOT NULL, " +
+                " [qty] INTEGER NOT NULL, " +
+                " CHECK(price >= 0), " +
+                " CHECK(qty >= 0));");
+
+        ContentValues values = new ContentValues();
+        for (Product product : products)
+        {
+            values.put(ProductsTable.Columns.DESCRIPTION, product.getDescription());
+            values.put(ProductsTable.Columns.CATEGORY_ID, product.getCategory_id());
+            values.put(ProductsTable.Columns.ID, product.getId());
+            values.put(ProductsTable.Columns.QUANTITY, product.getQuantity());
+            values.put(ProductsTable.Columns.PRICE, product.getPrice());
+            db.insert("products_aux",null,values);
+            values.clear();
+        }
+
+    }
+
+    public List<Product> RestoreProducts(){
+        ArrayList<Product> list = new ArrayList<>();
+
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products_aux ORDER BY description",null));
+        while (cursor.moveToNext()){
+            list.add(cursor.getProduct());
+        }
+        cursor.close();
+        db.execSQL("DROP TABLE IF EXISTS [products_aux]");
+
+        return list;
+    }
+
     public List<Assembly> getAllAssemblies() {
         ArrayList<Assembly> list = new ArrayList<>();
 

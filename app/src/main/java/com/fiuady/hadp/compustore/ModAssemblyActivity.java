@@ -41,6 +41,8 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
     public static final String EXTRA_IDASSEMBLY = " com.fiuady.hadp.compustore.extra_id";
     public static final String EXTRA_DESCASSEMBLY = " com.fiuady.hadp.compustore.extra_description";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_ID = "id";
     public static final int REQUESTCODE = 0;
     private int Id;
 
@@ -143,7 +145,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
     private class ProductHolder extends RecyclerView.ViewHolder {
 
-        private TextView idtext, catidtext, desctext, pricetext, qtytext;
+        private TextView idtext, catidtext, desctext, pricetext, qtytext, qtytag;
 
         public ProductHolder(View itemView) {
             super(itemView);
@@ -151,6 +153,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
             catidtext = (TextView) itemView.findViewById(R.id.categoryID_text);
             desctext = (TextView) itemView.findViewById(R.id.descriptionPr_text);
             pricetext = (TextView) itemView.findViewById(R.id.pricePr_text);
+            qtytag = (TextView) itemView.findViewById(R.id.qty_tag);
             qtytext = (TextView) itemView.findViewById(R.id.qty_text);
         }
 
@@ -186,6 +189,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
             pricetext.setText(String.valueOf(product.getPrice()));
             qtytext.setText(String.valueOf(product.getQuantity()));
             desctext.setText(product.getDescription());
+            qtytag.setText("Cantidad Requerida: ");
         }
     }
 
@@ -220,7 +224,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
     private CompuStore compustore;
     private ProductAdapter adapter;
     private Button btnsave, btncancel;
-    List<Product> products;
+    private ArrayList<Product> products;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -229,13 +233,24 @@ public class ModAssemblyActivity extends AppCompatActivity {
         desctext = (EditText) findViewById(R.id.descass_text);
         btnsave = (Button) findViewById(R.id.Btn_guardar);
         btncancel = (Button) findViewById(R.id.Btn_cancelar);
-
-        Intent i = getIntent();
-        Id = i.getIntExtra(EXTRA_IDASSEMBLY, 0);
+        final String description;
         compustore = new CompuStore(this);
-        products = (compustore.getAllProductsInAssembly(Id));
-        final String description = i.getStringExtra(EXTRA_DESCASSEMBLY);
-        desctext.setText(description);
+
+        if(savedInstanceState != null)
+        {
+            description = savedInstanceState.getString(KEY_DESCRIPTION);
+            desctext.setText(description);
+            Id = savedInstanceState.getInt(KEY_ID);
+            products = new ArrayList<Product>(compustore.RestoreProducts());
+        }else{
+            Intent i = getIntent();
+            Id = i.getIntExtra(EXTRA_IDASSEMBLY, 0);
+            products = new ArrayList<Product>(compustore.getAllProductsInAssembly(Id));
+            description = i.getStringExtra(EXTRA_DESCASSEMBLY);
+            desctext.setText(description);
+        }
+
+
         recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
         if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
             recyclerview.setLayoutManager(new LinearLayoutManager(this));
@@ -281,17 +296,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        int orientation = newConfig.orientation;
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        }
-        else {
-            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
-        }
-    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -318,13 +323,19 @@ public class ModAssemblyActivity extends AppCompatActivity {
                     }
                 }
             }
-
             UpdateAdapter();
 
         }
+        compustore.RestoreProducts();
     }
 
-
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        compustore.SaveProducts(products);
+        outState.putString(KEY_DESCRIPTION,desctext.getText().toString());
+        outState.putInt(KEY_ID,Id);
+        super.onSaveInstanceState(outState);
+    }
 
     public void UpdateAdapter() {
         Collections.sort(products, new Comparator<Product>() {
