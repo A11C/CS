@@ -30,7 +30,12 @@ import java.util.List;
 
 public class ProductsActivity extends AppCompatActivity {
 
+    private final static String KEY_SEARCH = "search";
+    private final static String KEY_SEARCHED = "searched";
+    private final static String KEY_POSITION = "position";
+    //private int POSITION;
     private String QUERY = null;
+    private boolean searched = false;
 
     public static class mDialogFragment extends DialogFragment {
 
@@ -335,7 +340,6 @@ public class ProductsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_products);
 
-
         //    if(Build.VERSION.SDK_INT >= 21){
         //      getWindow().setNavigationBarColor(getResources().getColor(R.color.colorProducts));
         //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorProducts));
@@ -345,7 +349,6 @@ public class ProductsActivity extends AppCompatActivity {
         search = (ImageButton) findViewById(R.id.buscarCat_button);
         searchtext = (EditText) findViewById(R.id.busquedaCat_text);
         compustore = new CompuStore(this);
-
         recyclerview = (RecyclerView) findViewById(R.id.productos_rv);
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
 
@@ -357,6 +360,16 @@ public class ProductsActivity extends AppCompatActivity {
         for (Category category : categories) {
             arrayAdapter.add(category.getDescription());
         }
+
+        if(savedInstanceState != null){
+            searched = savedInstanceState.getBoolean(KEY_SEARCHED, false);
+            spinner.setSelection(savedInstanceState.getInt(KEY_POSITION));
+            if (searched){
+                QUERY = savedInstanceState.getString(KEY_SEARCH);
+                UpdateAdapter();
+            }
+        }
+
 
         search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -388,6 +401,14 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(KEY_POSITION, spinner.getSelectedItemPosition());
+        outState.putBoolean(KEY_SEARCHED, searched);
+        outState.putString(KEY_SEARCH, QUERY);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
@@ -401,6 +422,7 @@ public class ProductsActivity extends AppCompatActivity {
     }
 
     public void UpdateAdapter(){
+        searched = true;
         if (QUERY!= null){
             if (spinner.getSelectedItemPosition() != 0){
                 adapter = new ProductAdapter(compustore.getProductByName(compustore.getOneCategory(spinner.getSelectedItem().toString()), String.valueOf(searchtext.getText())));
