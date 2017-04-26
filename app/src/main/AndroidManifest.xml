@@ -49,7 +49,6 @@
             android:theme="@style/ClientsTheme" />
         <activity
             android:name=".OrdersActivity"
-            android:configChanges="screenSize|orientation"
             android:label="@string/tag_ordenes"
             android:theme="@style/OrdersTheme" />
         <activity

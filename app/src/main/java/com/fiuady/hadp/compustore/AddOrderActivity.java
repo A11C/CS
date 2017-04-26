@@ -108,6 +108,13 @@ public class AddOrderActivity extends AppCompatActivity {
         for (Client client : clients) {
             arrayAdapter.add(client.getFirst_name()+" "+client.getLast_name());
         }
+
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }else{
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
+
     }
 
     @Override
@@ -115,7 +122,7 @@ public class AddOrderActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.agregar, menu);
         return true;
     }
-    @Override
+  /*  @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         int orientation = newConfig.orientation;
@@ -125,7 +132,7 @@ public class AddOrderActivity extends AppCompatActivity {
         else {
             recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         }
-    }
+    }*/
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

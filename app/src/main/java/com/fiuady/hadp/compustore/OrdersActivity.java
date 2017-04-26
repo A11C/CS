@@ -50,7 +50,7 @@ public class OrdersActivity extends AppCompatActivity {
     private CompuStore compustore;
     private RecyclerView recyclerview;
     private OrderAdapter adapter;
-
+    private Configuration newConfig;
     private class OrderHolder extends RecyclerView.ViewHolder {
 
         private TextView idOrtext, Statustext, CustomerIdtext, dateOrtext;
@@ -212,6 +212,12 @@ public class OrdersActivity extends AppCompatActivity {
             recyclerview.setLayoutManager(new LinearLayoutManager(this));
             adapter = new OrderAdapter(compustore.getAllOrders());
             recyclerview.setAdapter(adapter);
+            if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+                recyclerview.setLayoutManager(new LinearLayoutManager(this));
+            }else{
+                recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+            }
+
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item);
             spinnercl.setAdapter(arrayAdapter);
@@ -221,6 +227,7 @@ public class OrdersActivity extends AppCompatActivity {
             for (Client client : clients) {
                 arrayAdapter.add(client.getFirst_name() + " " + client.getLast_name());
             }
+
 
 
             chkdf.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -255,6 +262,7 @@ public class OrdersActivity extends AppCompatActivity {
             //    getWindow().setStatusBarColor(getResources().getColor(R.color.colorOrders));
             //}
 
+
         }
 
         @Override
@@ -262,7 +270,8 @@ public class OrdersActivity extends AppCompatActivity {
             getMenuInflater().inflate(R.menu.agregar, menu);
             return true;
         }
-     @Override
+
+/*  @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         int orientation = newConfig.orientation;
@@ -272,7 +281,7 @@ public class OrdersActivity extends AppCompatActivity {
         else {
             recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         }
-    }
+    }*/
 
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {

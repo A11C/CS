@@ -80,7 +80,7 @@ public class ModOrderActivity extends AppCompatActivity {
         }
 
     }
-    @Override
+  /*  @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         int orientation = newConfig.orientation;
@@ -90,7 +90,7 @@ public class ModOrderActivity extends AppCompatActivity {
         else {
             recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         }
-    }
+    }*/
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +102,11 @@ public class ModOrderActivity extends AppCompatActivity {
         recyclerview.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ModOrderAdapter(compustore.getAllAssemblies());
         recyclerview.setAdapter(adapter);
+        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerview.setLayoutManager(new LinearLayoutManager(this));
+        }else{
+            recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
+        }
     }
 
     @Override

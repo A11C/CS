@@ -73,6 +73,19 @@
     <string name="Confirma_operacion">Se ha realizado exitosamente </string>
     <string name="Error_operacion">No se ha completado la operación</string>
 
+    <string name="mes_ene">Enero</string>
+    <string name="mes_feb">Febrero</string>
+    <string name="mes_mar">Marzo</string>
+    <string name="mes_ab">Abril</string>
+    <string name="mes_may">Mayo</string>
+    <string name="mes_jun">Junio</string>
+    <string name="mes_jul">Julio</string>
+    <string name="mes_ago">Agosto</string>
+    <string name="mes_sep">Septiembre</string>
+    <string name="mes_oct">Octubre</string>
+    <string name="mes_nov">Noviembre</string>
+    <string name="mes_dic">Diciembre</string>
+    <string name="total_tag">Total: </string>
 
     <string name="texto_guardar">Guardar</string>
     <string name="texto_cancelar">Cancelar</string>
