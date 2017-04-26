@@ -55,6 +55,7 @@
     <string name="InvalidProduct">Texto vacío o Producto Existente</string>
 
     <string name="new_client">Nombre de cliente nuevo: </string>
+    <string name="InvalidClient">Cliente inválido</string>
 
     <string name="Agrega_categoria">Nombre de categoría nueva</string>
     <string name="Edita_categoria">Editar categoría</string>
@@ -69,6 +70,7 @@
     <string name="InvalidAssembly">Texto vacío o Ensamble Existente</string>
     <string name="EnsambleAdd">Ensamble agregado correctamente</string>
     <string name="EnsambleMod">Ensamble modificado correctamente</string>
+
 
     <string name="Confirma_operacion">Se ha realizado exitosamente </string>
     <string name="Error_operacion">No se ha completado la operación</string>
