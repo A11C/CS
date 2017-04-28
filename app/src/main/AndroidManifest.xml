@@ -83,7 +83,6 @@
             android:name=".ReportsResumeActivity"
             android:label="@string/tag_resumenventas"
             android:theme="@style/ReportsTheme"/>
-
     </application>
 
 </manifest>
