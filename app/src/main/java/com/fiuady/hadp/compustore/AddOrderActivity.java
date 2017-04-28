@@ -32,6 +32,9 @@ import java.util.List;
 
 
 public class AddOrderActivity extends AppCompatActivity {
+
+    public static final int REQUEST_CODE = 1;
+
     private class OrderHolder extends RecyclerView.ViewHolder {
 
         private TextView idPrtext,Desctext;

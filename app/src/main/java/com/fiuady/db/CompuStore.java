@@ -97,6 +97,19 @@ class OrderCursor extends CursorWrapper {
     }
 }
 
+class OrderStatusCursor extends CursorWrapper{
+    public OrderStatusCursor(Cursor cursor){super (cursor);}
+
+    public OrderStatus getOrderStatus(){
+        Cursor cursor = getWrappedCursor();
+        return new OrderStatus(cursor.getInt(cursor.getColumnIndex(OrderStatusTable.Columns.ID)),
+                cursor.getString(cursor.getColumnIndex(OrderStatusTable.Columns.DESCRIPTION)),
+                cursor.getInt(cursor.getColumnIndex(OrderStatusTable.Columns.EDITABLE)),
+                cursor.getString(cursor.getColumnIndex(OrderStatusTable.Columns.PREVIOUS)),
+                cursor.getString(cursor.getColumnIndex(OrderStatusTable.Columns.NEXT)));
+    }
+}
+
 class OrderAssemblyCursor extends CursorWrapper{
     public OrderAssemblyCursor(Cursor cursor){
         super (cursor);
@@ -182,7 +195,6 @@ public final class CompuStore {
         values.put(CategoriesTable.Columns.DESCRIPTION, description);
         db.update(CategoriesTable.NAME, values, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
-
 
     public void CategoryDelete(int id) {
         db.delete(CategoriesTable.NAME, CategoriesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
@@ -459,7 +471,6 @@ public final class CompuStore {
         return match;
     }
 
-
     public void UpdateAssembly(String description, int id){
         ContentValues values = new ContentValues();
         values.put(AssembliesTable.Columns.DESCRIPTION, description);
@@ -475,6 +486,18 @@ public final class CompuStore {
         db.insert(AssemblyProductsTable.NAME, null, values);
     }
 
+    public List<Client> getClients(String description,int i[]) {
+        ArrayList<Client> list = new ArrayList<>();
+
+        ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers ORDER BY last_name", null));
+        while (cursor.moveToNext()) {
+
+            list.add(cursor.getClient());
+        }
+        cursor.close();
+
+        return list;
+    }
 
     public List<Client> getAllClients() {
         ArrayList<Client> list = new ArrayList<>();
@@ -489,16 +512,17 @@ public final class CompuStore {
         return list;
     }
 
-    public List<Client> getClientName(String name) {
-        ArrayList<Client> list = new ArrayList<>();
-
-        ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers WHERE first_name LIKE '%" + name + "%' ORDER BY description", null));
-        while (cursor.moveToNext()) {
-            list.add(cursor.getClient());
+    public String getClientName (int id){
+        List<Client> list = getAllClients();
+        String name = "";
+        for (Client client : list){
+            if(client.getId()==id){
+                name = client.getLast_name() +" "+ client.getFirst_name();
+                break;
+            }
         }
-        cursor.close();
 
-        return list;
+        return name;
     }
 
     public void InsertClient(String fn, String ln, String dir, String p1, String p2, String p3, String email){
@@ -513,6 +537,20 @@ public final class CompuStore {
         values.put(CustomersTable.Columns.E_MAIL, email);
 
         db.insert(CustomersTable.NAME, null, values);
+    }
+
+    public void UpdateClient(int id, String fn, String ln, String dir, String p1, String p2, String p3, String email){
+        ContentValues values = new ContentValues();
+
+        values.put(CustomersTable.Columns.FIRST_NAME, fn);
+        values.put(CustomersTable.Columns.LAST_NAME, ln);
+        values.put(CustomersTable.Columns.ADDRESS, dir);
+        values.put(CustomersTable.Columns.PHONE1, p1);
+        values.put(CustomersTable.Columns.PHONE2, p2);
+        values.put(CustomersTable.Columns.PHONE3, p3);
+        values.put(CustomersTable.Columns.E_MAIL, email);
+
+        db.update(CustomersTable.NAME, values, CustomersTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
     public boolean ClientHaveOrder(int id){
@@ -534,6 +572,18 @@ public final class CompuStore {
         OrderCursor cursor = new OrderCursor(db.rawQuery("SELECT * FROM orders ORDER BY id",null));
         while (cursor.moveToNext()){
             list.add(cursor.getOrder());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public List<OrderStatus> getStatus(){
+        ArrayList<OrderStatus> list = new ArrayList<>();
+
+        OrderStatusCursor cursor = new OrderStatusCursor(db.rawQuery("SELECT * FROM order_status ORDER BY id",null));
+        while (cursor.moveToNext()){
+            list.add(cursor.getOrderStatus());
         }
         cursor.close();
 

@@ -73,8 +73,6 @@ public class MultiSelectionSpinner extends ArrayAdapter<StateC> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int getPosition = (Integer) buttonView.getTag();
-
-
             }
         });
         return convertView;
