@@ -68,10 +68,6 @@
             android:label="@string/tag_add_ass"
             android:theme="@style/OrdersTheme"/>
         <activity
-            android:name=".ModClientActivity"
-            android:label="@string/tag_mod_client"
-            android:theme="@style/ClientsTheme"/>
-        <activity
             android:name=".ReportsProductsActivity"
             android:label="@string/tag_faltantes"
             android:theme="@style/ReportsTheme"/>
