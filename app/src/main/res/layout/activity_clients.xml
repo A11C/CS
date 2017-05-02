@@ -9,7 +9,11 @@
         android:id="@+id/spinner_clients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:spinnerMode="dialog">
+        android:gravity="center"
+        android:padding="10dp"
+        android:textAlignment="center"
+        android:textColor="@android:color/black"
+        android:textSize="24sp">
 
     </Spinner>
 

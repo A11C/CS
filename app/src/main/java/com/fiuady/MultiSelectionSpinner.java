@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.fiuady.hadp.compustore.R;
 
@@ -56,10 +57,12 @@ public class MultiSelectionSpinner extends ArrayAdapter<StateC> {
 
         holder.mTextView.setText(listState.get(position).getTitle());
 
-        // To check weather checked event fire from getview() or user input
+
         isFromView = true;
         holder.mCheckBox.setChecked(listState.get(position).isSelected());
         isFromView = false;
+
+
 
         if ((position == 0)) {
             holder.mCheckBox.setVisibility(View.INVISIBLE);
@@ -73,6 +76,7 @@ public class MultiSelectionSpinner extends ArrayAdapter<StateC> {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 int getPosition = (Integer) buttonView.getTag();
+
             }
         });
         return convertView;

@@ -16,9 +16,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -87,6 +89,8 @@ public class ClientsActivity extends AppCompatActivity {
                     return DialogMod();
             }
             return super.onCreateDialog(savedInstanceState);
+
+
         }
 
         public AlertDialog DialogAdd() {
@@ -198,6 +202,7 @@ public class ClientsActivity extends AppCompatActivity {
             builder.setView(view);
             return builder.create();
         }
+
     }
 
     private EditText editText;
@@ -314,20 +319,25 @@ public class ClientsActivity extends AppCompatActivity {
 
         final String[] select_qualification = {
                 "Filtrar por:", "Nombre", "Apellido", "Dirección", "Teléfono", "E-mail"};
-        spinner = (Spinner) findViewById(R.id.spinner_clients);
+        Spinner spinner = (Spinner) findViewById(R.id.spinner_clients);
 
         final ArrayList<StateC> listC = new ArrayList<>();
+
 
         for (int i = 0; i < select_qualification.length; i++) {
             StateC stateC = new StateC();
             stateC.setTitle(select_qualification[i]);
             stateC.setSelected(false);
             listC.add(stateC);
+
         }
+
 
         MultiSelectionSpinner multiSelectionSpinner = new MultiSelectionSpinner(ClientsActivity.this, 0,
                 listC);
+
         spinner.setAdapter(multiSelectionSpinner);
+
         // Spinner spinner=(Spinner)findViewById(R.id.input1);
 
         //List<String> list = new ArrayList<String>();
@@ -357,18 +367,23 @@ public class ClientsActivity extends AppCompatActivity {
 
         //}
 
-        search.setOnClickListener(new View.OnClickListener() {
+      /*  search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                for(int i=1; i<listC.size();i++){
-                    if(listC.get(i).isSelected()){
-                        Toast.makeText(ClientsActivity.this, "Elemento "+i+" seleccionado",Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
+                switch (v.getId()) {
 
+                    case R.id.checkboxCL:
+                        break;
+                    default:
+
+                        break;
+                }
+
+            }
+
+        });*/
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -381,10 +396,14 @@ public class ClientsActivity extends AppCompatActivity {
         mDialogFragment fragment = mDialogFragment.newInstance(0);
         fragment.show(getFragmentManager(), "AddDialog");
         return super.onOptionsItemSelected(item);
+
+
     }
 
     public void UpdateAdapter() {
         adapter = new ClientAdapter(compustore.getClients(Description, I));
         recyclerview.setAdapter(adapter);
     }
+
+
 }
