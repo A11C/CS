@@ -39,6 +39,9 @@
     <string name="tag_cambios">Registro de cambios: </string>
     <string name="dialog_addp">Agregar Producto</string>
     <string name="tag_ProductID">ID Producto:</string>
+    <string name="proc_por_client">Procesar por cliente: </string>
+    <string name="proc_por_date">Procesar por fecha: </string>
+    <string name="proc_por_monto">Procesar por monto de venta: </string>
 
     <string name="order_pendiente">Pendiente: </string>
     <string name="order_cancelado">Cancelado: </string>
