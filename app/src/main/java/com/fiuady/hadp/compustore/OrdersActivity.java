@@ -43,6 +43,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.text.ParseException;
 
 public class OrdersActivity extends AppCompatActivity {
 
@@ -57,6 +58,8 @@ public class OrdersActivity extends AppCompatActivity {
     private OrderAdapter adapter;
     private List<OrderStatus> orderstatus;
     private Configuration newConfig;
+    private String newDate;
+
 
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -326,26 +329,40 @@ public class OrdersActivity extends AppCompatActivity {
         Collections.sort(orders, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+              //  SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 int d1 = Integer.valueOf(o1.getDate().substring(0,1));
                 int m1 = Integer.valueOf(o1.getDate().substring(3,4));
                 int y1 = Integer.valueOf(o1.getDate().substring(6,10));
                 Calendar c1 = Calendar.getInstance();
                 c1.set(y1,m1,d1);
-                Toast.makeText(OrdersActivity.this,String.valueOf(c1),Toast.LENGTH_SHORT).show();
+              //  Toast.makeText(OrdersActivity.this,String.valueOf(c1),Toast.LENGTH_SHORT).show();
 
                 int d2 = Integer.valueOf(o2.getDate().substring(0,1));
                 int m2 = Integer.valueOf(o2.getDate().substring(3,4));
                 int y2 = Integer.valueOf(o2.getDate().substring(6,10));
                 Calendar c2 = Calendar.getInstance();
                 c2.set(y2,m2,d2);
-                Toast.makeText(OrdersActivity.this,String.valueOf(c2),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OrdersActivity.this,String.valueOf(c2),Toast.LENGTH_SHORT).show();
                 return c1.compareTo(c2);
             }
         });
+
+        Order order = orders.get(0);
+       String fecha = order.getDate();
+        try {
+            SimpleDateFormat curFormarter = new SimpleDateFormat("dd-mm-yyyy");
+            Date dateObj = curFormarter.parse(fecha);
+            SimpleDateFormat postForm = new SimpleDateFormat("dd/mm/yyyy");
+            newDate = postForm.format(dateObj);
+            Toast.makeText(OrdersActivity.this, String.valueOf(newDate), Toast.LENGTH_SHORT).show();
+        }catch (ParseException e){
+            e.printStackTrace();
+        }
+
         adapter = new OrderAdapter(orders);
 
         recyclerview.setAdapter(adapter);
     }
+
 }
 
