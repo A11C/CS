@@ -87,7 +87,7 @@ class OrderCursor extends CursorWrapper {
         super(cursor);
     }
 
-    public Order getOrder(){
+    public Order getOrder() {
         Cursor cursor = getWrappedCursor();
         return new Order(cursor.getInt(cursor.getColumnIndex(OrdersTable.Columns.ID)),
                 cursor.getInt(cursor.getColumnIndex(OrdersTable.Columns.STATUS_ID)),
@@ -97,10 +97,12 @@ class OrderCursor extends CursorWrapper {
     }
 }
 
-class OrderStatusCursor extends CursorWrapper{
-    public OrderStatusCursor(Cursor cursor){super (cursor);}
+class OrderStatusCursor extends CursorWrapper {
+    public OrderStatusCursor(Cursor cursor) {
+        super(cursor);
+    }
 
-    public OrderStatus getOrderStatus(){
+    public OrderStatus getOrderStatus() {
         Cursor cursor = getWrappedCursor();
         return new OrderStatus(cursor.getInt(cursor.getColumnIndex(OrderStatusTable.Columns.ID)),
                 cursor.getString(cursor.getColumnIndex(OrderStatusTable.Columns.DESCRIPTION)),
@@ -110,12 +112,12 @@ class OrderStatusCursor extends CursorWrapper{
     }
 }
 
-class OrderAssemblyCursor extends CursorWrapper{
-    public OrderAssemblyCursor(Cursor cursor){
-        super (cursor);
+class OrderAssemblyCursor extends CursorWrapper {
+    public OrderAssemblyCursor(Cursor cursor) {
+        super(cursor);
     }
 
-    public OrderAssembly getOrderAssembly(){
+    public OrderAssembly getOrderAssembly() {
         Cursor cursor = getWrappedCursor();
         return new OrderAssembly(cursor.getInt(cursor.getColumnIndex(OrderAssembliesTable.Columns.ID)),
                 cursor.getInt(cursor.getColumnIndex(OrderAssembliesTable.Columns.ASSEMBLY_ID)),
@@ -161,12 +163,12 @@ public final class CompuStore {
     public int getOneCategory(String description) {
 
         List<Category> list = getAllCategoriesById();
-        int  category_id=-1;
-        for (Category category : list){
-           if(category.getDescription().equals(description)){
-               category_id = category.getId();
-               break;
-           }
+        int category_id = -1;
+        for (Category category : list) {
+            if (category.getDescription().equals(description)) {
+                category_id = category.getId();
+                break;
+            }
         }
 
         return category_id;
@@ -282,12 +284,12 @@ public final class CompuStore {
         }
     }
 
-    public List<Product> getAllProductsInAssembly(int id){
+    public List<Product> getAllProductsInAssembly(int id) {
         ArrayList<Product> list = new ArrayList<>();
 
         ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT p.id, p.category_id, p.description, p.price, ap.qty FROM products p " +
-                "INNER JOIN assembly_products ap ON (ap.product_id = p.id) WHERE ap.id = " + id + " ORDER BY p.description",null));
-        while (cursor.moveToNext()){
+                "INNER JOIN assembly_products ap ON (ap.product_id = p.id) WHERE ap.id = " + id + " ORDER BY p.description", null));
+        while (cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }
         cursor.close();
@@ -341,13 +343,13 @@ public final class CompuStore {
         db.insert(ProductsTable.NAME, null, values);
     }
 
-    public void AddStockProduct(int id, int qty){
+    public void AddStockProduct(int id, int qty) {
         ContentValues values = new ContentValues();
-        values.put(ProductsTable.Columns.QUANTITY,qty);
+        values.put(ProductsTable.Columns.QUANTITY, qty);
         db.update(ProductsTable.NAME, values, ProductsTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
-    public void SaveProducts(ArrayList<Product> products){
+    public void SaveProducts(ArrayList<Product> products) {
 
         db.execSQL("CREATE TABLE [products_aux]( " +
                 " [id] INTEGER PRIMARY KEY, " +
@@ -359,24 +361,23 @@ public final class CompuStore {
                 " CHECK(qty >= 0));");
 
         ContentValues values = new ContentValues();
-        for (Product product : products)
-        {
+        for (Product product : products) {
             values.put(ProductsTable.Columns.DESCRIPTION, product.getDescription());
             values.put(ProductsTable.Columns.CATEGORY_ID, product.getCategory_id());
             values.put(ProductsTable.Columns.ID, product.getId());
             values.put(ProductsTable.Columns.QUANTITY, product.getQuantity());
             values.put(ProductsTable.Columns.PRICE, product.getPrice());
-            db.insert("products_aux",null,values);
+            db.insert("products_aux", null, values);
             values.clear();
         }
 
     }
 
-    public List<Product> RestoreProducts(){
+    public List<Product> RestoreProducts() {
         ArrayList<Product> list = new ArrayList<>();
 
-        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products_aux ORDER BY description",null));
-        while (cursor.moveToNext()){
+        ProductCursor cursor = new ProductCursor(db.rawQuery("SELECT * FROM products_aux ORDER BY description", null));
+        while (cursor.moveToNext()) {
             list.add(cursor.getProduct());
         }
         cursor.close();
@@ -420,18 +421,19 @@ public final class CompuStore {
         return list;
     }
 
-    public void DeleteAssembly (int id){
+
+    public void DeleteAssembly(int id) {
         DeleteAllProductsInAssembly(id);
         db.delete(AssembliesTable.NAME, AssembliesTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
-    public void InsertAssembly (String description){
+    public void InsertAssembly(String description) {
         ContentValues values = new ContentValues();
         values.put(AssembliesTable.Columns.DESCRIPTION, description);
         db.insert(AssembliesTable.NAME, null, values);
     }
 
-    public boolean AssemblyInOrder(int id){
+    public boolean AssemblyInOrder(int id) {
         boolean match = true;
 
         List<OrderAssembly> orderAssemblies = getAllOrderAssemblyById(id);
@@ -443,26 +445,26 @@ public final class CompuStore {
         return match;
     }
 
-    public void UpdateQtyProductInAssembly(int pid, int id, int qty){
+    public void UpdateQtyProductInAssembly(int pid, int id, int qty) {
         ContentValues values = new ContentValues();
-        values.put(AssemblyProductsTable.Columns.QUANTITY,qty);
+        values.put(AssemblyProductsTable.Columns.QUANTITY, qty);
         db.update(AssemblyProductsTable.NAME, values, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
     }
 
-    public void DeleteProductInAssembly(int pid, int id){
+    public void DeleteProductInAssembly(int pid, int id) {
         db.delete(AssemblyProductsTable.NAME, AssemblyProductsTable.Columns.PRODUCT_ID + " = " + pid + " AND " + AssemblyProductsTable.Columns.ID + " = " + id, null);
     }
 
-    public void DeleteAllProductsInAssembly(int id){
+    public void DeleteAllProductsInAssembly(int id) {
         db.delete(AssemblyProductsTable.NAME, AssemblyProductsTable.Columns.ID + " = " + id, null);
     }
 
-    public boolean AssemblyExists(String description){
+    public boolean AssemblyExists(String description) {
         boolean match = false;
 
         List<Assembly> assemblies = getAllAssemblies();
-        for (Assembly assembly : assemblies){
-            if(assembly.getDescripcion().toUpperCase().equals(description.toUpperCase())){
+        for (Assembly assembly : assemblies) {
+            if (assembly.getDescripcion().toUpperCase().equals(description.toUpperCase())) {
                 match = true;
                 break;
             }
@@ -471,13 +473,13 @@ public final class CompuStore {
         return match;
     }
 
-    public void UpdateAssembly(String description, int id){
+    public void UpdateAssembly(String description, int id) {
         ContentValues values = new ContentValues();
         values.put(AssembliesTable.Columns.DESCRIPTION, description);
         db.update(AssembliesTable.NAME, values, AssembliesTable.Columns.ID + " = ?", new String[]{Integer.toString(id)});
     }
 
-    public void InsertAssemblyProduct(int id, int pid, int qty){
+    public void InsertAssemblyProduct(int id, int pid, int qty) {
         ContentValues values = new ContentValues();
         values.put(AssemblyProductsTable.Columns.ID, id);
         values.put(AssemblyProductsTable.Columns.PRODUCT_ID, pid);
@@ -486,7 +488,7 @@ public final class CompuStore {
         db.insert(AssemblyProductsTable.NAME, null, values);
     }
 
-    public List<Client> getClients(String description,int i[]) {
+    public List<Client> getClients(String description, int i[]) {
         ArrayList<Client> list = new ArrayList<>();
 
         ClientCursor cursor = new ClientCursor(db.rawQuery("SELECT * FROM customers ORDER BY last_name", null));
@@ -512,12 +514,12 @@ public final class CompuStore {
         return list;
     }
 
-    public String getClientName (int id){
+    public String getClientName(int id) {
         List<Client> list = getAllClients();
         String name = "";
-        for (Client client : list){
-            if(client.getId()==id){
-                name = client.getLast_name() +" "+ client.getFirst_name();
+        for (Client client : list) {
+            if (client.getId() == id) {
+                name = client.getLast_name() + " " + client.getFirst_name();
                 break;
             }
         }
@@ -525,7 +527,7 @@ public final class CompuStore {
         return name;
     }
 
-    public void InsertClient(String fn, String ln, String dir, String p1, String p2, String p3, String email){
+    public void InsertClient(String fn, String ln, String dir, String p1, String p2, String p3, String email) {
         ContentValues values = new ContentValues();
 
         values.put(CustomersTable.Columns.FIRST_NAME, fn);
@@ -539,7 +541,7 @@ public final class CompuStore {
         db.insert(CustomersTable.NAME, null, values);
     }
 
-    public void UpdateClient(int id, String fn, String ln, String dir, String p1, String p2, String p3, String email){
+    public void UpdateClient(int id, String fn, String ln, String dir, String p1, String p2, String p3, String email) {
         ContentValues values = new ContentValues();
 
         values.put(CustomersTable.Columns.FIRST_NAME, fn);
@@ -553,12 +555,12 @@ public final class CompuStore {
         db.update(CustomersTable.NAME, values, CustomersTable.Columns.ID + "= ?", new String[]{Integer.toString(id)});
     }
 
-    public boolean ClientHaveOrder(int id){
+    public boolean ClientHaveOrder(int id) {
         boolean match = true;
 
         List<Order> orders = getAllOrders();
-        for (Order order : orders){
-            if (order.getCustomer_id() == id){
+        for (Order order : orders) {
+            if (order.getCustomer_id() == id) {
                 match = false;
                 break;
             }
@@ -566,11 +568,11 @@ public final class CompuStore {
         return match;
     }
 
-    public List<Order> getAllOrders(){
+    public List<Order> getAllOrders() {
         ArrayList<Order> list = new ArrayList<>();
 
-        OrderCursor cursor = new OrderCursor(db.rawQuery("SELECT * FROM orders ORDER BY id",null));
-        while (cursor.moveToNext()){
+        OrderCursor cursor = new OrderCursor(db.rawQuery("SELECT * FROM orders ORDER BY id", null));
+        while (cursor.moveToNext()) {
             list.add(cursor.getOrder());
         }
         cursor.close();
@@ -578,11 +580,11 @@ public final class CompuStore {
         return list;
     }
 
-    public List<OrderStatus> getStatus(){
+    public List<OrderStatus> getStatus() {
         ArrayList<OrderStatus> list = new ArrayList<>();
 
-        OrderStatusCursor cursor = new OrderStatusCursor(db.rawQuery("SELECT * FROM order_status ORDER BY id",null));
-        while (cursor.moveToNext()){
+        OrderStatusCursor cursor = new OrderStatusCursor(db.rawQuery("SELECT * FROM order_status ORDER BY id", null));
+        while (cursor.moveToNext()) {
             list.add(cursor.getOrderStatus());
         }
         cursor.close();
@@ -590,14 +592,101 @@ public final class CompuStore {
         return list;
     }
 
-    public List<OrderAssembly> getAllOrderAssemblyById(int id){
+    public List<OrderAssembly> getAllOrderAssemblyById(int id) {
         ArrayList<OrderAssembly> list = new ArrayList<>();
 
-        OrderAssemblyCursor cursor = new OrderAssemblyCursor(db.rawQuery("SELECT * FROM order_assemblies WHERE assembly_id = " + id + " ORDER BY id",null));
-        while (cursor.moveToNext()){
+        OrderAssemblyCursor cursor = new OrderAssemblyCursor(db.rawQuery("SELECT * FROM order_assemblies WHERE assembly_id = " + id + " ORDER BY id", null));
+        while (cursor.moveToNext()) {
             list.add(cursor.getOrderAssembly());
         }
         cursor.close();
+
+        return list;
+    }
+
+    public List<OrderAssembly> getAllOrderAssemblyByOrderId(int id) {
+        ArrayList<OrderAssembly> list = new ArrayList<>();
+
+        OrderAssemblyCursor cursor = new OrderAssemblyCursor(db.rawQuery("SELECT * FROM order_assemblies WHERE id = " + id + " ORDER BY assembly_id", null));
+        while (cursor.moveToNext()) {
+            list.add(cursor.getOrderAssembly());
+        }
+        cursor.close();
+
+        return list;
+    }
+
+    public int InsertOrder(String Client, String date) {
+        int id = 0;
+        ContentValues values = new ContentValues();
+        values.put(OrdersTable.Columns.STATUS_ID, 0);
+
+        List<Client> clients = getAllClients();
+        int client_id = 0;
+        for (Client client : clients) {
+            if ((client.getFirst_name() + " " + client.getLast_name()).equals(Client)) {
+                client_id = client.getId();
+            }
+        }
+        values.put(OrdersTable.Columns.CUSTOMER_ID, client_id);
+        values.put(OrdersTable.Columns.DATE, date);
+        values.put(OrdersTable.Columns.CHANGE_LOG, "Estado: Pendiente, Fecha de Orden: " + date);
+        List<Order> orders = getAllOrders();
+        for (Order order : orders){
+            if (order.getId()> id){
+                id = order.getId();
+            }
+        }
+        id+=1;
+        values.put(OrdersTable.Columns.ID, id);
+        db.insert(OrdersTable.NAME, null, values);
+        return id;
+    }
+
+    public void InsertOrderAssembly(int id, int aid, int qty){
+        ContentValues values = new ContentValues();
+        values.put(OrderAssembliesTable.Columns.ID, id);
+        values.put(OrderAssembliesTable.Columns.ASSEMBLY_ID,aid);
+        values.put(OrderAssembliesTable.Columns.QUANTITY, qty);
+        db.insert(OrderAssembliesTable.NAME, null, values);
+    }
+
+    public void UpdateQtyAssemblyInOrder(int id, int aid, int qty){
+        ContentValues values = new ContentValues();
+        values.put(OrderAssembliesTable.Columns.QUANTITY, qty);
+        db.update(OrderAssembliesTable.NAME, values, OrderAssembliesTable.Columns.ASSEMBLY_ID + " = " + aid + " AND " + OrderAssembliesTable.Columns.ID + " = " + id, null);
+    }
+
+    public void DeleteAssemblyInOrder(int aid, int id) {
+        db.delete(OrderAssembliesTable.NAME, OrderAssembliesTable.Columns.ASSEMBLY_ID + " = " + aid + " AND " + OrderAssembliesTable.Columns.ID + " = " + id, null);
+    }
+
+    public void SaveOrderAssemblies(List<OrderAssembly> orderAssemblies){
+
+        db.execSQL("CREATE TABLE [orderass_aux]( " +
+                " [id] INTEGER NOT NULL, " +
+                " [assembly_id] INTEGER NOT NULL, " +
+                " [qty] INTEGER NOT NULL);");
+
+        ContentValues values = new ContentValues();
+        for (OrderAssembly orderAssembly : orderAssemblies) {
+            values.put(OrderAssembliesTable.Columns.ID, orderAssembly.getId());
+            values.put(OrderAssembliesTable.Columns.ASSEMBLY_ID, orderAssembly.getAssembly_id());
+            values.put(OrderAssembliesTable.Columns.QUANTITY, orderAssembly.getQty());
+            db.insert("orderass_aux", null, values);
+            values.clear();
+        }
+    }
+
+    public List<OrderAssembly> RestoreOrderAssemblies() {
+        ArrayList<OrderAssembly> list = new ArrayList<>();
+
+        OrderAssemblyCursor cursor = new OrderAssemblyCursor(db.rawQuery("SELECT * FROM orderass_aux ORDER BY assembly_id", null));
+        while (cursor.moveToNext()) {
+            list.add(cursor.getOrderAssembly());
+        }
+        cursor.close();
+        db.execSQL("DROP TABLE IF EXISTS [orderass_aux]");
 
         return list;
     }

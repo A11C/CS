@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.fiuady.db.CompuStore;
 import com.fiuady.db.Product;
 
@@ -37,7 +38,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_ID = "id";
     public static final int REQUESTCODE = 0;
-    private int Id;
+    private int Id, position;
 
     public static class mDialogFragment extends DialogFragment {
 
@@ -65,8 +66,6 @@ public class ModAssemblyActivity extends AppCompatActivity {
             dF.setArguments(args);
             return dF;
         }
-
-
 
 
         @Override
@@ -229,13 +228,13 @@ public class ModAssemblyActivity extends AppCompatActivity {
         final String description;
         compustore = new CompuStore(this);
 
-        if(savedInstanceState != null)
-        {
+        if (savedInstanceState != null) {
             description = savedInstanceState.getString(KEY_DESCRIPTION);
             desctext.setText(description);
             Id = savedInstanceState.getInt(KEY_ID);
             products = new ArrayList<Product>(compustore.RestoreProducts());
-        }else{
+            position =0;
+        } else {
             Intent i = getIntent();
             Id = i.getIntExtra(EXTRA_IDASSEMBLY, 0);
             products = new ArrayList<Product>(compustore.getAllProductsInAssembly(Id));
@@ -245,9 +244,9 @@ public class ModAssemblyActivity extends AppCompatActivity {
 
 
         recyclerview = (RecyclerView) findViewById(R.id.add_productrv);
-        if(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             recyclerview.setLayoutManager(new LinearLayoutManager(this));
-        }else{
+        } else {
             recyclerview.setLayoutManager(new GridLayoutManager(this, 2));
         }
 
@@ -319,14 +318,17 @@ public class ModAssemblyActivity extends AppCompatActivity {
             UpdateAdapter();
 
         }
-        compustore.RestoreProducts();
+        if (position ==1) {
+            compustore.RestoreProducts();
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         compustore.SaveProducts(products);
-        outState.putString(KEY_DESCRIPTION,desctext.getText().toString());
-        outState.putInt(KEY_ID,Id);
+        outState.putString(KEY_DESCRIPTION, desctext.getText().toString());
+        outState.putInt(KEY_ID, Id);
+        position =1;
         super.onSaveInstanceState(outState);
     }
 
@@ -383,7 +385,7 @@ public class ModAssemblyActivity extends AppCompatActivity {
                     repeated = false;
                 }
             }
-            if (!repeated || compustore.getAllProductsInAssembly(Id).isEmpty()){
+            if (!repeated || compustore.getAllProductsInAssembly(Id).isEmpty()) {
                 compustore.InsertAssemblyProduct(Id, product.getId(), product.getQuantity());
             }
         }

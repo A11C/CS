@@ -57,8 +57,6 @@ public class OrdersActivity extends AppCompatActivity {
     private RecyclerView recyclerview;
     private OrderAdapter adapter;
     private List<OrderStatus> orderstatus;
-    private Configuration newConfig;
-    private String newDate;
 
 
     public static class DatePickerFragment extends DialogFragment
@@ -92,13 +90,15 @@ public class OrdersActivity extends AppCompatActivity {
             //this.getContext();
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-            Date date = new Date(year-1900,month,day);
+            Date date = new Date(year - 1900, month, day);
             String formatDate = sdf.format(date);
             string = formatDate;
             if (Num == 0) {
-                ((OrdersActivity)getActivity()).SetDateIni();
+                ((OrdersActivity) getActivity()).SetDateIni();
+                ((OrdersActivity) getActivity()).UpdateAdapter();
             } else {
-                ((OrdersActivity)getActivity()).SetDateFin();
+                ((OrdersActivity) getActivity()).SetDateFin();
+                ((OrdersActivity) getActivity()).UpdateAdapter();
             }
         }
     }
@@ -121,8 +121,8 @@ public class OrdersActivity extends AppCompatActivity {
         private void bindOrder(final Order order) {
 
             idOrtext.setText(String.valueOf(order.getId()));
-            for (OrderStatus orderStatus : orderstatus){
-                if(orderStatus.getId()==order.getStatus_id()) {
+            for (OrderStatus orderStatus : orderstatus) {
+                if (orderStatus.getId() == order.getStatus_id()) {
                     Statustext.setText(orderStatus.getDescription());
                     break;
                 }
@@ -136,6 +136,9 @@ public class OrdersActivity extends AppCompatActivity {
                     final PopupMenu menu = new PopupMenu(OrdersActivity.this, itemView);
                     menu.getMenuInflater().inflate(R.menu.menu_option_assembly, menu.getMenu());
 
+                    if(order.getStatus_id()!=0){
+                        menu.getMenu().removeItem(R.id.menu_as_mod_or);
+                    }
 
                     menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         @Override
@@ -143,7 +146,9 @@ public class OrdersActivity extends AppCompatActivity {
 
                             if (item.getTitle().equals(menu.getMenu().getItem(1).getTitle())) {
                                 Intent i = new Intent(OrdersActivity.this, ModOrderActivity.class);
-                                startActivity(i);
+                                i.putExtra(ModOrderActivity.EXTRA_CID, order.getCustomer_id());
+                                i.putExtra(ModOrderActivity.EXTRA_OID, order.getId());
+                                startActivityForResult(i,ModOrderActivity.REQUEST_CODE);
                             } else {
                                 final PopupMenu menu2 = new PopupMenu(OrdersActivity.this, itemView);
                                 menu2.getMenuInflater().inflate(R.menu.menu_option_estadoassembly, menu2.getMenu());
@@ -262,7 +267,10 @@ public class OrdersActivity extends AppCompatActivity {
                 if (isChecked) {
                     DialogFragment fragment = DatePickerFragment.newInstance(0);
                     fragment.show(getFragmentManager(), "datePicker1");
+                }else{
+                    UpdateAdapter();
                 }
+
             }
         });
 
@@ -272,6 +280,8 @@ public class OrdersActivity extends AppCompatActivity {
                 if (isChecked) {
                     DialogFragment fragment = DatePickerFragment.newInstance(1);
                     fragment.show(getFragmentManager(), "datePicker2");
+                }else{
+                    UpdateAdapter();
                 }
 
             }
@@ -322,42 +332,97 @@ public class OrdersActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            Toast.makeText(OrdersActivity.this, "Orden Agregada Correctamente", Toast.LENGTH_SHORT).show();
+        } else if (requestCode == 0 && resultCode == RESULT_OK) {
+            Toast.makeText(OrdersActivity.this, "Orden Modificada Correctamente", Toast.LENGTH_SHORT).show();
+        }
+        UpdateAdapter();
     }
 
-    public void UpdateAdapter(){
+    public void UpdateAdapter() {
         List<Order> orders = compustore.getAllOrders();
         Collections.sort(orders, new Comparator<Order>() {
             @Override
             public int compare(Order o1, Order o2) {
-              //  SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                int d1 = Integer.valueOf(o1.getDate().substring(0,1));
-                int m1 = Integer.valueOf(o1.getDate().substring(3,4));
-                int y1 = Integer.valueOf(o1.getDate().substring(6,10));
-                Calendar c1 = Calendar.getInstance();
-                c1.set(y1,m1,d1);
-              //  Toast.makeText(OrdersActivity.this,String.valueOf(c1),Toast.LENGTH_SHORT).show();
-
-                int d2 = Integer.valueOf(o2.getDate().substring(0,1));
-                int m2 = Integer.valueOf(o2.getDate().substring(3,4));
-                int y2 = Integer.valueOf(o2.getDate().substring(6,10));
-                Calendar c2 = Calendar.getInstance();
-                c2.set(y2,m2,d2);
-                //Toast.makeText(OrdersActivity.this,String.valueOf(c2),Toast.LENGTH_SHORT).show();
+                String f1 = o1.getDate();
+                String f2 = o2.getDate();
+                Date c1 = new Date();
+                Date c2 = new Date();
+                try {
+                    SimpleDateFormat curFormarter = new SimpleDateFormat("dd-MM-yyyy");
+                    c1 = curFormarter.parse(f1);
+                    c2 = curFormarter.parse(f2);
+                    //Toast.makeText(OrdersActivity.this, String.valueOf(newDate), Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 return c1.compareTo(c2);
             }
         });
 
-        Order order = orders.get(0);
-       String fecha = order.getDate();
-        try {
-            SimpleDateFormat curFormarter = new SimpleDateFormat("dd-mm-yyyy");
-            Date dateObj = curFormarter.parse(fecha);
-            SimpleDateFormat postForm = new SimpleDateFormat("dd/mm/yyyy");
-            newDate = postForm.format(dateObj);
-            Toast.makeText(OrdersActivity.this, String.valueOf(newDate), Toast.LENGTH_SHORT).show();
-        }catch (ParseException e){
-            e.printStackTrace();
+        if (chkdi.isChecked() && chkdf.isChecked()){
+            int or=-1;
+            for(Order order : orders){
+                String f1 = order.getDate();
+                String f2 = dateini.getText().toString();
+                String f3 = datefin.getText().toString();
+                Date c1 = new Date();
+                Date c2 = new Date();
+                Date c3 = new Date();
+                try {
+                    SimpleDateFormat curFormarter = new SimpleDateFormat("dd-MM-yyyy");
+                    c1 = curFormarter.parse(f1);
+                    c2 = curFormarter.parse(f2);
+                    c3 = curFormarter.parse(f3);
+                    //Toast.makeText(OrdersActivity.this, String.valueOf(newDate), Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(c2.after(c1) || c1.after(c3)){
+                 //   orders.remove(order);
+                }
+            }
+        }else if (chkdi.isChecked()){
+            int or=-1;
+            for(Order order : orders){
+                String f1 = order.getDate();
+                String f2 = dateini.getText().toString();
+                Date c1 = new Date();
+                Date c2 = new Date();
+                try {
+                    SimpleDateFormat curFormarter = new SimpleDateFormat("dd-MM-yyyy");
+                    c1 = curFormarter.parse(f1);
+                    c2 = curFormarter.parse(f2);
+                    //Toast.makeText(OrdersActivity.this, String.valueOf(newDate), Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(c2.after(c1)){
+                 //   orders.remove(order);
+                }
+            }
+        }else if (chkdf.isChecked()){
+            int or=-1;
+            for(Order order : orders){
+                String f1 = order.getDate();
+                String f3 = datefin.getText().toString();
+                Date c1 = new Date();
+                Date c3 = new Date();
+                try {
+                    SimpleDateFormat curFormarter = new SimpleDateFormat("dd-MM-yyyy");
+                    c1 = curFormarter.parse(f1);
+                    c3 = curFormarter.parse(f3);
+                    //Toast.makeText(OrdersActivity.this, String.valueOf(newDate), Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                if(c1.after(c3)){
+                 //   orders.remove(order);
+                }
+            }
         }
+
 
         adapter = new OrderAdapter(orders);
 

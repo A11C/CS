@@ -35,10 +35,10 @@ import java.util.List;
 
 public class AddAssemblyActivity extends AppCompatActivity {
 
-    public static final String KEY_DESCRIPTION = "description";
-    public static final String KEY_ID = "id";
+    private static final String KEY_DESCRIPTION = "description";
+    private static final String KEY_ID = "id";
     public static final int REQUESTCODE = 1;
-    private int Id;
+    private int Id, position;
 
     public static class mDialogFragment extends DialogFragment {
 
@@ -88,7 +88,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
 
         public AlertDialog DialogMod() {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(getString(R.string.stock));
+            builder.setTitle(getString(R.string.tag_cantidad));
             picker = new NumberPicker(getActivity());
             picker.setMinValue(1);
             picker.setMaxValue(Qty + 10);
@@ -233,6 +233,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
             desctext.setText(description);
             Id = savedInstanceState.getInt(KEY_ID);
             products = new ArrayList<Product>(compustore.RestoreProducts());
+            position =0;
         } else {
             products = new ArrayList<Product>();
         }
@@ -319,7 +320,9 @@ public class AddAssemblyActivity extends AppCompatActivity {
             }
             UpdateAdapter();
         }
-        compustore.RestoreProducts();
+        if(position==1) {
+            compustore.RestoreProducts();
+        }
     }
 
     public void UpdateAdapter() {
@@ -357,6 +360,7 @@ public class AddAssemblyActivity extends AppCompatActivity {
         compustore.SaveProducts(products);
         outState.putString(KEY_DESCRIPTION,desctext.getText().toString());
         outState.putInt(KEY_ID,Id);
+        position =1;
         super.onSaveInstanceState(outState);
     }
 

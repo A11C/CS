@@ -6,11 +6,47 @@
     android:layout_height="match_parent"
     android:fillViewport="true">
 
+        <View
+            android:id="@+id/aux_viewB"
+            android:layout_width="5dp"
+            android:layout_height="match_parent"
+            android:layout_below="@id/spinner_clients"
+            android:background="#ffffff"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            android:layout_above="@+id/assemblyOR_rv" />
+
+        <Button
+            android:id="@+id/Btn_guardarB"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAssemblies"
+            android:backgroundTint="@color/colorAssembliesbg"
+            android:gravity="center"
+            android:text="@string/texto_guardar"
+            android:textColor="#ffffff"
+            android:layout_toStartOf="@+id/aux_viewB" />
+
+        <Button
+            android:id="@+id/Btn_cancelarB"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAssemblies"
+            android:backgroundTint="@color/colorAssembliesbg"
+            android:text="@string/texto_cancelar"
+            android:textColor="#ffffff"
+            android:layout_alignBaseline="@+id/Btn_guardarB"
+            android:layout_alignBottom="@+id/Btn_guardarB"
+            android:layout_toEndOf="@+id/aux_viewB" />
+
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/assemblyOR_rv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@id/Btn_cancelarB"
             android:textAlignment="center" />
 
 
