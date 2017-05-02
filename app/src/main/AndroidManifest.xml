@@ -18,7 +18,6 @@
         </activity>
         <activity
             android:name=".CategoriesActivity"
-            android:configChanges="screenSize|orientation"
             android:label="@string/tag_categorias"
             android:theme="@style/CategoryTheme" />
         <activity
@@ -27,7 +26,6 @@
             android:theme="@style/ProductTheme" />
         <activity
             android:name=".AssemblyActivity"
-            android:configChanges="screenSize|orientation"
             android:label="@string/tag_ensambles"
             android:theme="@style/AssembliesTheme" />
         <activity
@@ -36,7 +34,6 @@
             android:theme="@style/AssembliesTheme" />
         <activity
             android:name=".AddAssemblyActivity"
-            android:configChanges="screenSize|orientation"
             android:label="@string/tag_add_ass"
             android:theme="@style/AssembliesTheme" />
         <activity
